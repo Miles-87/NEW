@@ -4,7 +4,7 @@ stages:
 
 build_maven:
   stage: build
-  script: "mvn _B clean install"
+  script: "mvn -B clean install"
   artifacts:
     paths:
       - target/*.jar
