@@ -1,0 +1,11 @@
+stages:
+  - build
+
+
+build_maven:
+  stage: build
+  script: "mvn _B clean install"
+  artifacts:
+    paths:
+      - target/*.jar
+
