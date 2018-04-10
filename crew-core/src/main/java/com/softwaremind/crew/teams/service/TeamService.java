@@ -15,10 +15,10 @@ public class TeamService {
 	/**
 	 * This method add elements to Set
 	 */
-	
+
 	private void addTeamsToList() {
-		
-		TeamModel team1 = new TeamModel(1L, "first", "local", "Crakow", 6);
+
+		TeamModel team1 = new TeamModel(1, "first", "local", "Crakow", 6);
 		TeamModel team2 = new TeamModel(2L, "Second", "moblie", "Warsaw", 5);
 		TeamModel team3 = new TeamModel(3L, "third", "remote", "Rzeszow", 3);
 		TeamModel team4 = new TeamModel(4L, "first", "local", "Crakow", 6);
@@ -42,14 +42,14 @@ public class TeamService {
 		teamModelSet.add(team10);
 		teamModelSet.add(team11);
 		teamModelSet.add(team12);
-		
+
 	}
 
 	/**
 	 * call add method
 	 *
 	 */
-	public Set<TeamModel> myTeams() {
+	public Set<TeamModel> getMyTeams() {
 		addTeamsToList();
 		return teamModelSet;
 	}
