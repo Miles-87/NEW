@@ -1,4 +1,4 @@
-package com.softwaremind.crew.Employees.Model;
+package com.softwaremind.crew.employees.model;
 
 import java.util.Objects;
 
@@ -10,13 +10,16 @@ import java.util.Objects;
  */
 public class Employee {
 	
-	private final long id;
+	private long id;
 	private String firstName;
 	private String lastName;
 	private String location;
 	private String email;
 	private String department;
 	private String role;
+	
+	public Employee() {
+	};
 	
 	public Employee(long id, String firstName, String lastName, String location, String email, String department, String role) {
 		this.id = id;
@@ -40,7 +43,7 @@ public class Employee {
 				", role:'" + role + '\'' +
 				"}";
 	}
-
+	
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
