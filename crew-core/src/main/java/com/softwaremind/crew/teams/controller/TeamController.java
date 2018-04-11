@@ -1,27 +1,30 @@
 package com.softwaremind.crew.teams.controller;
 
-import com.softwaremind.crew.teams.model.TeamModel;
-import com.softwaremind.crew.teams.service.TeamService;
+import java.util.List;
+
+import com.softwaremind.crew.teams.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Set;
+import com.softwaremind.crew.teams.model.TeamModel;
+import com.softwaremind.crew.teams.service.TeamService;
 
 @RestController
 public class TeamController {
-	
-	@Autowired
-	TeamService teamService;
 
+	private TeamService teamService;
+
+	@Autowired
+	public TeamController(TeamService teamService){this.teamService = teamService;}
 
 	/**
 	 * This method send our set to rest controller
 	 */
-
-	@RequestMapping("/teams")
-	public Set<TeamModel> showTeams() {
-		return teamService.myTeams();
+	@RequestMapping("/team")
+	public List<TeamModel>showAll(){
+		return teamService.getmyteams();
 	}
-	
+
 }
