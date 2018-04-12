@@ -1,12 +1,12 @@
 package com.softwaremind.crew.teams.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * This class describe team object
+ * This class define team object
  */
-
-public class TeamModel {
+public class TeamModel implements Serializable {
 	
 	private long id;
 	private String name;
@@ -54,7 +54,7 @@ public class TeamModel {
 		this.headcount = headcount;
 	}
 	
-	public TeamModel(Long id, String name, String description, String city, int headcount) {
+	public TeamModel(long id, String name, String description, String city, int headcount) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
@@ -91,5 +91,6 @@ public class TeamModel {
 	public int hashCode() {
 		
 		return Objects.hash(id, name, description, city, headcount);
+		
 	}
 }
