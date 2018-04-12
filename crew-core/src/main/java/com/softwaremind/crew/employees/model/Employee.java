@@ -1,5 +1,6 @@
 package com.softwaremind.crew.employees.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -8,7 +9,7 @@ import java.util.Objects;
  * @author Wiktor Religo
  * @since 09.04.2018
  */
-public class Employee {
+public class Employee implements Serializable {
 	
 	private long id;
 	private String firstName;

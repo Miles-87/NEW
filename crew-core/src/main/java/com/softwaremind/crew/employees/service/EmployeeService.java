@@ -1,13 +1,12 @@
 package com.softwaremind.crew.employees.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.softwaremind.crew.employees.model.Employee;
-import com.softwaremind.crew.employees.repository.EmployeeServiceImpl;
+import com.softwaremind.crew.employees.repository.EmployeesRepository;
 
 /**
  * Employee service class
@@ -18,31 +17,31 @@ import com.softwaremind.crew.employees.repository.EmployeeServiceImpl;
 @Service
 public class EmployeeService {
 	
-	private List<Employee> employeeList = new ArrayList<>();
+	private EmployeesRepository employeesRepository;
 	
 	@Autowired
-	public EmployeeService(EmployeeServiceImpl serviceImpl) {
-		employeeList.addAll(serviceImpl.initList(employeeList));
+	public EmployeeService(EmployeesRepository employeesRepository) {
+		this.employeesRepository = employeesRepository;
 	}
 	
 	/**
-	 * This method return a set of employees
+	 * This method returns a set of employees
 	 * 
 	 * @return set of employees entities
 	 */
 	public List<Employee> findAll() {
-		return employeeList;
+		return employeesRepository.getEmployees();
 	}
 	
 	/**
-	 * Method return an Employee entity selected by id
+	 * Method returns an Employee entity selected by id
 	 * 
 	 * @param id
 	 *            of Employee
 	 * @return Employee entity
 	 */
 	public Employee getEmployeeById(long id) {
-		return employeeList.stream()
+		return employeesRepository.getEmployees().stream()
 				.filter(p -> p.getId() == id)
 				.findAny().orElse(null);
 	}

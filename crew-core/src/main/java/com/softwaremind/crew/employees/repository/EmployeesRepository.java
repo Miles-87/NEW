@@ -1,27 +1,30 @@
 package com.softwaremind.crew.employees.repository;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Repository;
 
 import com.softwaremind.crew.employees.model.Employee;
 
 /**
- * EmployeeServiceImpl implement {@link com.softwaremind.crew.employees.service.EmployeeService}
+ * Employees Repository class
  * 
  * @author Wiktor Religo
  * @since 10.04.2018
  */
 @Repository
-public class EmployeeServiceImpl {
+public class EmployeesRepository {
+	
+	private static final List<Employee> employeeList = new ArrayList<>();
+	
 	/**
 	 * Method initialize list of Employees
-	 * 
-	 * @param employeeList
-	 *            to initialize
-	 * @return list of employees
 	 */
-	public List<Employee> initList(List<Employee> employeeList) {
+	@PostConstruct
+	private static void initEmployees() {
 		employeeList.add(new Employee(1, "Wiktor", "Pietrzyk", "Kraków", "email@gmail.com", "IT", "Developer"));
 		employeeList.add(new Employee(2, "Tomasz", "Nowak", "Kraków", "email2@gmail.com", "Quality", "UX Designer"));
 		employeeList.add(new Employee(3, "Katarzyna", "Janosik", "Radom", "email3@gmail.com", "BHP", "Manager"));
@@ -38,6 +41,14 @@ public class EmployeeServiceImpl {
 		employeeList.add(new Employee(14, "Robert", "Kwaitkowski", "Rzeszów", "email13@gmail.com", "Administration", "Secretary"));
 		employeeList.add(new Employee(15, "Wojciech", "Norek", "Radom", "email14@gmail.com", "Finance", "Accountant"));
 		employeeList.add(new Employee(16, "Adam", "Jasiński", "Kraków", "email15@gmail.com", "Quality", "Engineer"));
+	}
+	
+	/**
+	 * Method returns Employees object list
+	 * 
+	 * @return list of Employees
+	 */
+	public static List<Employee> getEmployees() {
 		return employeeList;
 	}
 }
