@@ -1,4 +1,4 @@
-package com.softwaremind.crew.TeamServiceTest;
+package com.softwaremind.crew.teamServiceTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -7,7 +7,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.softwaremind.crew.teams.model.TeamModel;
+import com.softwaremind.crew.teams.model.Team;
 import com.softwaremind.crew.teams.service.TeamService;
 
 public class TeamServiceTest {
@@ -21,14 +21,14 @@ public class TeamServiceTest {
 	
 	@Test
 	void testMethodCheckingIfListIsEmpty() {
-		List<TeamModel> result = teamService.getmyteams();
+		List<Team> result = teamService.findAll();
 		assertThat(result)
 				.isNotEmpty();
 	}
 	
 	@Test
 	void testMethodCheckingSizeOfTheList() {
-		List<TeamModel> result = teamService.getmyteams();
+		List<Team> result = teamService.findAll();
 		assertThat(result).hasSize(10);
 	}
 }

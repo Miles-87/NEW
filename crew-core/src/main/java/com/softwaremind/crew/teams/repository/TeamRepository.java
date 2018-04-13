@@ -3,34 +3,33 @@ package com.softwaremind.crew.teams.repository;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.softwaremind.crew.teams.model.Team;
 import org.springframework.stereotype.Repository;
-
-import com.softwaremind.crew.teams.model.TeamModel;
 
 @Repository
 public class TeamRepository {
 	
-	private final List<TeamModel> teamModelList = new LinkedList<>();
+	private final List<Team> teamList = new LinkedList<>();
 	
 	/**
 	 * Below method add new elements to list
 	 * 
-	 * @param teamModelList
+	 * @param teamList
 	 * @return
 	 */
-	private List<TeamModel> addTeamsToList(List<TeamModel> teamModelList) {
-		teamModelList.add(new TeamModel(1, "first", "local", "Krakow", 6));
-		teamModelList.add(new TeamModel(2, "first", "local", "Krakow", 6));
-		teamModelList.add(new TeamModel(3, "first", "local", "Krakow", 6));
-		teamModelList.add(new TeamModel(4, "first", "local", "Krakow", 6));
-		teamModelList.add(new TeamModel(5, "first", "local", "Krakow", 6));
-		teamModelList.add(new TeamModel(6, "first", "local", "Krakow", 6));
-		teamModelList.add(new TeamModel(7, "first", "local", "Krakow", 6));
-		teamModelList.add(new TeamModel(8, "first", "local", "Krakow", 6));
-		teamModelList.add(new TeamModel(9, "first", "local", "Krakow", 6));
-		teamModelList.add(new TeamModel(10, "first", "local", "Krakow", 6));
+	private List<Team> addTeamsToList(List<Team> teamList) {
+		teamList.add(new Team(1, "first", "local", "Krakow", 6));
+		teamList.add(new Team(2, "first", "local", "Krakow", 6));
+		teamList.add(new Team(3, "first", "local", "Krakow", 6));
+		teamList.add(new Team(4, "first", "local", "Krakow", 6));
+		teamList.add(new Team(5, "first", "local", "Krakow", 6));
+		teamList.add(new Team(6, "first", "local", "Krakow", 6));
+		teamList.add(new Team(7, "first", "local", "Krakow", 6));
+		teamList.add(new Team(8, "first", "local", "Krakow", 6));
+		teamList.add(new Team(9, "first", "local", "Krakow", 6));
+		teamList.add(new Team(10, "first", "local", "Krakow", 6));
 		
-		return teamModelList;
+		return teamList;
 	}
 	
 	/**
@@ -38,11 +37,11 @@ public class TeamRepository {
 	 * 
 	 * @return
 	 */
-	public final List<TeamModel> listStart() {
-		if (teamModelList.isEmpty()) {
-			addTeamsToList(teamModelList);
+	public final List<Team> getTeams() {
+		if (teamList.isEmpty()) {
+			addTeamsToList(teamList);
 		}
-		return teamModelList;
+		return teamList;
 	}
 	
 }

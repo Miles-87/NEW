@@ -6,7 +6,7 @@ import java.util.Objects;
 /**
  * This class define team object
  */
-public class TeamModel implements Serializable {
+public class Team implements Serializable {
 	
 	private long id;
 	private String name;
@@ -54,17 +54,19 @@ public class TeamModel implements Serializable {
 		this.headcount = headcount;
 	}
 	
-	public TeamModel(long id, String name, String description, String city, int headcount) {
+	public Team(long id, String name, String description, String city, int headcount) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.city = city;
 		this.headcount = headcount;
 	}
+
+	public Team(){}
 	
 	@Override
 	public String toString() {
-		return "TeamModel{" +
+		return "Team{" +
 				"id=" + id + "\n" +
 				", name='" + name + '\'' + "\n" +
 				", description='" + description + '\'' + "\n" +
@@ -79,12 +81,12 @@ public class TeamModel implements Serializable {
 			return true;
 		if (o == null || getClass() != o.getClass())
 			return false;
-		TeamModel teamModel = (TeamModel) o;
-		return headcount == teamModel.headcount &&
-				Objects.equals(id, teamModel.id) &&
-				Objects.equals(name, teamModel.name) &&
-				Objects.equals(description, teamModel.description) &&
-				Objects.equals(city, teamModel.city);
+		Team team = (Team) o;
+		return headcount == team.headcount &&
+				Objects.equals(id, team.id) &&
+				Objects.equals(name, team.name) &&
+				Objects.equals(description, team.description) &&
+				Objects.equals(city, team.city);
 	}
 	
 	@Override

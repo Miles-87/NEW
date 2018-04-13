@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.softwaremind.crew.teams.model.TeamModel;
+import com.softwaremind.crew.teams.model.Team;
 import com.softwaremind.crew.teams.service.TeamService;
 
 @RestController
@@ -25,8 +25,8 @@ public class TeamController {
 	 * @return
 	 */
 	@RequestMapping("/team")
-	public List<TeamModel> showAll() {
-		return teamService.getmyteams();
+	public List<Team> showAll() {
+		return teamService.findAll();
 	}
 	
 }
