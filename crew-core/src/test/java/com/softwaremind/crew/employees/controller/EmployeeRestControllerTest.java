@@ -37,11 +37,6 @@ public class EmployeeRestControllerTest {
 	@Autowired
 	private MockMvc mockMvc;
 	
-	/**
-	 * Method testing the HTTP GET query
-	 * 
-	 * @throws Exception
-	 */
 	@Test
 	public void shouldGetEmployeesResource() throws Exception {
 		MvcResult mvcResult = mockMvc.perform(get("/employees"))
@@ -53,13 +48,12 @@ public class EmployeeRestControllerTest {
 		List<Employee> employees = Arrays.asList(mapper.readValue(content, Employee[].class));
 		assertFalse(content.isEmpty());
 		
-		// checking the Employee attributes
 		for (Employee e : employees) {
 			assertFalse("Some property are empty!",
 					Stream.of(e.getId(), e.getEmail(), e.getFirstName(), e.getLastName(), e.getDepartment(), e.getRole())
 							.anyMatch(it -> (it == null)));
 		}
-		// checking expecting size of response list
+		
 		assertEquals(16, employees.size());
 	}
 }

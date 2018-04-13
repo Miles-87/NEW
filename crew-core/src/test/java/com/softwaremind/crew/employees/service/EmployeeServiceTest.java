@@ -1,17 +1,18 @@
 package com.softwaremind.crew.employees.service;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import com.softwaremind.crew.employees.model.Employee;
-import com.softwaremind.crew.employees.repository.EmployeesRepository;
+import com.softwaremind.crew.employees.repository.EmployeeRepository;
 
 /**
  * TestSuit for {@link EmployeeService}
@@ -19,38 +20,33 @@ import com.softwaremind.crew.employees.repository.EmployeesRepository;
  * @author Wiktor Religo
  * @since 10.04.2018
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@RunWith(MockitoJUnitRunner.class)
 public class EmployeeServiceTest {
-	@Autowired
+	
 	private EmployeeService employeeService;
 	
-	/**
-	 * Method tests returning the list of Employees
-	 */
-	@Test
-	public void shouldReturnAllEmployees() {
-		List<Employee> expectedEmployees = EmployeesRepository.getEmployees();
-		
-		List<Employee> resultEmployees = employeeService.findAll();
-		
-		assertFalse(resultEmployees.isEmpty());
-		assertEquals(expectedEmployees, resultEmployees);
+	@Mock
+	private EmployeeRepository employeeRepository;
+	
+	@Before
+	public void initTest() {
+		MockitoAnnotations.initMocks(this);
+		employeeService = new EmployeeService(employeeRepository);
 	}
 	
-	/**
-	 * Method tests returning an Employee with the given id
-	 */
+	@Test
+	public void shouldReturnAllEmployees() {
+		// Mockito.when(employeeRepository.getEmployees()).thenReturn(new ArrayList<Employee>());
+		List<Employee> resultEmployees = employeeService.findAll();
+		assertThat(resultEmployees).hasSize(0);
+		
+	}
+	
 	@Test
 	public void shouldReturnEmployeeById() {
-		List<Employee> storedEmployees = EmployeesRepository.getEmployees();
-		Employee expectedEmployee = storedEmployees.stream()
-				.filter(p -> (p.getId() == 10))
-				.findAny().orElse(null);
-		
-		Employee foundEmployee = employeeService.getEmployeeById(10);
-		
-		assertNotNull(expectedEmployee);
-		assertEquals(expectedEmployee, foundEmployee);
+		Employee result = employeeService.getEmployeeById(0);
+		System.out.println(result);
+		assertThat(result).isNotNull();
+		assertThat(result).hasFieldOrPropertyWithValue("id", 0L);
 	}
 }

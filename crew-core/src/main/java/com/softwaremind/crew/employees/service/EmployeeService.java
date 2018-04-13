@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.softwaremind.crew.employees.model.Employee;
-import com.softwaremind.crew.employees.repository.EmployeesRepository;
+import com.softwaremind.crew.employees.repository.EmployeeRepository;
 
 /**
  * Employee service class
@@ -17,11 +17,11 @@ import com.softwaremind.crew.employees.repository.EmployeesRepository;
 @Service
 public class EmployeeService {
 	
-	private EmployeesRepository employeesRepository;
+	private final EmployeeRepository employeeRepository;
 	
 	@Autowired
-	public EmployeeService(EmployeesRepository employeesRepository) {
-		this.employeesRepository = employeesRepository;
+	public EmployeeService(EmployeeRepository employeeRepository) {
+		this.employeeRepository = employeeRepository;
 	}
 	
 	/**
@@ -30,7 +30,7 @@ public class EmployeeService {
 	 * @return set of employees entities
 	 */
 	public List<Employee> findAll() {
-		return employeesRepository.getEmployees();
+		return employeeRepository.getEmployees();
 	}
 	
 	/**
@@ -41,9 +41,10 @@ public class EmployeeService {
 	 * @return Employee entity
 	 */
 	public Employee getEmployeeById(long id) {
-		return employeesRepository.getEmployees().stream()
+		
+		return employeeRepository.getEmployees().stream()
 				.filter(p -> p.getId() == id)
-				.findAny().orElse(null);
+				.findAny().orElse(new Employee());
 	}
 	
 }

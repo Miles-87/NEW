@@ -16,7 +16,7 @@ import com.softwaremind.crew.employees.model.Employee;
  * @since 10.04.2018
  */
 @Repository
-public class EmployeesRepository {
+public class EmployeeRepository {
 	
 	private static final List<Employee> employeeList = new ArrayList<>();
 	
@@ -48,7 +48,7 @@ public class EmployeesRepository {
 	 * 
 	 * @return list of Employees
 	 */
-	public static List<Employee> getEmployees() {
+	public List<Employee> getEmployees() {
 		return employeeList;
 	}
 }

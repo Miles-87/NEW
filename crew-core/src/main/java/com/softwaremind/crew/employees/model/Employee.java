@@ -20,7 +20,8 @@ public class Employee implements Serializable {
 	private String role;
 	
 	public Employee() {
-	};
+		// creating for Testing using Jackson, which requires a default constructor
+	}
 	
 	public Employee(long id, String firstName, String lastName, String location, String email, String department, String role) {
 		this.id = id;
@@ -30,40 +31,6 @@ public class Employee implements Serializable {
 		this.email = email;
 		this.department = department;
 		this.role = role;
-	}
-	
-	@Override
-	public String toString() {
-		return "Employee: {" +
-				"id:" + id +
-				", firstName:'" + firstName + '\'' +
-				", lastName:'" + lastName + '\'' +
-				", location:'" + location + '\'' +
-				", email:'" + email + '\'' +
-				", department:'" + department + '\'' +
-				", role:'" + role + '\'' +
-				"}";
-	}
-	
-	@Override
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (o == null || getClass() != o.getClass())
-			return false;
-		Employee employee = (Employee) o;
-		return id == employee.id &&
-				Objects.equals(firstName, employee.firstName) &&
-				Objects.equals(lastName, employee.lastName) &&
-				Objects.equals(location, employee.location) &&
-				Objects.equals(email, employee.email) &&
-				Objects.equals(department, employee.department) &&
-				Objects.equals(role, employee.role);
-	}
-	
-	@Override
-	public int hashCode() {
-		return Objects.hash(id, firstName, lastName, location, email, department, role);
 	}
 	
 	public long getId() {
@@ -117,4 +84,39 @@ public class Employee implements Serializable {
 	public void setRole(String role) {
 		this.role = role;
 	}
+	
+	@Override
+	public String toString() {
+		return "Employee: {" +
+				"id:" + id +
+				", firstName:'" + firstName + '\'' +
+				", lastName:'" + lastName + '\'' +
+				", location:'" + location + '\'' +
+				", email:'" + email + '\'' +
+				", department:'" + department + '\'' +
+				", role:'" + role + '\'' +
+				"}";
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Employee employee = (Employee) o;
+		return id == employee.id &&
+				Objects.equals(firstName, employee.firstName) &&
+				Objects.equals(lastName, employee.lastName) &&
+				Objects.equals(location, employee.location) &&
+				Objects.equals(email, employee.email) &&
+				Objects.equals(department, employee.department) &&
+				Objects.equals(role, employee.role);
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, firstName, lastName, location, email, department, role);
+	}
+	
 }
