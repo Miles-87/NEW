@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Arrays;
 import java.util.List;
 
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,7 +16,12 @@ import org.mockito.junit.MockitoJUnitRunner;
 import com.softwaremind.crew.teams.model.Team;
 import com.softwaremind.crew.teams.repository.TeamRepository;
 import com.softwaremind.crew.teams.service.TeamService;
-
+/**
+ * TestSuit for(@link TeamService)
+ *
+ * * @author Mateusz Michoński
+ *  * @since 16.04.2018
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class TeamServiceTest {
 	private TeamService teamService;
