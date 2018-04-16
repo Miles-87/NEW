@@ -8,34 +8,38 @@ import java.util.List;
 import com.softwaremind.crew.teams.model.Team;
 import org.springframework.stereotype.Repository;
 
+/**
+ * Teams repository class
+ *
+ * @author Mateusz Michoński
+ * @since 09.04.2018
+ */
 @Repository
 public class TeamRepository {
 	
-	private final List<Team> teamList = new LinkedList<>();
-	
 	/**
-	 * Below method add new elements to list
+	 * below method create list and add new elements
 	 * 
 	 * @param teamList
 	 * @return
 	 */
-	private final List<Team> teams = new LinkedList<> (Arrays.asList(
-			new Team(1L,"jan","mucha","local",6),
-			new Team(2L,"ewa","kowalski","remote",7),
-			new Team(3L,"jan","mucha","local",3),
-			new Team(4L,"jan","mucha","local",2),
-			new Team(5L,"jan","mucha","local",5),
-			new Team(6L,"jan","mucha","local",6),
-			new Team(7L,"jan","mucha","local",7)
-
+	private final List<Team> teams = new LinkedList<>(Arrays.asList(
+			new Team(1L, "team1", "local", "wawa", 6),
+			new Team(2L, "team2", "remote", "krk", 7),
+			new Team(3L, "team3", "local", "wawa", 3),
+			new Team(4L, "team4", "remote", "krk", 2),
+			new Team(5L, "team5", "local", "wawa", 5),
+			new Team(6L, "team6", "remote", "gda", 6),
+			new Team(7L, "team7", "local", "krk", 7)
+	
 	));
-
+	
 	/**
-	 * This method return list elements. If list is empty this method initialize add-method
+	 * this method return all elements of list
 	 * 
 	 * @return
 	 */
-	public final List<Team> getAllTeams() {
+	public List<Team> findAll() {
 		return teams;
 	}
 	

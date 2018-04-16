@@ -10,7 +10,10 @@ import com.softwaremind.crew.teams.model.Team;
 import com.softwaremind.crew.teams.service.TeamService;
 
 /**
- * This class manage http request
+ * This class operate on http requests
+ *
+ * @author Mateusz Michoński
+ * @since 09.04.2018
  */
 @RestController
 public class TeamController {
@@ -27,8 +30,8 @@ public class TeamController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping("/team")
-	public List<Team> showAll() {
+	@RequestMapping("/teams")
+	public List<Team> findAll() {
 		return teamService.findAll();
 	}
 	

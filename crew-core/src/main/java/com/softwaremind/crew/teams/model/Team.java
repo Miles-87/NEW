@@ -5,6 +5,9 @@ import java.util.Objects;
 
 /**
  * This class define team object
+ *
+ * @author Mateusz Michoński
+ * @since 09.04.2018
  */
 public class Team implements Serializable {
 	
@@ -22,6 +25,9 @@ public class Team implements Serializable {
 		this.headcount = headcount;
 	}
 	
+	/**
+	 * for jackson
+	 */
 	public Team() {
 	}
 	
@@ -92,8 +98,6 @@ public class Team implements Serializable {
 	
 	@Override
 	public int hashCode() {
-		
 		return Objects.hash(id, name, description, city, headcount);
-		
 	}
 }

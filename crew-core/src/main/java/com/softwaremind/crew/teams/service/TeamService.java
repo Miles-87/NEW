@@ -25,9 +25,9 @@ public class TeamService {
 	}
 	
 	/**
-	 * Initialize repository method which returns list
-	 * 
-	 * @return list of teams
+	 *This method return a set of teams
+	 *
+	 * @return
 	 */
 	public List<TeamModel> findAll() {
 		return teamRepository.listStart();
