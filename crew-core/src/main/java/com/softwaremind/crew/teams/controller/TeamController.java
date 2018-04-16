@@ -9,10 +9,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.softwaremind.crew.teams.model.Team;
 import com.softwaremind.crew.teams.service.TeamService;
 
+/**
+ * This class manage http request
+ */
 @RestController
 public class TeamController {
 	
-	private TeamService teamService;
+	private final TeamService teamService;
 	
 	@Autowired
 	public TeamController(TeamService teamService) {

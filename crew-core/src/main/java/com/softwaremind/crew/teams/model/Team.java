@@ -14,6 +14,17 @@ public class Team implements Serializable {
 	private String city;
 	private int headcount;
 	
+	public Team(long id, String name, String description, String city, int headcount) {
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.city = city;
+		this.headcount = headcount;
+	}
+	
+	public Team() {
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -53,16 +64,6 @@ public class Team implements Serializable {
 	public void setHeadcount(int headcount) {
 		this.headcount = headcount;
 	}
-	
-	public Team(long id, String name, String description, String city, int headcount) {
-		this.id = id;
-		this.name = name;
-		this.description = description;
-		this.city = city;
-		this.headcount = headcount;
-	}
-
-	public Team(){}
 	
 	@Override
 	public String toString() {

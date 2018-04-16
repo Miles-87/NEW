@@ -1,5 +1,7 @@
 package com.softwaremind.crew.teams.repository;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,31 +19,24 @@ public class TeamRepository {
 	 * @param teamList
 	 * @return
 	 */
-	private List<Team> addTeamsToList(List<Team> teamList) {
-		teamList.add(new Team(1, "first", "local", "Krakow", 6));
-		teamList.add(new Team(2, "first", "local", "Krakow", 6));
-		teamList.add(new Team(3, "first", "local", "Krakow", 6));
-		teamList.add(new Team(4, "first", "local", "Krakow", 6));
-		teamList.add(new Team(5, "first", "local", "Krakow", 6));
-		teamList.add(new Team(6, "first", "local", "Krakow", 6));
-		teamList.add(new Team(7, "first", "local", "Krakow", 6));
-		teamList.add(new Team(8, "first", "local", "Krakow", 6));
-		teamList.add(new Team(9, "first", "local", "Krakow", 6));
-		teamList.add(new Team(10, "first", "local", "Krakow", 6));
-		
-		return teamList;
-	}
-	
+	private final List<Team> teams = new LinkedList<> (Arrays.asList(
+			new Team(1L,"jan","mucha","local",6),
+			new Team(2L,"ewa","kowalski","remote",7),
+			new Team(3L,"jan","mucha","local",3),
+			new Team(4L,"jan","mucha","local",2),
+			new Team(5L,"jan","mucha","local",5),
+			new Team(6L,"jan","mucha","local",6),
+			new Team(7L,"jan","mucha","local",7)
+
+	));
+
 	/**
 	 * This method return list elements. If list is empty this method initialize add-method
 	 * 
 	 * @return
 	 */
-	public final List<Team> getTeams() {
-		if (teamList.isEmpty()) {
-			addTeamsToList(teamList);
-		}
-		return teamList;
+	public final List<Team> getAllTeams() {
+		return teams;
 	}
 	
 }

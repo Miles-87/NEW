@@ -4,11 +4,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import com.softwaremind.crew.teams.model.Team;
 import com.softwaremind.crew.teams.service.TeamService;
+import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 
 public class TeamServiceTest {
 	

@@ -33,6 +33,7 @@ public class TeamControllerTest {
 	
 	@Test
     public void shouldGetTeamsResource() throws Exception{
+
         MvcResult mvcResult = mockMvc.perform(get("/team"))
                     .andExpect(status().isOk())
                     .andExpect(content().contentType((MediaType.APPLICATION_JSON_UTF8)))
@@ -47,7 +48,7 @@ public class TeamControllerTest {
                                                                        .anyMatch(it->(it == null)));
 
         }
-        assertEquals(10,teams.size());
+        assertEquals(7,teams.size());
     }
 	
 }
