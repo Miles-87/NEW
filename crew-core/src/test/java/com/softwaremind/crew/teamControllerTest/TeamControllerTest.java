@@ -1,8 +1,7 @@
 package com.softwaremind.crew.teamControllerTest;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.util.Arrays;
 
@@ -16,7 +15,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.softwaremind.crew.teams.controller.TeamController;
@@ -25,9 +23,8 @@ import com.softwaremind.crew.teams.service.TeamService;
 
 /**
  * TestSuit for(@link TeamController)
- *
  * * @author Mateusz Michoński
- *  * @since 16.04.2018
+ * * @since 16.04.2018
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -51,11 +48,11 @@ public class TeamControllerTest {
 		mockMvc.perform(get("/teams"))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-				.andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(t1.getId()))
-				.andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value(t1.getName()))
-				.andExpect(MockMvcResultMatchers.jsonPath("$[0].description").value(t1.getDescription()))
-				.andExpect(MockMvcResultMatchers.jsonPath("$[0].city").value(t1.getCity()))
-				.andExpect(MockMvcResultMatchers.jsonPath("$[0].headcount").value(t1.getHeadcount()));
+				.andExpect(jsonPath("$[0].id").value(t1.getId()))
+				.andExpect(jsonPath("$[0].name").value(t1.getName()))
+				.andExpect(jsonPath("$[0].description").value(t1.getDescription()))
+				.andExpect(jsonPath("$[0].city").value(t1.getCity()))
+				.andExpect(jsonPath("$[0].headcount").value(t1.getHeadcount()));
 		
 	}
 }

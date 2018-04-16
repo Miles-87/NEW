@@ -1,12 +1,12 @@
 package com.softwaremind.crew.teams.repository;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.softwaremind.crew.teams.model.Team;
 import org.springframework.stereotype.Repository;
+
+import com.softwaremind.crew.teams.model.Team;
 
 /**
  * Teams repository class
