@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.softwaremind.crew.employees.model.Employee;
 
 /**
- * Employees Repository class
+ * EmployeesRepository class as data storage layer
  * 
  * @author Wiktor Religo
  * @since 10.04.2018
@@ -24,7 +24,7 @@ public class EmployeeRepository {
 	 * Method initialize list of Employees
 	 */
 	@PostConstruct
-	private static void initEmployees() {
+	private void initEmployees() {
 		employeeList.add(new Employee(1, "Wiktor", "Pietrzyk", "Kraków", "email@gmail.com", "IT", "Developer"));
 		employeeList.add(new Employee(2, "Tomasz", "Nowak", "Kraków", "email2@gmail.com", "Quality", "UX Designer"));
 		employeeList.add(new Employee(3, "Katarzyna", "Janosik", "Radom", "email3@gmail.com", "BHP", "Manager"));

@@ -19,8 +19,10 @@ public class Employee implements Serializable {
 	private String department;
 	private String role;
 	
+	/**
+	 * Creating for Testing using Jackson, which requires a default constructor
+	 */
 	public Employee() {
-		// creating for Testing using Jackson, which requires a default constructor
 	}
 	
 	public Employee(long id, String firstName, String lastName, String location, String email, String department, String role) {
