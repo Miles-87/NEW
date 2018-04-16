@@ -10,7 +10,7 @@ import com.softwaremind.crew.teams.model.Team;
 import com.softwaremind.crew.teams.service.TeamService;
 
 /**
- * This class operate on http requests
+ * This class for managing and finding teams
  *
  * @author Mateusz Michoński
  * @since 09.04.2018
@@ -26,7 +26,7 @@ public class TeamController {
 	}
 	
 	/**
-	 * This method send our List to rest controller
+	 * This method all teams
 	 * 
 	 * @return
 	 */
