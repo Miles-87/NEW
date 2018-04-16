@@ -1,8 +1,6 @@
 package com.softwaremind.crew.employees.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -29,8 +27,8 @@ public class EmployeeTest {
 	
 	@Test
 	public void testEqualsForEmployee() {
-		assertEquals(e1, e1);
-		assertFalse(e1.equals(e2));
+		assertThat(e1).isEqualTo(e1);
+		assertThat(e1).isNotEqualTo(e2);
 	}
 	
 	@Test

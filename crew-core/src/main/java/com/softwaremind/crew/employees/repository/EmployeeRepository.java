@@ -18,7 +18,7 @@ import com.softwaremind.crew.employees.model.Employee;
 @Repository
 public class EmployeeRepository {
 	
-	private static final List<Employee> employeeList = new ArrayList<>();
+	private  final List<Employee> employeeList = new ArrayList<>();
 	
 	/**
 	 * Method initialize list of Employees

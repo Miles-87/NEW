@@ -7,11 +7,9 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import com.softwaremind.crew.employees.model.Employee;
 import com.softwaremind.crew.employees.repository.EmployeeRepository;
@@ -22,7 +20,7 @@ import com.softwaremind.crew.employees.repository.EmployeeRepository;
  * @author Wiktor Religo
  * @since 10.04.2018
  */
-@RunWith(MockitoJUnitRunner.class)
+
 public class EmployeeServiceTest {
 	
 	private EmployeeService employeeService;
