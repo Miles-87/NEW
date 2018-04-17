@@ -13,28 +13,28 @@ import org.junit.Test;
  */
 public class PersonTest {
 	
-	private static Person e1;
-	private static Person e2;
+	private static Person person1;
+	private static Person person2;
 	
 	/**
 	 * Method initializes Person class fields with fake data
 	 */
 	@BeforeClass
 	public static void initObjects() {
-		e1 = new Person(1, "Tomek", "Nowak", "Krkaów", "email@gmail.com", "APPS", "Developer");
-		e2 = new Person(1, "Alicja", "Kowalska", "Warszawa", "email2@gmail.com", "Business", "Designer");
+		person1 = new Person(1, "Tomek", "Nowak", "Krkaów", "email@gmail.com", "APPS", "Developer");
+		person2 = new Person(1, "Alicja", "Kowalska", "Warszawa", "email2@gmail.com", "Business", "Designer");
 	}
 	
 	@Test
 	public void testEqualsForPerson() {
-		assertThat(e1).isEqualTo(e1);
-		assertThat(e1).isNotEqualTo(e2);
+		assertThat(person1).isEqualTo(person1);
+		assertThat(person1).isNotEqualTo(person2);
 	}
 	
 	@Test
 	public void testHashCodeForPerson() {
-		assertThat(e1.hashCode()).isEqualTo(e1.hashCode());
-		assertThat(e1.hashCode()).isNotEqualTo(e2.hashCode());
+		assertThat(person1.hashCode()).isEqualTo(person1.hashCode());
+		assertThat(person1.hashCode()).isNotEqualTo(person2.hashCode());
 	}
 	
 }

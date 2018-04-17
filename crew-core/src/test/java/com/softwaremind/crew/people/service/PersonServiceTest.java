@@ -52,8 +52,8 @@ public class PersonServiceTest {
 	}
 	
 	private void initMockRepositoryToTest() {
-		Person e1 = new Person(1, "Tomek", "Nowak", "Krkaów", "email@gmail.com", "APPS", "Developer");
-		Person e2 = new Person(3, "Alicja", "Kowalska", "Warszawa", "email2@gmail.com", "Business", "Designer");
-		Mockito.when(personRepository.getPeople()).thenReturn(Arrays.asList(e1, e2));
+		Person person1 = new Person(1, "Tomek", "Nowak", "Krkaów", "email@gmail.com", "APPS", "Developer");
+		Person person2 = new Person(3, "Alicja", "Kowalska", "Warszawa", "email2@gmail.com", "Business", "Designer");
+		Mockito.when(personRepository.getPeople()).thenReturn(Arrays.asList(person1, person2));
 	}
 }
