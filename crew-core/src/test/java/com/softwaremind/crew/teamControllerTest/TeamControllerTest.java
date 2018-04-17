@@ -3,7 +3,7 @@ package com.softwaremind.crew.teamControllerTest;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,8 +23,9 @@ import com.softwaremind.crew.teams.service.TeamService;
 
 /**
  * TestSuit for(@link TeamController)
- * * @author Mateusz Michoński
- * * @since 16.04.2018
+ *
+ * @author Mateusz Michoński
+ * @since 16.04.2018
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -42,17 +43,17 @@ public class TeamControllerTest {
 	
 	@Test
 	public void shouldGetTeamsResource() throws Exception {
-		Team t1 = new Team(1, "Jan", "local", "wawa", 6);
-		Mockito.when(teamService.findAll()).thenReturn(Arrays.asList(t1));
+		Team team = new Team(1, "Jan", "local", "wawa", 6);
+		Mockito.when(teamService.findAll()).thenReturn(Collections.singletonList(team));
 		
 		mockMvc.perform(get("/teams"))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-				.andExpect(jsonPath("$[0].id").value(t1.getId()))
-				.andExpect(jsonPath("$[0].name").value(t1.getName()))
-				.andExpect(jsonPath("$[0].description").value(t1.getDescription()))
-				.andExpect(jsonPath("$[0].city").value(t1.getCity()))
-				.andExpect(jsonPath("$[0].headcount").value(t1.getHeadcount()));
+				.andExpect(jsonPath("$[0].id").value(team.getId()))
+				.andExpect(jsonPath("$[0].name").value(team.getName()))
+				.andExpect(jsonPath("$[0].description").value(team.getDescription()))
+				.andExpect(jsonPath("$[0].city").value(team.getCity()))
+				.andExpect(jsonPath("$[0].headcount").value(team.getHeadcount()));
 		
 	}
 }

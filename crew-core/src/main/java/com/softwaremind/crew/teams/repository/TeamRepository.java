@@ -18,7 +18,7 @@ import com.softwaremind.crew.teams.model.Team;
 public class TeamRepository {
 	
 	/**
-	 * below method create list and add new elements
+	 * Below method create list and add new elements
 	 * 
 	 * @param teamList
 	 * @return
@@ -35,7 +35,7 @@ public class TeamRepository {
 	));
 	
 	/**
-	 * this method return all elements of list
+	 * This method return all elements of list
 	 * 
 	 * @return
 	 */

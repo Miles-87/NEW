@@ -26,7 +26,7 @@ public class Team implements Serializable {
 	}
 	
 	/**
-	 * for jackson
+	 * For jackson
 	 */
 	public Team() {
 	}

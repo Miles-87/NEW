@@ -25,7 +25,7 @@ public class TeamService {
 	}
 	
 	/**
-	 * This method return a set of teams
+	 * This method return a list of teams
 	 *
 	 * @return
 	 */

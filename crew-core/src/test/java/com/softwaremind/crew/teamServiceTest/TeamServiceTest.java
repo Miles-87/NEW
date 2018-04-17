@@ -7,11 +7,9 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import com.softwaremind.crew.teams.model.Team;
 import com.softwaremind.crew.teams.repository.TeamRepository;
@@ -19,10 +17,10 @@ import com.softwaremind.crew.teams.service.TeamService;
 
 /**
  * TestSuit for(@link TeamService)
- * * @author Mateusz Michoński
- * * @since 16.04.2018
+ *
+ * @author Mateusz Michoński
+ * @since 16.04.2018
  */
-@RunWith(MockitoJUnitRunner.class)
 public class TeamServiceTest {
 	private TeamService teamService;
 	

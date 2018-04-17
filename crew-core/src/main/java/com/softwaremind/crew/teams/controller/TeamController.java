@@ -26,7 +26,7 @@ public class TeamController {
 	}
 	
 	/**
-	 * This method all teams
+	 * This method return all teams
 	 * 
 	 * @return
 	 */
