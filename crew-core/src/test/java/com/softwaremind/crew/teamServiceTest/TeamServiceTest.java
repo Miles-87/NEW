@@ -19,7 +19,6 @@ import com.softwaremind.crew.teams.service.TeamService;
 
 /**
  * TestSuit for(@link TeamService)
- *
  * * @author Mateusz Michoński
  * * @since 16.04.2018
  */
