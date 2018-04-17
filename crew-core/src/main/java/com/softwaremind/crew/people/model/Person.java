@@ -1,15 +1,15 @@
-package com.softwaremind.crew.employees.model;
+package com.softwaremind.crew.people.model;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * Employee class represents the employee entity
+ * Person class represents the Person entity
  * 
  * @author Wiktor Religo
  * @since 09.04.2018
  */
-public class Employee implements Serializable {
+public class Person implements Serializable {
 	
 	private long id;
 	private String firstName;
@@ -22,10 +22,10 @@ public class Employee implements Serializable {
 	/**
 	 * Creating for Testing using Jackson, which requires a default constructor
 	 */
-	public Employee() {
+	public Person() {
 	}
 	
-	public Employee(long id, String firstName, String lastName, String location, String email, String department, String role) {
+	public Person(long id, String firstName, String lastName, String location, String email, String department, String role) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -89,7 +89,7 @@ public class Employee implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "Employee: {" +
+		return "Person: {" +
 				"id:" + id +
 				", firstName:'" + firstName + '\'' +
 				", lastName:'" + lastName + '\'' +
@@ -106,14 +106,14 @@ public class Employee implements Serializable {
 			return true;
 		if (o == null || getClass() != o.getClass())
 			return false;
-		Employee employee = (Employee) o;
-		return id == employee.id &&
-				Objects.equals(firstName, employee.firstName) &&
-				Objects.equals(lastName, employee.lastName) &&
-				Objects.equals(location, employee.location) &&
-				Objects.equals(email, employee.email) &&
-				Objects.equals(department, employee.department) &&
-				Objects.equals(role, employee.role);
+		Person person = (Person) o;
+		return id == person.id &&
+				Objects.equals(firstName, person.firstName) &&
+				Objects.equals(lastName, person.lastName) &&
+				Objects.equals(location, person.location) &&
+				Objects.equals(email, person.email) &&
+				Objects.equals(department, person.department) &&
+				Objects.equals(role, person.role);
 	}
 	
 	@Override

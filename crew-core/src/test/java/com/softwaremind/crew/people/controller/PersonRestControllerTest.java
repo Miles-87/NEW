@@ -1,5 +1,6 @@
-package com.softwaremind.crew.employees.controller;
+package com.softwaremind.crew.people.controller;
 
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -9,7 +10,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -17,11 +17,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.softwaremind.crew.employees.model.Employee;
-import com.softwaremind.crew.employees.service.EmployeeService;
+import com.softwaremind.crew.people.model.Person;
+import com.softwaremind.crew.people.service.PersonService;
 
 /**
- * TestSuit for {@link EmployeeRestController}
+ * TestSuit for {@link PersonRestController}
  * 
  * @author Wiktor Religo
  * @since 10.04.2018
@@ -29,23 +29,23 @@ import com.softwaremind.crew.employees.service.EmployeeService;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class EmployeeRestControllerTest {
+public class PersonRestControllerTest {
 	
 	private MockMvc mockMvc;
 	@Mock
-	private EmployeeService employeeService;
+	private PersonService personService;
 	
 	@Before
 	public void initTest() {
-		mockMvc = MockMvcBuilders.standaloneSetup(new EmployeeRestController(employeeService)).build();
+		mockMvc = MockMvcBuilders.standaloneSetup(new PersonRestController(personService)).build();
 	}
 	
 	@Test
-	public void shouldGetEmployeesResource() throws Exception {
-		Employee e1 = new Employee(1, "Bob", "Noob", "Warszawa", "email@gmail.com", "APPS", "Developer");
-		Mockito.when(employeeService.findAll()).thenReturn(Arrays.asList(e1));
+	public void shouldGetPeopleResource() throws Exception {
+		Person e1 = new Person(1, "Bob", "Noob", "Warszawa", "email@gmail.com", "APPS", "Developer");
+		when(personService.findAll()).thenReturn(Arrays.asList(e1));
 		
-		mockMvc.perform(get("/employees"))
+		mockMvc.perform(get("/people"))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(jsonPath("$[0].id").value(e1.getId()))
