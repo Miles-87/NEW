@@ -2,24 +2,24 @@ package com.softwaremind.crew.teams.service;
 
 import java.util.List;
 
+import com.softwaremind.crew.teams.model.Team;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.softwaremind.crew.teams.repository.TeamRepository;
 
 /**
- * Team service class
+ * This class have methods to manage teams
+ *
+ * @author Mateusz Michoński
+ * @since 09.04.2018
  */
 @Service
 public class TeamService {
 	
 	private final TeamRepository teamRepository;
-
-	@Autowired
-	public TeamService() {
-		teamRepository = new TeamRepository();
-	}
 	
+	@Autowired
 	public TeamService(TeamRepository teamRepository) {
 		this.teamRepository = teamRepository;
 	}
@@ -29,7 +29,7 @@ public class TeamService {
 	 *
 	 * @return
 	 */
-	public List<TeamModel> findAll() {
-		return teamRepository.listStart();
+	public List<Team> findAll() {
+		return teamRepository.findAll();
 	}
 }
