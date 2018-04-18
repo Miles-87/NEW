@@ -1,0 +1,7 @@
+###
+#   Including Database Settings
+###
+spring:
+  profiles:
+    include: h2
+
