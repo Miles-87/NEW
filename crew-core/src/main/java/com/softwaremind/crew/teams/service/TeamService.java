@@ -2,10 +2,10 @@ package com.softwaremind.crew.teams.service;
 
 import java.util.List;
 
-import com.softwaremind.crew.teams.model.Team;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.softwaremind.crew.teams.model.Team;
 import com.softwaremind.crew.teams.repository.TeamRepository;
 
 /**
