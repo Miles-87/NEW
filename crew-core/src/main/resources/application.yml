@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: dev
   application:
     name: Crew Tool
     version: @project.version@
