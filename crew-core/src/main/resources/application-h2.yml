@@ -1,0 +1,12 @@
+###
+#   H2 Settings
+###
+spring:
+  profiles: h2
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        trace: false
+        web-allow-others: false
