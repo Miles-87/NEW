@@ -1,19 +1,20 @@
 package com.softwaremind.crew.people.service;
 
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.time.LocalDate;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.softwaremind.crew.people.model.Person;
+import com.softwaremind.crew.people.model.dto.PersonDto;
 import com.softwaremind.crew.people.repository.PersonRepository;
 
 /**
  * PersonService class for managing {@link PersonRepository}
  * 
- * @author Wiktor Religo
- * @since 10.04.2018
+ * @author Mateusz Michoński
+ * @since 20.04.2018
  */
 @Service
 public class PersonService {
@@ -25,28 +26,18 @@ public class PersonService {
 		this.personRepository = personRepository;
 	}
 	
-	/**
-	 * Method returns all People
-	 * 
-	 * @return all People
-	 */
-	public List<Person> findAll() {
-		return personRepository.getPeople();
-	}
+	ModelMapper modelMapper = new ModelMapper();
 	
 	/**
-	 * Method returns an Person entity selected by id
-	 * 
-	 * @param id
-	 *            of Person
-	 * @return Person entity
+	 * This method mapped from person to person DTO
+	 *
+	 * @author Mateusz Michoński
+	 * @since 20.04.2018
 	 */
-	public Person getPersonById(long id) {
-		
-		return personRepository.getPeople()
-				.stream()
-				.filter(p -> p.getId() == id)
-				.findAny().orElseThrow(NoSuchElementException::new);
+	public void mappedPersonToPersonDto() {
+		Person person1 =
+				new Person("Jan", "mucha", "dfs", "sdfsdf", "sdfsd", "d33", LocalDate.parse("12-02-2015"), LocalDate.parse("12-02-2016"));
+		PersonDto personDto = modelMapper.map(person1, PersonDto.class);
 		
 	}
 	

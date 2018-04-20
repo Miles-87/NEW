@@ -19,7 +19,7 @@ public class TeamRepository {
 	
 	/**
 	 * Below method create list and add new elements
-	 * 
+	 *
 	 * @param teamList
 	 * @return
 	 */
@@ -31,16 +31,16 @@ public class TeamRepository {
 			new Team(5L, "team5", "local", "wawa", 5),
 			new Team(6L, "team6", "remote", "gda", 6),
 			new Team(7L, "team7", "local", "krk", 7)
-	
+
 	));
-	
+
 	/**
 	 * This method return all elements of list
-	 * 
+	 *
 	 * @return
 	 */
 	public List<Team> findAll() {
 		return teams;
 	}
-	
+
 }
