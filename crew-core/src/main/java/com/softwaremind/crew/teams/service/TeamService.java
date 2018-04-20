@@ -55,7 +55,7 @@ public class TeamService {
 	 * Method mapping {@link TeamDto} class to {@link Team} entity
 	 * 
 	 * @param teamDto
-	 * @return instance of {@link Team} entity
+	 * @return instance of {@link Team} database entity 
 	 */
 	public Team mapDtoToTeamEntity(TeamDto teamDto) {
 		Team team = modelMapper.map(teamDto, Team.class);
