@@ -1,6 +1,7 @@
 package com.softwaremind.crew.people.service;
 
-import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,33 +13,49 @@ import com.softwaremind.crew.people.repository.PersonRepository;
 
 /**
  * PersonService class for managing {@link PersonRepository}
- * 
+ *
+ * @author Wiktor Religo
  * @author Mateusz Michoński
- * @since 20.04.2018
+ * @since 09.04.2018
  */
 @Service
 public class PersonService {
 	
 	private final PersonRepository personRepository;
-	
-	@Autowired
-	public PersonService(PersonRepository personRepository) {
-		this.personRepository = personRepository;
-	}
-	
-	ModelMapper modelMapper = new ModelMapper();
-	
 	/**
 	 * This method mapped from person to person DTO
 	 *
 	 * @author Mateusz Michoński
 	 * @since 20.04.2018
 	 */
-	public void mappedPersonToPersonDto() {
-		Person person1 =
-				new Person("Jan", "mucha", "dfs", "sdfsdf", "sdfsd", "d33", LocalDate.parse("12-02-2015"), LocalDate.parse("12-02-2016"));
-		PersonDto personDto = modelMapper.map(person1, PersonDto.class);
-		
+	ModelMapper modelMapper = new ModelMapper();
+	
+	// private final List<Person> person = new LinkedList<>();
+	
+	@Autowired
+	public PersonService(PersonRepository personRepository) {
+		this.personRepository = personRepository;
+	}
+	
+	public PersonDto mapPersonToPersonDto(Person person) {
+		PersonDto personDto = modelMapper.map(person, PersonDto.class);
+		return personDto;
+	}
+	
+	public Person mapDtoToTeamEntity(PersonDto teamDto) {
+		Person person = modelMapper.map(teamDto, Person.class);
+		return person;
+	}
+
+	/**
+	 * this method return a list of Persons
+	 *
+	 * @return
+	 */
+	public List<PersonDto> findAll() {
+		List<Person> allDtoTeams = personRepository.findAll();
+		PersonDto[] map = modelMapper.map(allDtoTeams, PersonDto[].class);
+		return Arrays.asList(map);
 	}
 	
 }

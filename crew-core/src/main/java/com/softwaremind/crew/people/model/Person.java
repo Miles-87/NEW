@@ -1,19 +1,23 @@
 package com.softwaremind.crew.people.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import javax.persistence.*;
+
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 /**
  * Person class represents the Person entity
- * 
+ *
+ * @author Wiktor Religo
  * @author Mateusz Michoński
- * @since 20.04.2018
+ * @since 09.04.2018
  */
+@EntityListeners(AuditingEntityListener.class)
 @Entity
+@Table(name = "Persons")
 public class Person implements Serializable {
 	
 	@Id
@@ -30,12 +34,13 @@ public class Person implements Serializable {
 	
 	/**
 	 * Creating for Testing using Jackson, which requires a default constructor
+
 	 */
 	public Person() {
 	}
 	
-	public Person(String firstName, String lastName, String location, String email, String status, String role, LocalDate createOn,
-			LocalDate modifiedOn) {
+	public Person(Long id, String firstName, String lastName, String location, String email, String status, String role) {
+		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.location = location;

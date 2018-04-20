@@ -1,6 +1,7 @@
 package com.softwaremind.crew.people.model.dto;
 
-import java.time.LocalDate;
+import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * This class define personDto
@@ -8,32 +9,37 @@ import java.time.LocalDate;
  * @author Mateusz Michoński
  * @since 20.04.2018
  */
-public class PersonDto {
-	
+public class PersonDto implements Serializable {
+
+	private Long id;
 	private String firstName;
 	private String lastName;
 	private String email;
 	private String location;
 	private String status;
 	private String role;
-	private LocalDate createOn;
-	private LocalDate modifiedOn;
 	
 	public PersonDto() {
 	}
 	
-	public PersonDto(String firstName, String lastName, String email, String location, String status, String role, LocalDate createOn,
-			LocalDate modifiedOn) {
+	public PersonDto(Long id,String firstName, String lastName, String email, String location, String status, String role) {
+		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.location = location;
 		this.status = status;
 		this.role = role;
-		this.createOn = createOn;
-		this.modifiedOn = modifiedOn;
 	}
-	
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public String getFirstName() {
 		return firstName;
 	}
@@ -81,34 +87,37 @@ public class PersonDto {
 	public void setRole(String role) {
 		this.role = role;
 	}
-	
-	public LocalDate getCreateOn() {
-		return createOn;
-	}
-	
-	public void setCreateOn(LocalDate createOn) {
-		this.createOn = createOn;
-	}
-	
-	public LocalDate getModifiedOn() {
-		return modifiedOn;
-	}
-	
-	public void setModifiedOn(LocalDate modifiedOn) {
-		this.modifiedOn = modifiedOn;
-	}
-	
+
 	@Override
 	public String toString() {
 		return "PersonDto{" +
-				"firstName='" + firstName + '\'' +
+				"id=" + id +
+				", firstName='" + firstName + '\'' +
 				", lastName='" + lastName + '\'' +
 				", email='" + email + '\'' +
 				", location='" + location + '\'' +
 				", status='" + status + '\'' +
 				", role='" + role + '\'' +
-				", createOn=" + createOn +
-				", modifiedOn=" + modifiedOn +
 				'}';
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof PersonDto)) return false;
+		PersonDto personDto = (PersonDto) o;
+		return Objects.equals(getId(), personDto.getId()) &&
+				Objects.equals(getFirstName(), personDto.getFirstName()) &&
+				Objects.equals(getLastName(), personDto.getLastName()) &&
+				Objects.equals(getEmail(), personDto.getEmail()) &&
+				Objects.equals(getLocation(), personDto.getLocation()) &&
+				Objects.equals(getStatus(), personDto.getStatus()) &&
+				Objects.equals(getRole(), personDto.getRole());
+	}
+
+	@Override
+	public int hashCode() {
+
+		return Objects.hash(getId(), getFirstName(), getLastName(), getEmail(), getLocation(), getStatus(), getRole());
 	}
 }

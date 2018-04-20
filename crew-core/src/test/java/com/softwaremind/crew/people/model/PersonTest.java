@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.time.LocalDate;
+
 /**
  * TestSuit for {@link Person}
  * 
@@ -21,8 +23,9 @@ public class PersonTest {
 	 */
 	@BeforeClass
 	public static void initObjects() {
-//		person1 = new Person(1, "Tomek", "Nowak", "Krkaów", "email@gmail.com", "APPS", "Developer",2015-10-10,2016-11-11);
-//		person2 = new Person(1, "Alicja", "Kowalska", "Warszawa", "email2@gmail.com", "Business", "Designer");
+		person1 = new Person(1L, "Tomek", "Nowak", "Krkaów", "email@gmail.com", "APPS", "Developer");
+		person2 = new Person(2L, "Alicja", "Kowalska", "Warszawa", "email2@gmail.com", "Business", "Designer");
+		
 	}
 	
 	@Test

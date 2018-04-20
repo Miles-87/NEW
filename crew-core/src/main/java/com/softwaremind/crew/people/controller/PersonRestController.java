@@ -1,28 +1,25 @@
 package com.softwaremind.crew.people.controller;
 
-import java.util.LinkedList;
 import java.util.List;
 
-import com.softwaremind.crew.people.model.dto.PersonDto;
-import com.softwaremind.crew.people.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.softwaremind.crew.people.model.Person;
+import com.softwaremind.crew.people.model.dto.PersonDto;
 import com.softwaremind.crew.people.service.PersonService;
 
 /**
  * PersonRestController class for managing Persons
  *
+ * @author Wiktor Religo
  * @author Mateusz Michoński
- * @since 20.04.2018
+ * @since 09.04.2018
  */
 @RestController
 public class PersonRestController {
-
-	private PersonRepository personRepository;
+	
 	private final PersonService personService;
 	
 	@Autowired
@@ -30,12 +27,19 @@ public class PersonRestController {
 		this.personService = personService;
 	}
 
-	@GetMapping("/person/insert")
-    public String personInsert(Model model){
-	    model.addAttribute("person", new PersonDto());
-	    return "welcome";
-    }
-
-
+    /**
+     * This method return all Persons
+     *
+     * @return
+     */
+	@RequestMapping("/persons")
+	public List<PersonDto> findAll() {
+		List<PersonDto> allPersons = personService.findAll();
+		for (PersonDto personDto : allPersons) {
+			Person person = personService.mapDtoToTeamEntity(personDto);
+			personService.mapPersonToPersonDto(person);
+		}
+		return allPersons;
+	}
 	
 }

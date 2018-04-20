@@ -2,9 +2,11 @@ package com.softwaremind.crew.people.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
+import com.softwaremind.crew.people.model.dto.PersonDto;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -18,6 +20,7 @@ import com.softwaremind.crew.people.repository.PersonRepository;
  * TestSuit for {@link PersonService}
  *
  * @author Wiktor Religo
+ * @author Mateusz Michoński
  * @since 10.04.2018
  */
 
@@ -36,24 +39,18 @@ public class PersonServiceTest {
 	
 	@Test
 	public void shouldReturnAllPeople() {
-		initMockRepositoryToTest();
+		initMockServiceTest();
 		
-//		List<Person> resultPeople = personService.findAll();
-//		assertThat(resultPeople).hasSize(2);
+		List<PersonDto> resultPeopleDtos = personService.findAll();
+		assertThat(resultPeopleDtos).hasSize(2);
 	}
-	
-	@Test
-	public void shouldReturnPersonById() {
-		initMockRepositoryToTest();
-		
-//		Person result = personService.getPersonById(3l);
-//		assertThat(result).isNotNull();
-//		assertThat(result).hasFieldOrPropertyWithValue("id", 3l);
+
+
+	private void initMockServiceTest() {
+		Person person1 = new Person(1L,"jan","mucha","krakow","email1@onet.com","Programing","Developer");
+		Person person2 = new Person(3L, "Alicja", "Kowalska", "Warszawa", "email2@gmail.com", "Business", "Designer");
+		Mockito.when(personRepository.findAll()).thenReturn(Arrays.asList(person1, person2));
 	}
-	
-	private void initMockRepositoryToTest() {
-//		Person person1 = new Person(1, "Tomek", "Nowak", "Krkaów", "email@gmail.com", "APPS", "Developer");
-//		Person person2 = new Person(3, "Alicja", "Kowalska", "Warszawa", "email2@gmail.com", "Business", "Designer");
-//		Mockito.when(personRepository.getPeople()).thenReturn(Arrays.asList(person1, person2));
-	}
+
+
 }
