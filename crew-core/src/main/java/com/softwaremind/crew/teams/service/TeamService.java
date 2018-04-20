@@ -1,6 +1,6 @@
 package com.softwaremind.crew.teams.service;
 
-import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -35,8 +35,9 @@ public class TeamService {
 	 * @return
 	 */
 	public List<TeamDto> findAll() {
-		
-		return teamRepository.findAll();
+		List<Team> allDtoTeams = teamRepository.findAll();
+		TeamDto[] map = modelMapper.map(allDtoTeams, TeamDto[].class);
+		return Arrays.asList(map);
 	}
 	
 	/**
@@ -55,12 +56,10 @@ public class TeamService {
 	 * Method mapping {@link TeamDto} class to {@link Team} entity
 	 * 
 	 * @param teamDto
-	 * @return instance of {@link Team} database entity 
+	 * @return instance of {@link Team} database entity
 	 */
 	public Team mapDtoToTeamEntity(TeamDto teamDto) {
 		Team team = modelMapper.map(teamDto, Team.class);
-		team.setCreatedOn(LocalDateTime.now());
-		team.setModifiedOn(LocalDateTime.now());
 		return team;
 	}
 }

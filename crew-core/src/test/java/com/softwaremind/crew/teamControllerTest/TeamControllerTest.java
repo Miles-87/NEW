@@ -30,7 +30,7 @@ import com.softwaremind.crew.teams.service.TeamService;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class TeamDtoControllerTest {
+public class TeamControllerTest {
 	
 	private MockMvc mockMvc;
 	@Mock

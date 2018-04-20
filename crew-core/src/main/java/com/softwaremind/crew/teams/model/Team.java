@@ -17,6 +17,8 @@ public class Team {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@Version
+	private Long version;
 	
 	private String name;
 	private String description;
@@ -29,11 +31,26 @@ public class Team {
 	public Team() {
 	}
 	
-	public Team(String name, String description, LocalDateTime createdOn, LocalDateTime modifiedOn) {
+	public Team(Long version, String name, String description) {
+		this.version = version;
 		this.name = name;
 		this.description = description;
-		this.createdOn = createdOn;
-		this.modifiedOn = modifiedOn;
+	}
+	
+	/*
+	 * Method sets creation time of the object
+	 */
+	@PrePersist
+	public void persistOnCreate() {
+		this.createdOn = LocalDateTime.now();
+	}
+	
+	/*
+	 * Method sets modification time of the object
+	 */
+	@PreUpdate
+	public void updateOnModify() {
+		this.modifiedOn = LocalDateTime.now();
 	}
 	
 	public Long getId() {
@@ -80,6 +97,7 @@ public class Team {
 	public String toString() {
 		return "Team{" +
 				"id=" + id +
+				", version=" + version +
 				", name='" + name + '\'' +
 				", description='" + description + '\'' +
 				", createdOn=" + createdOn +
