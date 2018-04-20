@@ -1,0 +1,1 @@
+INSERT INTO Team (name,description,created_on,modified_on) VALUES ('Apacze','grupa programistow',parsedatetime('17-09-2012 18:47:52.69', 'dd-MM-yyyy hh:mm:ss.SS'),null)

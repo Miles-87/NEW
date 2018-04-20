@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.softwaremind.crew.teams.model.Team;
+import com.softwaremind.crew.teams.model.TeamDto;
 import com.softwaremind.crew.teams.service.TeamService;
 
 /**
@@ -27,12 +28,17 @@ public class TeamController {
 	
 	/**
 	 * This method return all teams
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping("/teams")
-	public List<Team> findAll() {
-		return teamService.findAll();
+	public List<TeamDto> findAll() {
+		List<TeamDto> allTeams = teamService.findAll();
+		for (TeamDto teamDto : allTeams) {
+			Team team = teamService.mapDtoToTeamEntity(teamDto);
+			teamService.mapTeamEntityToDto(team);
+		}
+		return allTeams;
 	}
 	
 }

@@ -11,7 +11,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import com.softwaremind.crew.teams.model.Team;
+import com.softwaremind.crew.teams.model.TeamDto;
 import com.softwaremind.crew.teams.repository.TeamRepository;
 import com.softwaremind.crew.teams.service.TeamService;
 
@@ -21,7 +21,7 @@ import com.softwaremind.crew.teams.service.TeamService;
  * @author Mateusz Michoński
  * @since 16.04.2018
  */
-public class TeamServiceTest {
+public class TeamDtoServiceTest {
 	private TeamService teamService;
 	
 	@Mock
@@ -37,13 +37,13 @@ public class TeamServiceTest {
 	public void shouldReturnAllTeams() {
 		initMockServiceTest();
 		
-		List<Team> resultTeams = teamService.findAll();
-		assertThat(resultTeams).hasSize(2);
+		List<TeamDto> resultTeamDtos = teamService.findAll();
+		assertThat(resultTeamDtos).hasSize(2);
 	}
 	
 	private void initMockServiceTest() {
-		Team t1 = new Team(1, "team1", "local", "wawa", 6);
-		Team t2 = new Team(2, "team2", "remote", "krk", 7);
+		TeamDto t1 = new TeamDto(1, "team1", "local", "wawa", 6);
+		TeamDto t2 = new TeamDto(2, "team2", "remote", "krk", 7);
 		Mockito.when(teamRepository.findAll()).thenReturn(Arrays.asList(t1, t2));
 		
 	}

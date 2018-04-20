@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.softwaremind.crew.teams.model.Team;
+import com.softwaremind.crew.teams.model.TeamDto;
 
 /**
  * Teams repository class
@@ -23,14 +23,14 @@ public class TeamRepository {
 	 * @param teamList
 	 * @return
 	 */
-	private final List<Team> teams = new LinkedList<>(Arrays.asList(
-			new Team(1L, "team1", "local", "wawa", 6),
-			new Team(2L, "team2", "remote", "krk", 7),
-			new Team(3L, "team3", "local", "wawa", 3),
-			new Team(4L, "team4", "remote", "krk", 2),
-			new Team(5L, "team5", "local", "wawa", 5),
-			new Team(6L, "team6", "remote", "gda", 6),
-			new Team(7L, "team7", "local", "krk", 7)
+	private final List<TeamDto> teamDtos = new LinkedList<>(Arrays.asList(
+			new TeamDto(1L, "team1", "local", "wawa", 6),
+			new TeamDto(2L, "team2", "remote", "krk", 7),
+			new TeamDto(3L, "team3", "local", "wawa", 3),
+			new TeamDto(4L, "team4", "remote", "krk", 2),
+			new TeamDto(5L, "team5", "local", "wawa", 5),
+			new TeamDto(6L, "team6", "remote", "gda", 6),
+			new TeamDto(7L, "team7", "local", "krk", 7)
 	
 	));
 	
@@ -39,8 +39,8 @@ public class TeamRepository {
 	 * 
 	 * @return
 	 */
-	public List<Team> findAll() {
-		return teams;
+	public List<TeamDto> findAll() {
+		return teamDtos;
 	}
 	
 }
