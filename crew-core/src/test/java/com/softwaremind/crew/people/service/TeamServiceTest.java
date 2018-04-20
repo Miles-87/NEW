@@ -1,4 +1,4 @@
-package com.softwaremind.crew.teamServiceTest;
+package com.softwaremind.crew.people.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,6 +20,7 @@ import com.softwaremind.crew.teams.service.TeamService;
  * TestSuit for(@link TeamService)
  *
  * @author Mateusz Michoński
+ * @author Wiktor Religo
  * @since 16.04.2018
  */
 public class TeamServiceTest {
@@ -43,8 +44,8 @@ public class TeamServiceTest {
 	}
 	
 	private void initMockServiceTest() {
-		Team t1 = new Team(1l, "Nazwa1", "description1");
-		Team t2 = new Team(2l, "Nazwa1", "description1");
+		Team t1 = new Team("Name1", "description1", "city1", 2);
+		Team t2 = new Team("Name2", "description2", "city2", 5);
 		
 		Mockito.when(teamRepository.findAll()).thenReturn(Arrays.asList(t1, t2));
 		

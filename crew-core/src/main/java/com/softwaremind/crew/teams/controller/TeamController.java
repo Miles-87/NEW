@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.softwaremind.crew.teams.model.Team;
 import com.softwaremind.crew.teams.model.TeamDto;
 import com.softwaremind.crew.teams.service.TeamService;
 
@@ -33,12 +32,7 @@ public class TeamController {
 	 */
 	@RequestMapping("/teams")
 	public List<TeamDto> findAll() {
-		List<TeamDto> allTeams = teamService.findAll();
-		for (TeamDto teamDto : allTeams) {
-			Team team = teamService.mapDtoToTeamEntity(teamDto);
-			teamService.mapTeamEntityToDto(team);
-		}
-		return allTeams;
+		return teamService.findAll();
 	}
 	
 }

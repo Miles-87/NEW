@@ -22,6 +22,8 @@ public class Team {
 	
 	private String name;
 	private String description;
+	private String city;
+	private Integer headcount;
 	private LocalDateTime createdOn;
 	private LocalDateTime modifiedOn;
 	
@@ -31,10 +33,11 @@ public class Team {
 	public Team() {
 	}
 	
-	public Team(Long version, String name, String description) {
-		this.version = version;
+	public Team(String name, String description, String city, Integer headcount) {
 		this.name = name;
 		this.description = description;
+		this.city = city;
+		this.headcount = headcount;
 	}
 	
 	/*
@@ -51,6 +54,22 @@ public class Team {
 	@PreUpdate
 	public void updateOnModify() {
 		this.modifiedOn = LocalDateTime.now();
+	}
+	
+	public String getCity() {
+		return city;
+	}
+	
+	public void setCity(String city) {
+		this.city = city;
+	}
+	
+	public Integer getHeadcount() {
+		return headcount;
+	}
+	
+	public void setHeadcount(Integer headcount) {
+		this.headcount = headcount;
 	}
 	
 	public Long getId() {
@@ -97,9 +116,10 @@ public class Team {
 	public String toString() {
 		return "Team{" +
 				"id=" + id +
-				", version=" + version +
 				", name='" + name + '\'' +
 				", description='" + description + '\'' +
+				", city='" + city + '\'' +
+				", headcount=" + headcount +
 				", createdOn=" + createdOn +
 				", modifiedOn=" + modifiedOn +
 				'}';

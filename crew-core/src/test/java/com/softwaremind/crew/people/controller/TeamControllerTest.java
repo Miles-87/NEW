@@ -1,4 +1,4 @@
-package com.softwaremind.crew.teamControllerTest;
+package com.softwaremind.crew.people.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -25,6 +25,7 @@ import com.softwaremind.crew.teams.service.TeamService;
  * TestSuit for(@link TeamController)
  *
  * @author Mateusz Michoński
+ * @author Wiktor Religo
  * @since 16.04.2018
  */
 @RunWith(SpringRunner.class)

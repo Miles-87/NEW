@@ -1,8 +1,6 @@
 package com.softwaremind.crew.teams.repository;
 
-import java.util.LinkedList;
-import java.util.List;
-
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.softwaremind.crew.teams.model.Team;
@@ -11,24 +9,10 @@ import com.softwaremind.crew.teams.model.Team;
  * Teams repository class
  *
  * @author Mateusz Michoński
+ * @author Wiktor Religo
  * @since 09.04.2018
  */
 @Repository
-public class TeamRepository {
-	
-	/**
-	 * (In the future) after setting up Database
-	 * Below list will store Team Entities
-	 */
-	private final List<Team> teams = new LinkedList<>();
-	
-	/**
-	 * This method return all elements of list
-	 * 
-	 * @return
-	 */
-	public List<Team> findAll() {
-		return teams;
-	}
+public interface TeamRepository extends JpaRepository<Team, Long> {
 	
 }
