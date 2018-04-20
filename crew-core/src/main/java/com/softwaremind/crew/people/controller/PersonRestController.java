@@ -3,9 +3,11 @@ package com.softwaremind.crew.people.controller;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.softwaremind.crew.people.model.dto.PersonDto;
 import com.softwaremind.crew.people.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.softwaremind.crew.people.model.Person;
@@ -27,6 +29,12 @@ public class PersonRestController {
 	public PersonRestController(PersonService personService) {
 		this.personService = personService;
 	}
+
+	@GetMapping("/person/insert")
+    public String personInsert(Model model){
+	    model.addAttribute("person", new PersonDto());
+	    return "welcome";
+    }
 
 
 	
