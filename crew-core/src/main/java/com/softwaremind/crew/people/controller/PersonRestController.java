@@ -3,6 +3,9 @@ package com.softwaremind.crew.people.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,6 +38,18 @@ public class PersonRestController {
 	@RequestMapping("/people")
 	public List<PersonDto> findAll() {
 		return personService.findAll();
+	}
+	
+	/**
+	 * Method returns an Person entity selected id
+	 *
+	 * @param id
+	 * @return
+	 */
+	
+	@GetMapping(value = "/people/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Person getPersonById(@PathVariable long id) {
+		return personService.getPersonById(id);
 	}
 	
 }

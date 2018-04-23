@@ -6,8 +6,6 @@ import java.util.Objects;
 
 import javax.persistence.*;
 
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 /**
  * Person class represents the Person entity
  *
@@ -15,7 +13,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
  * @author Mateusz Michoński
  * @since 09.04.2018
  */
-@EntityListeners(AuditingEntityListener.class)
 @Entity
 @Table(name = "Person")
 public class Person implements Serializable {
