@@ -1,34 +1,75 @@
 package com.softwaremind.crew.teams.model;
 
-import java.io.Serializable;
-import java.util.Objects;
+import java.time.LocalDateTime;
+
+import javax.persistence.*;
 
 /**
- * This class define team object
+ * Team represents entity in the database
  *
- * @author Mateusz Michoński
- * @since 09.04.2018
+ * @author Wiktor Religo
+ * @since 19.04.2018
  */
-public class Team implements Serializable {
+@Entity
+@Table(name = "Team")
+public class Team {
 	
-	private long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	@Version
+	private Long version;
+	
 	private String name;
 	private String description;
 	private String city;
-	private int headcount;
+	private Integer headcount;
+	private LocalDateTime createdOn;
+	private LocalDateTime modifiedOn;
 	
-	public Team(long id, String name, String description, String city, int headcount) {
-		this.id = id;
+	/**
+	 * Default constructor using for ModelMapper
+	 */
+	public Team() {
+	}
+	
+	public Team(String name, String description, String city, Integer headcount) {
 		this.name = name;
 		this.description = description;
 		this.city = city;
 		this.headcount = headcount;
 	}
 	
-	/**
-	 * For jackson
+	/*
+	 * Method sets creation time of the object
 	 */
-	public Team() {
+	@PrePersist
+	public void persistOnCreate() {
+		this.createdOn = LocalDateTime.now();
+	}
+	
+	/*
+	 * Method sets modification time of the object
+	 */
+	@PreUpdate
+	public void updateOnModify() {
+		this.modifiedOn = LocalDateTime.now();
+	}
+	
+	public String getCity() {
+		return city;
+	}
+	
+	public void setCity(String city) {
+		this.city = city;
+	}
+	
+	public Integer getHeadcount() {
+		return headcount;
+	}
+	
+	public void setHeadcount(Integer headcount) {
+		this.headcount = headcount;
 	}
 	
 	public Long getId() {
@@ -55,49 +96,32 @@ public class Team implements Serializable {
 		this.description = description;
 	}
 	
-	public String getCity() {
-		return city;
+	public LocalDateTime getCreatedOn() {
+		return createdOn;
 	}
 	
-	public void setCity(String city) {
-		this.city = city;
+	public void setCreatedOn(LocalDateTime createdOn) {
+		this.createdOn = createdOn;
 	}
 	
-	public int getHeadcount() {
-		return headcount;
+	public LocalDateTime getModifiedOn() {
+		return modifiedOn;
 	}
 	
-	public void setHeadcount(int headcount) {
-		this.headcount = headcount;
+	public void setModifiedOn(LocalDateTime modifiedOn) {
+		this.modifiedOn = modifiedOn;
 	}
 	
 	@Override
 	public String toString() {
 		return "Team{" +
-				"id=" + id + "\n" +
-				", name='" + name + '\'' + "\n" +
-				", description='" + description + '\'' + "\n" +
-				", city='" + city + '\'' + "\n" +
-				", headcount=" + headcount + "\n" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				", description='" + description + '\'' +
+				", city='" + city + '\'' +
+				", headcount=" + headcount +
+				", createdOn=" + createdOn +
+				", modifiedOn=" + modifiedOn +
 				'}';
-	}
-	
-	@Override
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (o == null || getClass() != o.getClass())
-			return false;
-		Team team = (Team) o;
-		return headcount == team.headcount &&
-				Objects.equals(id, team.id) &&
-				Objects.equals(name, team.name) &&
-				Objects.equals(description, team.description) &&
-				Objects.equals(city, team.city);
-	}
-	
-	@Override
-	public int hashCode() {
-		return Objects.hash(id, name, description, city, headcount);
 	}
 }

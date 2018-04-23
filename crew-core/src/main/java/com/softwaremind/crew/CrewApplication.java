@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author daba
  * @since 06.04.2018
  */
+
 @SpringBootApplication
 public class CrewApplication {
 	
