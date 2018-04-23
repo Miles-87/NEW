@@ -1,1 +1,1 @@
-INSERT INTO Person(id,first_name,last_name,location,email,status,role,created_on,modified_on,version) VALUES (1,'ADAM','Mucha','Krakow','first@o2.pl','active','admin',parsedatetime('17-09-2012 18:47:52.69', 'dd-MM-yyyy hh:mm:ss.SS'),null);
+INSERT INTO Person(id,first_name) VALUES (1,'ADAM');
