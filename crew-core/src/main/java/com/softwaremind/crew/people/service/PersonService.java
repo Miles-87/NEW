@@ -21,17 +21,12 @@ import com.softwaremind.crew.people.repository.PersonRepository;
 public class PersonService {
 	
 	private final PersonRepository personRepository;
-	/**
-	 * This method mapped from person to person DTO
-	 *
-	 * @author Mateusz Michoński
-	 * @since 20.04.2018
-	 */
-	ModelMapper modelMapper = new ModelMapper();
+	private final ModelMapper modelMapper;
 	
 	@Autowired
 	public PersonService(PersonRepository personRepository) {
 		this.personRepository = personRepository;
+		this.modelMapper = new ModelMapper();
 	}
 	
 	/**
