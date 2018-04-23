@@ -43,8 +43,8 @@ public class PersonService {
 		return personDto;
 	}
 	
-	public Person mapDtoToTeamEntity(PersonDto teamDto) {
-		Person person = modelMapper.map(teamDto, Person.class);
+	public Person mapDtoToPersonEntity(PersonDto personDto) {
+		Person person = modelMapper.map(personDto, Person.class);
 		return person;
 	}
 	
