@@ -25,7 +25,7 @@ public class Person implements Serializable {
 	private long id;
 	@Version
 	private Long version;
-
+	
 	private String firstName;
 	private String lastName;
 	private String location;

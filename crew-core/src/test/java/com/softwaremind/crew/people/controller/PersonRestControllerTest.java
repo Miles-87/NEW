@@ -35,7 +35,7 @@ import com.softwaremind.crew.people.service.PersonService;
 @SpringBootTest
 @AutoConfigureMockMvc
 public class PersonRestControllerTest {
-
+	
 	private MockMvc mockMvc;
 	@Mock
 	private PersonService personService;
@@ -44,7 +44,7 @@ public class PersonRestControllerTest {
 	public void initTest() {
 		mockMvc = MockMvcBuilders.standaloneSetup(new PersonRestController(personService)).build();
 	}
-
+	
 	@Test
 	public void shouldGetPeopleResource() throws Exception {
 		PersonDto personDto = new PersonDto(1L, "Bob", "Noob", "Warszawa", "email@gmail.com", "APPS", "Developer");
