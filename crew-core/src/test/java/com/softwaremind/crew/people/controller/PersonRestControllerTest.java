@@ -53,11 +53,12 @@ public class PersonRestControllerTest {
 		mockMvc.perform(get("/people"))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+				.andExpect(jsonPath("$[0].id").value(personDto.getId()))
 				.andExpect(jsonPath("$[0].firstName").value(personDto.getFirstName()))
 				.andExpect(jsonPath("$[0].lastName").value(personDto.getLastName()))
 				.andExpect(jsonPath("$[0].location").value(personDto.getLocation()))
 				.andExpect(jsonPath("$[0].email").value(personDto.getEmail()))
-				.andExpect(jsonPath("$[0].department").value(personDto.getStatus()))
+				.andExpect(jsonPath("$[0].status").value(personDto.getStatus()))
 				.andExpect(jsonPath("$[0].role").value(personDto.getRole()));
 	}
 }
