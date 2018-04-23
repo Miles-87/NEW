@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Optional;
 
 import com.softwaremind.crew.people.model.dto.PersonDto;
 import org.junit.Before;
@@ -47,7 +48,7 @@ public class PersonRestControllerTest {
 	
 	@Test
 	public void shouldGetPeopleResource() throws Exception {
-		PersonDto personDto = new PersonDto(1L, "Bob", "Noob", "Warszawa", "email@gmail.com", "APPS", "Developer");
+		PersonDto personDto = new PersonDto(1L, "Bob", "Noob", "email@gmail.com", "Warszawa", "APPS", "Developer");
 		Mockito.when(personService.findAll()).thenReturn(Collections.singletonList(personDto));
 		
 		mockMvc.perform(get("/people"))
@@ -60,5 +61,15 @@ public class PersonRestControllerTest {
 				.andExpect(jsonPath("$[0].email").value(personDto.getEmail()))
 				.andExpect(jsonPath("$[0].status").value(personDto.getStatus()))
 				.andExpect(jsonPath("$[0].role").value(personDto.getRole()));
+	}
+	@Test
+	public void shouldGetPersonById() throws Exception{
+		PersonDto personDto = new PersonDto(2L,"Adam","Kowalski","kowalski@o2.pl","Krawko","Active","Manager");
+		Mockito.when(personService.findById(2L));
+
+		mockMvc.perform(get("/people/{id}"))
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+				.andExpect(jsonPath("$[0].id").value(personDto.getId()));
 	}
 }

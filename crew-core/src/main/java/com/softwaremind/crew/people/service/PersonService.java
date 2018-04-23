@@ -48,11 +48,14 @@ public class PersonService {
 	 * @param id
 	 * @return
 	 */
-	public Optional<Person> findOne(Long id) {
+	public Optional<PersonDto> findById(Long id) {
+		if(id == null){
+			throw new IllegalArgumentException("id shouldn't be null");
+		}
 		if (id != null) {
 			return personRepository
 					.findById(id)
-					.map(p -> modelMapper.map(p, Person.class));
+					.map(p -> modelMapper.map(p, PersonDto.class));
 		}
 		return Optional.empty();
 	}
