@@ -1,4 +1,4 @@
-package com.softwaremind.crew.teamControllerTest;
+package com.softwaremind.crew.people.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -18,13 +18,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.softwaremind.crew.teams.controller.TeamController;
-import com.softwaremind.crew.teams.model.Team;
+import com.softwaremind.crew.teams.model.TeamDto;
 import com.softwaremind.crew.teams.service.TeamService;
 
 /**
  * TestSuit for(@link TeamController)
  *
  * @author Mateusz Michoński
+ * @author Wiktor Religo
  * @since 16.04.2018
  */
 @RunWith(SpringRunner.class)
@@ -43,17 +44,17 @@ public class TeamControllerTest {
 	
 	@Test
 	public void shouldGetTeamsResource() throws Exception {
-		Team team = new Team(1, "Jan", "local", "wawa", 6);
-		Mockito.when(teamService.findAll()).thenReturn(Collections.singletonList(team));
+		TeamDto teamDto = new TeamDto(1, "Jan", "local", "wawa", 6);
+		Mockito.when(teamService.findAll()).thenReturn(Collections.singletonList(teamDto));
 		
 		mockMvc.perform(get("/teams"))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-				.andExpect(jsonPath("$[0].id").value(team.getId()))
-				.andExpect(jsonPath("$[0].name").value(team.getName()))
-				.andExpect(jsonPath("$[0].description").value(team.getDescription()))
-				.andExpect(jsonPath("$[0].city").value(team.getCity()))
-				.andExpect(jsonPath("$[0].headcount").value(team.getHeadcount()));
+				.andExpect(jsonPath("$[0].id").value(teamDto.getId()))
+				.andExpect(jsonPath("$[0].name").value(teamDto.getName()))
+				.andExpect(jsonPath("$[0].description").value(teamDto.getDescription()))
+				.andExpect(jsonPath("$[0].city").value(teamDto.getCity()))
+				.andExpect(jsonPath("$[0].headcount").value(teamDto.getHeadcount()));
 		
 	}
 }
