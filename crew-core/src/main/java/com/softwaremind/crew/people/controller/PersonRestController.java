@@ -26,20 +26,15 @@ public class PersonRestController {
 	public PersonRestController(PersonService personService) {
 		this.personService = personService;
 	}
-
-    /**
-     * This method return all Persons
-     *
-     * @return
-     */
+	
+	/**
+	 * This method return all Persons
+	 *
+	 * @return
+	 */
 	@RequestMapping("/persons")
 	public List<PersonDto> findAll() {
-		List<PersonDto> allPersons = personService.findAll();
-		for (PersonDto personDto : allPersons) {
-			Person person = personService.mapDtoToTeamEntity(personDto);
-			personService.mapPersonToPersonDto(person);
-		}
-		return allPersons;
+		return personService.findAll();
 	}
 	
 }

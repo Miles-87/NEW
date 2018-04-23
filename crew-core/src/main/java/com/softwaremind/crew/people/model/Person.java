@@ -34,7 +34,6 @@ public class Person implements Serializable {
 	
 	/**
 	 * Creating for Testing using Jackson, which requires a default constructor
-
 	 */
 	public Person() {
 	}

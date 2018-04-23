@@ -10,7 +10,7 @@ import java.util.Objects;
  * @since 20.04.2018
  */
 public class PersonDto implements Serializable {
-
+	
 	private Long id;
 	private String firstName;
 	private String lastName;
@@ -22,7 +22,7 @@ public class PersonDto implements Serializable {
 	public PersonDto() {
 	}
 	
-	public PersonDto(Long id,String firstName, String lastName, String email, String location, String status, String role) {
+	public PersonDto(Long id, String firstName, String lastName, String email, String location, String status, String role) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -31,15 +31,15 @@ public class PersonDto implements Serializable {
 		this.status = status;
 		this.role = role;
 	}
-
+	
 	public Long getId() {
 		return id;
 	}
-
+	
 	public void setId(Long id) {
 		this.id = id;
 	}
-
+	
 	public String getFirstName() {
 		return firstName;
 	}
@@ -87,7 +87,7 @@ public class PersonDto implements Serializable {
 	public void setRole(String role) {
 		this.role = role;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "PersonDto{" +
@@ -100,11 +100,13 @@ public class PersonDto implements Serializable {
 				", role='" + role + '\'' +
 				'}';
 	}
-
+	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (!(o instanceof PersonDto)) return false;
+		if (this == o)
+			return true;
+		if (!(o instanceof PersonDto))
+			return false;
 		PersonDto personDto = (PersonDto) o;
 		return Objects.equals(getId(), personDto.getId()) &&
 				Objects.equals(getFirstName(), personDto.getFirstName()) &&
@@ -114,10 +116,10 @@ public class PersonDto implements Serializable {
 				Objects.equals(getStatus(), personDto.getStatus()) &&
 				Objects.equals(getRole(), personDto.getRole());
 	}
-
+	
 	@Override
 	public int hashCode() {
-
+		
 		return Objects.hash(getId(), getFirstName(), getLastName(), getEmail(), getLocation(), getStatus(), getRole());
 	}
 }

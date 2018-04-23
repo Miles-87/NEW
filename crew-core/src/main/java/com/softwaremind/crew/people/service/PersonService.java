@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,16 +47,15 @@ public class PersonService {
 		Person person = modelMapper.map(teamDto, Person.class);
 		return person;
 	}
-
+	
 	/**
-	 * this method return a list of Persons
+	 * This method return a list of Persons
 	 *
 	 * @return
 	 */
 	public List<PersonDto> findAll() {
-		List<Person> allDtoTeams = personRepository.findAll();
-		PersonDto[] map = modelMapper.map(allDtoTeams, PersonDto[].class);
-		return Arrays.asList(map);
+		return modelMapper.map(personRepository.findAll(), new TypeToken<List<PersonDto>>() {
+		}.getType());
 	}
 	
 }
