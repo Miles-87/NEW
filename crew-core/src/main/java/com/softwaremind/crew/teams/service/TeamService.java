@@ -21,7 +21,7 @@ import com.softwaremind.crew.teams.repository.TeamRepository;
 public class TeamService {
 	
 	private final TeamRepository teamRepository;
-	private ModelMapper modelMapper;
+	private final ModelMapper modelMapper;
 	
 	@Autowired
 	public TeamService(TeamRepository teamRepository) {
