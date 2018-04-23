@@ -32,7 +32,7 @@ public class PersonRestController {
 	 *
 	 * @return
 	 */
-	@RequestMapping("/persons")
+	@RequestMapping("/people")
 	public List<PersonDto> findAll() {
 		return personService.findAll();
 	}

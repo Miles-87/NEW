@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -34,7 +35,7 @@ import com.softwaremind.crew.people.service.PersonService;
 @SpringBootTest
 @AutoConfigureMockMvc
 public class PersonRestControllerTest {
-	
+
 	private MockMvc mockMvc;
 	@Mock
 	private PersonService personService;
@@ -43,11 +44,11 @@ public class PersonRestControllerTest {
 	public void initTest() {
 		mockMvc = MockMvcBuilders.standaloneSetup(new PersonRestController(personService)).build();
 	}
-	
+
 	@Test
 	public void shouldGetPeopleResource() throws Exception {
 		PersonDto personDto = new PersonDto(1L, "Bob", "Noob", "Warszawa", "email@gmail.com", "APPS", "Developer");
-		when(personService.findAll()).thenReturn(Collections.singletonList(personDto));
+		Mockito.when(personService.findAll()).thenReturn(Collections.singletonList(personDto));
 		
 		mockMvc.perform(get("/people"))
 				.andExpect(status().isOk())

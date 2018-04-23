@@ -17,19 +17,22 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
  */
 @EntityListeners(AuditingEntityListener.class)
 @Entity
-@Table(name = "Persons")
+@Table(name = "Person")
 public class Person implements Serializable {
 	
 	@Id
 	@GeneratedValue
 	private long id;
+	@Version
+	private Long version;
+
 	private String firstName;
 	private String lastName;
 	private String location;
 	private String email;
 	private String status;
 	private String role;
-	private LocalDate createOn;
+	private LocalDate createdOn;
 	private LocalDate modifiedOn;
 	
 	/**
@@ -46,7 +49,7 @@ public class Person implements Serializable {
 		this.email = email;
 		this.status = status;
 		this.role = role;
-		this.createOn = createOn;
+		this.createdOn = createdOn;
 		this.modifiedOn = modifiedOn;
 	}
 	
@@ -107,11 +110,11 @@ public class Person implements Serializable {
 	}
 	
 	public LocalDate getCreateOn() {
-		return createOn;
+		return createdOn;
 	}
 	
 	public void setCreateOn(LocalDate createOn) {
-		this.createOn = createOn;
+		this.createdOn = createOn;
 	}
 	
 	public LocalDate getModifiedOn() {
@@ -123,37 +126,42 @@ public class Person implements Serializable {
 	}
 	
 	@Override
-	public String toString() {
-		return "Person: {" +
-				"id:" + id +
-				", firstName:'" + firstName + '\'' +
-				", lastName:'" + lastName + '\'' +
-				", location:'" + location + '\'' +
-				", email:'" + email + '\'' +
-				", status:'" + status + '\'' +
-				", role:'" + role + '\'' +
-				"}";
-	}
-	
-	@Override
 	public boolean equals(Object o) {
 		if (this == o)
 			return true;
-		if (o == null || getClass() != o.getClass())
+		if (!(o instanceof Person))
 			return false;
 		Person person = (Person) o;
-		return id == person.id &&
-				Objects.equals(firstName, person.firstName) &&
-				Objects.equals(lastName, person.lastName) &&
-				Objects.equals(location, person.location) &&
-				Objects.equals(email, person.email) &&
-				Objects.equals(status, person.status) &&
-				Objects.equals(role, person.role);
+		return getId() == person.getId() &&
+				Objects.equals(getFirstName(), person.getFirstName()) &&
+				Objects.equals(getLastName(), person.getLastName()) &&
+				Objects.equals(getLocation(), person.getLocation()) &&
+				Objects.equals(getEmail(), person.getEmail()) &&
+				Objects.equals(getStatus(), person.getStatus()) &&
+				Objects.equals(getRole(), person.getRole()) &&
+				Objects.equals(createdOn, person.createdOn) &&
+				Objects.equals(getModifiedOn(), person.getModifiedOn());
 	}
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, firstName, lastName, location, email, status, role);
+		
+		return Objects.hash(getId(), getFirstName(), getLastName(), getLocation(), getEmail(), getStatus(), getRole(), createdOn,
+				getModifiedOn());
 	}
 	
+	@Override
+	public String toString() {
+		return "Person{" +
+				"id=" + id +
+				", firstName='" + firstName + '\'' +
+				", lastName='" + lastName + '\'' +
+				", location='" + location + '\'' +
+				", email='" + email + '\'' +
+				", status='" + status + '\'' +
+				", role='" + role + '\'' +
+				", createdOn=" + createdOn +
+				", modifiedOn=" + modifiedOn +
+				'}';
+	}
 }
