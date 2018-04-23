@@ -1,6 +1,7 @@
 package com.softwaremind.crew.people.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
 
 import java.util.Arrays;
 import java.util.List;
@@ -40,14 +41,17 @@ public class TeamServiceTest {
 		initMockServiceTest();
 		
 		List<TeamDto> resultTeamDtos = teamService.findAll();
-		assertThat(resultTeamDtos).hasSize(2);
+		System.out.println(resultTeamDtos.toString());
+		assertThat(resultTeamDtos).extracting("name", "description", "city", "headcount")
+				.contains(tuple("Name1", "description1", "city1", 2),
+						tuple("Name2", "description2", "city2", 5));
 	}
 	
 	private void initMockServiceTest() {
-		Team t1 = new Team("Name1", "description1", "city1", 2);
-		Team t2 = new Team("Name2", "description2", "city2", 5);
+		Team team1 = new Team("Name1", "description1", "city1", 2);
+		Team team2 = new Team("Name2", "description2", "city2", 5);
 		
-		Mockito.when(teamRepository.findAll()).thenReturn(Arrays.asList(t1, t2));
+		Mockito.when(teamRepository.findAll()).thenReturn(Arrays.asList(team1, team2));
 		
 	}
 }

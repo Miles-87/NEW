@@ -82,11 +82,13 @@ public class TeamDto implements Serializable {
 				", headcount=" + headcount + "\n" +
 				'}';
 	}
-
+	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
 		TeamDto teamDto = (TeamDto) o;
 		return Objects.equals(id, teamDto.id) &&
 				Objects.equals(name, teamDto.name) &&
@@ -94,7 +96,7 @@ public class TeamDto implements Serializable {
 				Objects.equals(city, teamDto.city) &&
 				Objects.equals(headcount, teamDto.headcount);
 	}
-
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id, name, description, city, headcount);
