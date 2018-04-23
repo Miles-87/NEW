@@ -1,7 +1,7 @@
 package com.softwaremind.crew.people.model;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 import javax.persistence.*;
@@ -32,8 +32,8 @@ public class Person implements Serializable {
 	private String email;
 	private String status;
 	private String role;
-	private LocalDate createdOn;
-	private LocalDate modifiedOn;
+	private LocalDateTime createdOn;
+	private LocalDateTime modifiedOn;
 	
 	/**
 	 * Creating for Testing using Jackson, which requires a default constructor
@@ -49,8 +49,16 @@ public class Person implements Serializable {
 		this.email = email;
 		this.status = status;
 		this.role = role;
-		this.createdOn = createdOn;
-		this.modifiedOn = modifiedOn;
+	}
+	
+	@PrePersist
+	public void persistOnCreate() {
+		this.createdOn = LocalDateTime.now();
+	}
+	
+	@PreUpdate
+	public void updateOnModify() {
+		this.modifiedOn = LocalDateTime.now();
 	}
 	
 	public long getId() {
@@ -109,19 +117,19 @@ public class Person implements Serializable {
 		this.role = role;
 	}
 	
-	public LocalDate getCreateOn() {
+	public LocalDateTime getCreateOn() {
 		return createdOn;
 	}
 	
-	public void setCreateOn(LocalDate createOn) {
+	public void setCreateOn(LocalDateTime createOn) {
 		this.createdOn = createOn;
 	}
 	
-	public LocalDate getModifiedOn() {
+	public LocalDateTime getModifiedOn() {
 		return modifiedOn;
 	}
 	
-	public void setModifiedOn(LocalDate modifiedOn) {
+	public void setModifiedOn(LocalDateTime modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
 	
