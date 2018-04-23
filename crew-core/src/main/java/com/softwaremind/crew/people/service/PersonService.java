@@ -30,9 +30,7 @@ public class PersonService {
 	 * @since 20.04.2018
 	 */
 	ModelMapper modelMapper = new ModelMapper();
-	
-	// private final List<Person> person = new LinkedList<>();
-	
+
 	@Autowired
 	public PersonService(PersonRepository personRepository) {
 		this.personRepository = personRepository;
