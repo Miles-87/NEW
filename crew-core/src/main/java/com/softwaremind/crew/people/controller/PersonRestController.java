@@ -1,6 +1,7 @@
 package com.softwaremind.crew.people.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -48,8 +49,8 @@ public class PersonRestController {
 	 */
 	
 	@GetMapping(value = "/people/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Person getPersonById(@PathVariable long id) {
-		return personService.getPersonById(id);
+	public Optional<Person> getPersonById(@PathVariable long id) {
+		return personService.findOne(id);
 	}
 	
 }

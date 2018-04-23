@@ -1,1 +1,1 @@
-INSERT INTO Person(id,first_name) VALUES (1,'ADAM');
+INSERT INTO Person(id,first_name,last_name,email,location,role,status) VALUES (1,'ADAM','mucha','mial@gmail.com','warszawa','admin','developer');

@@ -2,6 +2,7 @@ package com.softwaremind.crew.people.service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -42,18 +43,17 @@ public class PersonService {
 	}
 	
 	/**
-	 * Method returns an Person by id
+	 * Method returns a Person by id
 	 *
 	 * @param id
 	 * @return
 	 */
-	public Person getPersonById(long id) {
-		
-		return personRepository.findAll()
-				.stream()
-				.filter(p -> p.getId() == id)
-				.findAny().orElseThrow(NoSuchElementException::new);
-		
+	public Optional<Person> findOne(Long id) {
+		if (id != null) {
+			return personRepository
+					.findById(id)
+					.map(p -> modelMapper.map(p, Person.class));
+		}
+		return Optional.empty();
 	}
-	
 }
