@@ -1,7 +1,8 @@
 package com.softwaremind.crew.teams.service;
 
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import javax.transaction.Transactional;
 
@@ -10,6 +11,7 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 
 import com.softwaremind.crew.teams.model.Team;
 import com.softwaremind.crew.teams.model.TeamDto;
@@ -51,9 +53,13 @@ public class TeamService {
 	 *            of team
 	 * @return Team object
 	 */
-	public TeamDto findTeamById(Long id) {
-		return modelMapper.map(teamRepository.findById(id)
-				.orElseThrow(NoSuchElementException::new), TeamDto.class);
+	public TeamDto findTeamById(Long id) throws HttpClientErrorException {
+		if (teamRepository.findById(id).isPresent()) {
+			return modelMapper.map(teamRepository.findById(id).get(), TeamDto.class);
+		} else {
+			throw new HttpClientErrorException(NOT_FOUND, "No such Element expected");
+		}
+		
 	}
 	
 	/**
@@ -65,8 +71,7 @@ public class TeamService {
 	 * @return updated Team
 	 */
 	@Transactional
-	public TeamDto updateTeamById(long id, TeamDto teamDto) {
-		
+	public TeamDto updateTeamById(long id, TeamDto teamDto) throws HttpClientErrorException {
 		if (teamRepository.findById(id).isPresent()) {
 			Team teamEntity = teamRepository.findById(id).get();
 			teamEntity.setName(teamDto.getName());
@@ -74,9 +79,9 @@ public class TeamService {
 			teamEntity.setDescription(teamDto.getDescription());
 			teamEntity.setHeadcount(teamDto.getHeadcount());
 			teamRepository.save(teamEntity);
-		} else
-			throw new NoSuchElementException();
-		
+		} else {
+			throw new HttpClientErrorException(NOT_FOUND, "No such Element expected");
+		}
 		return teamDto;
 	}
 	
@@ -89,8 +94,7 @@ public class TeamService {
 	 */
 	@Transactional
 	public ResponseEntity<?> deleteTeamById(Long id) {
-		Team existTeam = teamRepository.findById(id)
-				.orElseThrow(NoSuchElementException::new);
+		Team existTeam = teamRepository.findById(id).get();
 		
 		teamRepository.delete(existTeam);
 		return ResponseEntity.ok().build();

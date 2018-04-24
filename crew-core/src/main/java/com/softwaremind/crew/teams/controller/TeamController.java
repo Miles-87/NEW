@@ -44,7 +44,7 @@ public class TeamController {
 	 * @param teamDto
 	 * @return updated Team
 	 */
-	@PutMapping("team/{id}")
+	@PutMapping("teams/{id}")
 	public TeamDto updateById(@PathVariable(value = "id") long id, @RequestBody TeamDto teamDto) {
 		return teamService.updateTeamById(id, teamDto);
 	}
@@ -70,7 +70,6 @@ public class TeamController {
 	 */
 	@DeleteMapping("teams/{id}")
 	public ResponseEntity<?> deleteById(@PathVariable Long id) {
-		
 		return teamService.deleteTeamById(id);
 	}
 	
@@ -80,7 +79,7 @@ public class TeamController {
 	 * @param teamDto
 	 * @return new Team
 	 */
-	@PostMapping("teams/add")
+	@PostMapping("/teams")
 	public TeamDto createTeam(@RequestBody TeamDto teamDto) {
 		return teamService.createTeam(teamDto);
 	}
