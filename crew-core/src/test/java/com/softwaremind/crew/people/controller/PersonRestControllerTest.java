@@ -45,7 +45,7 @@ public class PersonRestControllerTest {
 	
 	@Test
 	public void shouldGetPeopleResource() throws Exception {
-		PersonDto personDto = new PersonDto(1L, "Bob", "Noob", "email@gmail.com", "Warszawa", "APPS", "Developer");
+		PersonDto personDto = new PersonDto(1L, "Bob", "Noob", "mail@first.pl", "Warszawa", "APPS", "Developer");
 		Mockito.when(personService.findAll()).thenReturn(Collections.singletonList(personDto));
 		
 		mockMvc.perform(get("/people"))
@@ -62,8 +62,9 @@ public class PersonRestControllerTest {
 	
 	@Test
 	public void shouldGetPersonById() throws Exception {
+		Long testId = 2L;
 		PersonDto personDto = new PersonDto(2L, "Adam", "Kowalski", "kowalski@o2.pl", "Krawko", "Active", "Manager");
-		Mockito.when(personService.findById(2L)).thenReturn(Optional.of(personDto));
+		Mockito.when(personService.findById(testId)).thenReturn(Optional.of(personDto));
 		
 		mockMvc.perform(get("/people/" + personDto.getId()))
 				.andExpect(status().isOk())
