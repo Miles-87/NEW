@@ -1,2 +1,2 @@
-INSERT INTO Person(id,first_name,last_name,email,location,role,status) VALUES (1,'ADAM','mucha','mial@gmail.com','warszawa','admin','developer');
+INSERT INTO Person(id,first_name,last_name,email,location,role,status) VALUES (1,'ADAM','mucha','mial@mail.com','warszawa','admin','developer');
 INSERT INTO Team (name,description,created_on,modified_on) VALUES ('Apacze','grupa programistow',parsedatetime('17-09-2012 18:47:52.69', 'dd-MM-yyyy hh:mm:ss.SS'),null)
