@@ -5,8 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.time.LocalDate;
-
 /**
  * TestSuit for {@link Person}
  * 
