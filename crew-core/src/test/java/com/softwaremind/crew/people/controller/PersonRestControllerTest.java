@@ -62,14 +62,16 @@ public class PersonRestControllerTest {
 				.andExpect(jsonPath("$[0].status").value(personDto.getStatus()))
 				.andExpect(jsonPath("$[0].role").value(personDto.getRole()));
 	}
+	
 	@Test
-	public void shouldGetPersonById() throws Exception{
-		PersonDto personDto = new PersonDto(2L,"Adam","Kowalski","kowalski@o2.pl","Krawko","Active","Manager");
-		Mockito.when(personService.findById(2L));
-
-		mockMvc.perform(get("/people/{id}"))
+	public void shouldGetPersonById() throws Exception {
+		PersonDto personDto = new PersonDto(2L, "Adam", "Kowalski", "kowalski@o2.pl", "Krawko", "Active", "Manager");
+		Mockito.when(personService.findById(2L)).thenReturn(Optional.of(personDto));
+		
+		mockMvc.perform(get("/people/" + personDto.getId()))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-				.andExpect(jsonPath("$[0].id").value(personDto.getId()));
+				.andExpect(jsonPath("$.id").value(personDto.getId()));
+		
 	}
 }

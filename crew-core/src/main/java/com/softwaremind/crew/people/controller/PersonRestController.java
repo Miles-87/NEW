@@ -40,7 +40,7 @@ public class PersonRestController {
 	 *
 	 * @return
 	 */
-	@RequestMapping("/people")
+	@GetMapping("/people")
 	public List<PersonDto> findAll() {
 		return personService.findAll();
 	}
