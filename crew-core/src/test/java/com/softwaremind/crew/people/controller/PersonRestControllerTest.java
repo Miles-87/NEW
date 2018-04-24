@@ -63,7 +63,7 @@ public class PersonRestControllerTest {
 	@Test
 	public void shouldGetPersonById() throws Exception {
 		Long testId = 2L;
-		PersonDto personDto = new PersonDto(2L, "Adam", "Kowalski", "kowalski@o2.pl", "Krawko", "Active", "Manager");
+		PersonDto personDto = new PersonDto(testId, "Adam", "Kowalski", "kowalski@o2.pl", "Krawko", "Active", "Manager");
 		Mockito.when(personService.findById(testId)).thenReturn(Optional.of(personDto));
 		
 		mockMvc.perform(get("/people/" + personDto.getId()))
