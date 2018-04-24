@@ -1,15 +1,11 @@
 package com.softwaremind.crew.people.controller;
 
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Optional;
 
-import com.softwaremind.crew.people.model.dto.PersonDto;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,13 +18,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.softwaremind.crew.people.model.Person;
+import com.softwaremind.crew.people.model.dto.PersonDto;
 import com.softwaremind.crew.people.service.PersonService;
 
 /**
  * TestSuit for {@link PersonRestController}
- * 
+ *
  * @author Wiktor Religo
+ * @author Mateusz Michoński
  * @since 10.04.2018
  */
 
