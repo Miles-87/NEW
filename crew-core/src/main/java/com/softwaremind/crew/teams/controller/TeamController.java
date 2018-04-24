@@ -2,9 +2,8 @@ package com.softwaremind.crew.teams.controller;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.softwaremind.crew.teams.model.TeamDto;
@@ -46,7 +45,7 @@ public class TeamController {
 	 * @return updated Team
 	 */
 	@PutMapping("team/{id}")
-	public TeamDto updateTeamById(@PathVariable(value = "id") long id, @Valid @RequestBody TeamDto teamDto) {
+	public TeamDto updateById(@PathVariable(value = "id") long id, @RequestBody TeamDto teamDto) {
 		return teamService.updateTeamById(id, teamDto);
 	}
 	
@@ -57,8 +56,8 @@ public class TeamController {
 	 *            of team
 	 * @return Team object
 	 */
-	@GetMapping("team/{id}")
-	public TeamDto findTeamById(@PathVariable Long id) {
+	@GetMapping("teams/{id}")
+	public TeamDto findById(@PathVariable Long id) {
 		return teamService.findTeamById(id);
 	}
 	
@@ -69,8 +68,9 @@ public class TeamController {
 	 *            of team
 	 * @return deleted team
 	 */
-	@DeleteMapping("team/{id}")
-	public TeamDto deleteTeamById(@PathVariable Long id) {
+	@DeleteMapping("teams/{id}")
+	public ResponseEntity<?> deleteById(@PathVariable Long id) {
+		
 		return teamService.deleteTeamById(id);
 	}
 	
@@ -80,8 +80,8 @@ public class TeamController {
 	 * @param teamDto
 	 * @return new Team
 	 */
-	@PostMapping("team/add")
-	public TeamDto createTeam(@Valid @RequestBody TeamDto teamDto) {
+	@PostMapping("teams/add")
+	public TeamDto createTeam(@RequestBody TeamDto teamDto) {
 		return teamService.createTeam(teamDto);
 	}
 	
