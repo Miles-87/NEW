@@ -1,23 +1,36 @@
 package com.softwaremind.crew.people.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Objects;
+
+import javax.persistence.*;
 
 /**
  * Person class represents the Person entity
- * 
+ *
  * @author Wiktor Religo
+ * @author Mateusz Michoński
  * @since 09.04.2018
  */
+@Entity
+@Table(name = "Person")
 public class Person implements Serializable {
 	
+	@Id
+	@GeneratedValue
 	private long id;
+	@Version
+	private Long version;
+	
 	private String firstName;
 	private String lastName;
 	private String location;
 	private String email;
-	private String department;
+	private String status;
 	private String role;
+	private LocalDateTime createdOn;
+	private LocalDateTime modifiedOn;
 	
 	/**
 	 * Creating for Testing using Jackson, which requires a default constructor
@@ -25,18 +38,32 @@ public class Person implements Serializable {
 	public Person() {
 	}
 	
-	public Person(long id, String firstName, String lastName, String location, String email, String department, String role) {
+	public Person(Long id, String firstName, String lastName, String location, String email, String status, String role) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.location = location;
 		this.email = email;
-		this.department = department;
+		this.status = status;
 		this.role = role;
+	}
+	
+	@PrePersist
+	public void persistOnCreate() {
+		this.createdOn = LocalDateTime.now();
+	}
+	
+	@PreUpdate
+	public void updateOnModify() {
+		this.modifiedOn = LocalDateTime.now();
 	}
 	
 	public long getId() {
 		return id;
+	}
+	
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 	public String getFirstName() {
@@ -71,12 +98,12 @@ public class Person implements Serializable {
 		this.email = email;
 	}
 	
-	public String getDepartment() {
-		return department;
+	public String getStatus() {
+		return status;
 	}
 	
-	public void setDepartment(String department) {
-		this.department = department;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 	public String getRole() {
@@ -87,38 +114,59 @@ public class Person implements Serializable {
 		this.role = role;
 	}
 	
-	@Override
-	public String toString() {
-		return "Person: {" +
-				"id:" + id +
-				", firstName:'" + firstName + '\'' +
-				", lastName:'" + lastName + '\'' +
-				", location:'" + location + '\'' +
-				", email:'" + email + '\'' +
-				", department:'" + department + '\'' +
-				", role:'" + role + '\'' +
-				"}";
+	public LocalDateTime getCreateOn() {
+		return createdOn;
+	}
+	
+	public void setCreateOn(LocalDateTime createOn) {
+		this.createdOn = createOn;
+	}
+	
+	public LocalDateTime getModifiedOn() {
+		return modifiedOn;
+	}
+	
+	public void setModifiedOn(LocalDateTime modifiedOn) {
+		this.modifiedOn = modifiedOn;
 	}
 	
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
 			return true;
-		if (o == null || getClass() != o.getClass())
+		if (!(o instanceof Person))
 			return false;
 		Person person = (Person) o;
-		return id == person.id &&
-				Objects.equals(firstName, person.firstName) &&
-				Objects.equals(lastName, person.lastName) &&
-				Objects.equals(location, person.location) &&
-				Objects.equals(email, person.email) &&
-				Objects.equals(department, person.department) &&
-				Objects.equals(role, person.role);
+		return getId() == person.getId() &&
+				Objects.equals(getFirstName(), person.getFirstName()) &&
+				Objects.equals(getLastName(), person.getLastName()) &&
+				Objects.equals(getLocation(), person.getLocation()) &&
+				Objects.equals(getEmail(), person.getEmail()) &&
+				Objects.equals(getStatus(), person.getStatus()) &&
+				Objects.equals(getRole(), person.getRole()) &&
+				Objects.equals(createdOn, person.createdOn) &&
+				Objects.equals(getModifiedOn(), person.getModifiedOn());
 	}
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, firstName, lastName, location, email, department, role);
+		
+		return Objects.hash(getId(), getFirstName(), getLastName(), getLocation(), getEmail(), getStatus(), getRole(), createdOn,
+				getModifiedOn());
 	}
 	
+	@Override
+	public String toString() {
+		return "Person{" +
+				"id=" + id +
+				", firstName='" + firstName + '\'' +
+				", lastName='" + lastName + '\'' +
+				", location='" + location + '\'' +
+				", email='" + email + '\'' +
+				", status='" + status + '\'' +
+				", role='" + role + '\'' +
+				", createdOn=" + createdOn +
+				", modifiedOn=" + modifiedOn +
+				'}';
+	}
 }

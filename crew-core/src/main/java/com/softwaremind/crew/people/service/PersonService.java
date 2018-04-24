@@ -1,53 +1,58 @@
 package com.softwaremind.crew.people.service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.softwaremind.crew.people.model.Person;
+import com.softwaremind.crew.people.model.dto.PersonDto;
 import com.softwaremind.crew.people.repository.PersonRepository;
 
 /**
  * PersonService class for managing {@link PersonRepository}
- * 
+ *
  * @author Wiktor Religo
- * @since 10.04.2018
+ * @author Mateusz Michoński
+ * @since 09.04.2018
  */
 @Service
 public class PersonService {
 	
 	private final PersonRepository personRepository;
+	private final ModelMapper modelMapper;
 	
 	@Autowired
 	public PersonService(PersonRepository personRepository) {
 		this.personRepository = personRepository;
+		this.modelMapper = new ModelMapper();
 	}
 	
 	/**
-	 * Method returns all People
-	 * 
-	 * @return all People
+	 * This method return a list of Persons
+	 *
+	 * @return
 	 */
-	public List<Person> findAll() {
-		return personRepository.getPeople();
+	public List<PersonDto> findAll() {
+		return modelMapper.map(personRepository.findAll(), new TypeToken<List<PersonDto>>() {
+		}.getType());
 	}
 	
 	/**
-	 * Method returns an Person entity selected by id
-	 * 
+	 * Method returns a Person by id
+	 *
 	 * @param id
-	 *            of Person
-	 * @return Person entity
+	 * @return
 	 */
-	public Person getPersonById(long id) {
-		
-		return personRepository.getPeople()
-				.stream()
-				.filter(p -> p.getId() == id)
-				.findAny().orElseThrow(NoSuchElementException::new);
+	public Optional<PersonDto> findById(Long id) {
+		if (id == null) {
+			throw new IllegalArgumentException("id shouldn't be null");
+		}
+		return personRepository
+				.findById(id)
+				.map(p -> modelMapper.map(p, PersonDto.class));
 		
 	}
-	
 }
