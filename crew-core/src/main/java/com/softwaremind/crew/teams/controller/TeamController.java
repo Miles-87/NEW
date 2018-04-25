@@ -3,6 +3,7 @@ package com.softwaremind.crew.teams.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,15 +39,18 @@ public class TeamController {
 	
 	/**
 	 * Method update Team by id
-	 * 
+	 *
 	 * @param id
 	 *            of team
 	 * @param teamDto
 	 * @return updated Team
 	 */
 	@PutMapping("teams/{id}")
-	public TeamDto updateById(@PathVariable(value = "id") long id, @RequestBody TeamDto teamDto) {
-		return teamService.updateTeamById(id, teamDto);
+	public ResponseEntity<TeamDto> updateById(@PathVariable(value = "id") long id, @RequestBody TeamDto teamDto) {
+		return teamService
+				.updateTeamById(id, teamDto)
+				.map(ResponseEntity::ok)
+				.orElse(ResponseEntity.notFound().build());
 	}
 	
 	/**
@@ -57,8 +61,11 @@ public class TeamController {
 	 * @return Team object
 	 */
 	@GetMapping("teams/{id}")
-	public TeamDto findById(@PathVariable Long id) {
-		return teamService.findTeamById(id);
+	public ResponseEntity<TeamDto> findById(@PathVariable Long id) {
+		return teamService
+				.findTeamById(id)
+				.map(ResponseEntity::ok)
+				.orElse(ResponseEntity.notFound().build());
 	}
 	
 	/**
@@ -70,18 +77,27 @@ public class TeamController {
 	 */
 	@DeleteMapping("teams/{id}")
 	public ResponseEntity<?> deleteById(@PathVariable Long id) {
-		return teamService.deleteTeamById(id);
+		try {
+			teamService.deleteTeamById(id);
+			return ResponseEntity.ok().body("Deleted");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cant delete! Entity not exist");
+		}
 	}
 	
 	/**
 	 * Method creates new Team
-	 * 
+	 *
 	 * @param teamDto
 	 * @return new Team
 	 */
 	@PostMapping("/teams")
-	public TeamDto createTeam(@RequestBody TeamDto teamDto) {
-		return teamService.createTeam(teamDto);
+	public ResponseEntity<TeamDto> createTeam(@RequestBody TeamDto teamDto) {
+		try {
+			teamService.createTeam(teamDto);
+			return ResponseEntity.ok(teamDto);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
+		}
 	}
-	
 }

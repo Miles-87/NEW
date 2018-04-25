@@ -4,6 +4,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.util.Collections;
+import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,9 +13,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -64,7 +63,7 @@ public class TeamControllerTest {
 	@Test
 	public void shouldGetTeamByIdFromPath() throws Exception {
 		TeamDto team = new TeamDto(1, "Jan", "local", "wawa", 6);
-		Mockito.when(teamService.findTeamById(1l)).thenReturn(team);
+		Mockito.when(teamService.findTeamById(1l)).thenReturn(Optional.of(team));
 		
 		mockMvc.perform(get("/teams/" + 1))
 				.andExpect(status().isOk())
@@ -76,7 +75,7 @@ public class TeamControllerTest {
 	public void shouldUpdateTeamByPutRequest() throws Exception {
 		TeamDto team = new TeamDto(1, "Jan", "local", "wawa", 6);
 		
-		Mockito.when(teamService.updateTeamById(1, team)).thenReturn(team);
+		Mockito.when(teamService.updateTeamById(1, team)).thenReturn(Optional.of(team));
 		
 		mockMvc.perform(
 				put("/teams/{id}", 1)
@@ -90,11 +89,10 @@ public class TeamControllerTest {
 	
 	@Test
 	public void shouldDeleteTeamByGivenId() throws Exception {
-		Mockito.when(teamService.deleteTeamById(1l)).thenReturn(new ResponseEntity(HttpStatus.ACCEPTED));
-		
-		mockMvc.perform(delete("/teams/{id}", 1)
+		Mockito.doCallRealMethod().when(teamService).deleteTeamById(2l);
+		mockMvc.perform(delete("/teams/{id}", 2l)
 				.accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isAccepted());
+				.andExpect(status().isNotFound());
 	}
 	
 }

@@ -14,4 +14,5 @@ import com.softwaremind.crew.teams.model.Team;
  */
 @Repository
 public interface TeamRepository extends JpaRepository<Team, Long> {
+	
 }

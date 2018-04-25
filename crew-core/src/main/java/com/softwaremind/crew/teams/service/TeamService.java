@@ -1,17 +1,14 @@
 package com.softwaremind.crew.teams.service;
 
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 
 import com.softwaremind.crew.teams.model.Team;
 import com.softwaremind.crew.teams.model.TeamDto;
@@ -53,13 +50,13 @@ public class TeamService {
 	 *            of team
 	 * @return Team object
 	 */
-	public TeamDto findTeamById(Long id) throws HttpClientErrorException {
-		if (teamRepository.findById(id).isPresent()) {
-			return modelMapper.map(teamRepository.findById(id).get(), TeamDto.class);
-		} else {
-			throw new HttpClientErrorException(NOT_FOUND, "No such Element expected");
+	public Optional<TeamDto> findTeamById(Long id) {
+		if (id == null) {
+			throw new IllegalArgumentException("An argument is missing ! ");
 		}
-		
+		return teamRepository
+				.findById(id)
+				.map(p -> modelMapper.map(p, TeamDto.class));
 	}
 	
 	/**
@@ -71,18 +68,18 @@ public class TeamService {
 	 * @return updated Team
 	 */
 	@Transactional
-	public TeamDto updateTeamById(long id, TeamDto teamDto) throws HttpClientErrorException {
+	public Optional<TeamDto> updateTeamById(long id, TeamDto teamDto) {
 		if (teamRepository.findById(id).isPresent()) {
-			Team teamEntity = teamRepository.findById(id).get();
+			Team teamEntity = teamRepository.getOne(id);
 			teamEntity.setName(teamDto.getName());
 			teamEntity.setCity(teamDto.getCity());
 			teamEntity.setDescription(teamDto.getDescription());
 			teamEntity.setHeadcount(teamDto.getHeadcount());
 			teamRepository.save(teamEntity);
+			return Optional.of(modelMapper.map(teamEntity, TeamDto.class));
 		} else {
-			throw new HttpClientErrorException(NOT_FOUND, "No such Element expected");
+			throw new IllegalArgumentException("NO such entity in database with given ID  ");
 		}
-		return teamDto;
 	}
 	
 	/**
@@ -93,11 +90,11 @@ public class TeamService {
 	 * @return deleted team
 	 */
 	@Transactional
-	public ResponseEntity<?> deleteTeamById(Long id) {
-		Team existTeam = teamRepository.findById(id).get();
-		
-		teamRepository.delete(existTeam);
-		return ResponseEntity.ok().build();
+	public void deleteTeamById(Long id) {
+		if (id == null) {
+			throw new IllegalArgumentException("An argument is missing ! ");
+		}
+		teamRepository.deleteById(id);
 	}
 	
 	/**
@@ -107,8 +104,11 @@ public class TeamService {
 	 * @return new Team
 	 */
 	@Transactional
-	public TeamDto createTeam(TeamDto teamDto) {
-		teamRepository.save(modelMapper.map(teamDto, Team.class));
-		return teamDto;
+	public void createTeam(TeamDto teamDto) {
+		if (Optional.ofNullable(teamDto).isPresent()) {
+			teamRepository.save(modelMapper.map(teamDto, Team.class));
+		} else {
+			throw new IllegalArgumentException("Wrong argument to save");
+		}
 	}
 }
