@@ -72,10 +72,17 @@ public class TeamControllerTest {
 	}
 	
 	@Test
+	public void shouldNotGetTeamByIdFromPath() throws Exception {
+		Mockito.doThrow(new IllegalArgumentException()).when(teamService).findTeamById(null);
+		
+		mockMvc.perform(get("/teams/" + 1))
+				.andExpect(status().isNotFound());
+	}
+	
+	@Test
 	public void shouldUpdateTeamByPutRequest() throws Exception {
 		TeamDto team = new TeamDto(1, "Jan", "local", "wawa", 6);
-		
-		Mockito.when(teamService.updateTeamById(1, team)).thenReturn(Optional.of(team));
+		Mockito.doThrow(new IllegalArgumentException()).when(teamService).updateTeamById(1l, te);
 		
 		mockMvc.perform(
 				put("/teams/{id}", 1)
@@ -88,11 +95,34 @@ public class TeamControllerTest {
 	}
 	
 	@Test
+	public void shouldNotUpdateTeamByPutRequest() throws Exception {
+		// to DOO
+		mockMvc.perform(
+				put("/teams/{id}", 1)
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(new ObjectMapper().valueToTree(Boolean.FALSE).toString()))
+				.andExpect(status().isBadRequest());
+	}
+	
+	@Test
 	public void shouldDeleteTeamByGivenId() throws Exception {
 		Mockito.doCallRealMethod().when(teamService).deleteTeamById(2l);
+		// to DOO
 		mockMvc.perform(delete("/teams/{id}", 2l)
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isNotFound());
+	}
+	
+	@Test
+	public void shouldNotDeleteTeamByGivenId() {
+		
+		// TO DO ....
+		
+	}
+	
+	@Test
+	public void shouldAddTeamToDatabase() {
+		// to doo
 	}
 	
 }

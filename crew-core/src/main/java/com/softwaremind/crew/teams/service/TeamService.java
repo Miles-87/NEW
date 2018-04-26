@@ -3,12 +3,12 @@ package com.softwaremind.crew.teams.service;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
-
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import com.softwaremind.crew.teams.model.Team;
 import com.softwaremind.crew.teams.model.TeamDto;
@@ -68,18 +68,18 @@ public class TeamService {
 	 * @return updated Team
 	 */
 	@Transactional
-	public Optional<TeamDto> updateTeamById(long id, TeamDto teamDto) {
-		if (teamRepository.findById(id).isPresent()) {
-			Team teamEntity = teamRepository.getOne(id);
-			teamEntity.setName(teamDto.getName());
-			teamEntity.setCity(teamDto.getCity());
-			teamEntity.setDescription(teamDto.getDescription());
-			teamEntity.setHeadcount(teamDto.getHeadcount());
-			teamRepository.save(teamEntity);
-			return Optional.of(modelMapper.map(teamEntity, TeamDto.class));
-		} else {
-			throw new IllegalArgumentException("NO such entity in database with given ID  ");
-		}
+	public void updateTeamById(Long id, TeamDto teamDto) throws NoEntityFoundException {
+		Assert.notNull(id, "Id can't be null ! ");
+		Assert.notNull(teamDto, "Object can't be null!");
+		teamRepository.findById(id)
+				.map(team -> {
+					Team teamEntity = teamRepository.getOne(id);
+					teamEntity.setName(teamDto.getName());
+					teamEntity.setCity(teamDto.getCity());
+					teamEntity.setDescription(teamDto.getDescription());
+					teamEntity.setHeadcount(teamDto.getHeadcount());
+					return teamRepository.save(teamEntity);
+				}).orElseThrow(NoEntityFoundException::new);
 	}
 	
 	/**
@@ -91,9 +91,7 @@ public class TeamService {
 	 */
 	@Transactional
 	public void deleteTeamById(Long id) {
-		if (id == null) {
-			throw new IllegalArgumentException("An argument is missing ! ");
-		}
+		Assert.notNull(id, "Id can't be null !");
 		teamRepository.deleteById(id);
 	}
 	
@@ -105,10 +103,16 @@ public class TeamService {
 	 */
 	@Transactional
 	public void createTeam(TeamDto teamDto) {
-		if (Optional.ofNullable(teamDto).isPresent()) {
-			teamRepository.save(modelMapper.map(teamDto, Team.class));
-		} else {
-			throw new IllegalArgumentException("Wrong argument to save");
+		teamRepository.save(modelMapper.map(teamDto, Team.class));
+	}
+	
+	/**
+	 * Class to handle own Exception of the lack of entity in the database
+	 */
+	private class NoEntityFoundException extends RuntimeException {
+		public NoEntityFoundException() {
+			super("There is no Entity in database with given id.");
 		}
+		
 	}
 }

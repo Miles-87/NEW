@@ -3,7 +3,6 @@ package com.softwaremind.crew.teams.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,11 +45,13 @@ public class TeamController {
 	 * @return updated Team
 	 */
 	@PutMapping("teams/{id}")
-	public ResponseEntity<TeamDto> updateById(@PathVariable(value = "id") long id, @RequestBody TeamDto teamDto) {
-		return teamService
-				.updateTeamById(id, teamDto)
-				.map(ResponseEntity::ok)
-				.orElse(ResponseEntity.notFound().build());
+	public ResponseEntity<?> updateById(@PathVariable(value = "id") Long id, @RequestBody TeamDto teamDto) {
+		try {
+			teamService.updateTeamById(id, teamDto);
+			return ResponseEntity.ok().build();
+		} catch (Exception e) {
+			return ResponseEntity.notFound().build();
+		}
 	}
 	
 	/**
@@ -79,9 +80,9 @@ public class TeamController {
 	public ResponseEntity<?> deleteById(@PathVariable Long id) {
 		try {
 			teamService.deleteTeamById(id);
-			return ResponseEntity.ok().body("Deleted");
+			return ResponseEntity.ok().build();
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cant delete! Entity not exist");
+			return ResponseEntity.notFound().build();
 		}
 	}
 	
@@ -97,7 +98,7 @@ public class TeamController {
 			teamService.createTeam(teamDto);
 			return ResponseEntity.ok(teamDto);
 		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.CONFLICT);
+			return ResponseEntity.badRequest().build();
 		}
 	}
 }
