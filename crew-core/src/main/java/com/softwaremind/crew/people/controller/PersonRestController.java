@@ -34,7 +34,7 @@ public class PersonRestController {
 	 *
 	 * @return
 	 */
-	@GetMapping("/people")
+	@GetMapping("/persons")
 	public List<PersonDto> findAll() {
 		return personService.findAll();
 	}
@@ -46,7 +46,7 @@ public class PersonRestController {
 	 * @return
 	 */
 	
-	@GetMapping(value = "/people/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/persons/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<PersonDto> getPersonById(@PathVariable long id) {
 		return personService
 				.findById(id)
@@ -92,7 +92,7 @@ public class PersonRestController {
 	 * @param personDto
 	 * @return
 	 */
-	@PostMapping("/people")
+	@PostMapping("/persons")
 	public ResponseEntity<PersonDto> createPerson(@RequestBody PersonDto personDto) {
 		try {
 			personService.createPerson(personDto);

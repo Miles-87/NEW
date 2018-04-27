@@ -1,8 +1,8 @@
 package com.softwaremind.crew.people.controller;
 
-import static java.nio.file.Files.delete;
-import static org.springframework.mock.http.server.reactive.MockServerHttpRequest.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.util.Collections;
@@ -63,7 +63,7 @@ public class PersonRestControllerTest {
 				.andExpect(jsonPath("$[0].status").value(personDto.getStatus()))
 				.andExpect(jsonPath("$[0].role").value(personDto.getRole()));
 	}
-
+	
 	@Ignore
 	@Test
 	public void shouldGetPersonById() throws Exception {
@@ -77,30 +77,28 @@ public class PersonRestControllerTest {
 				.andExpect(jsonPath("$.id").value(personDto.getId()));
 		
 	}
-
-	@Ignore
+	
 	@Test
 	public void shouldDeletePersonById() throws Exception {
 		Mockito.doCallRealMethod().when(personService).deleteById(1L);
-		/*mockMvc.perform(delete("/teams/{id}", 1L)
+		mockMvc.perform(delete("/people/{id}", 1L)
 				.accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isNotFound());*/
+				.andExpect(status().isNotFound());
 	}
-
-	@Ignore
+	
 	@Test
 	public void shouldUpdatePersonByPutRequest() throws Exception {
 		PersonDto person = new PersonDto(1L, "Bob", "Noob", "mail@first.pl", "Warszawa", "APPS", "Developer");
-		Mockito.doThrow(new IllegalArgumentException()).when(personService).updatePersonById(1l, person);
+		Mockito.doThrow(new IllegalArgumentException()).when(personService).updatePersonById(1L, person);
 		
-		/*mockMvc.perform(
-				put("/teams/{id}", 1)
+		mockMvc.perform(
+				put("/persons/{id}", 1)
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(new ObjectMapper().valueToTree(person).toString()))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(jsonPath("$.id").value(person.getId()))
-				.andExpect(jsonPath("$.name").value(person.getFirstName()));*/
+				.andExpect(jsonPath("$.firstName").value(person.getFirstName()));
 	}
 	
 }
