@@ -76,11 +76,11 @@ public class PersonRestController {
 	 * @param id
 	 * @return
 	 */
-	@DeleteMapping("/person/{id}")
+	@DeleteMapping("/persons/{id}")
 	public ResponseEntity<?> deleteById(@PathVariable Long id) {
 		try {
 			personService.deleteById(id);
-			return ResponseEntity.ok().body("Deleted");
+			return ResponseEntity.ok().body("{Deleted}");
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cant delete! Entity not exist");
 		}
