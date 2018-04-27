@@ -1,16 +1,12 @@
 package com.softwaremind.crew.people.controller;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.util.Collections;
 import java.util.Optional;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -22,6 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.softwaremind.crew.people.model.dto.PersonDto;
 import com.softwaremind.crew.people.service.PersonService;
 
@@ -52,7 +49,7 @@ public class PersonRestControllerTest {
 		PersonDto personDto = new PersonDto(1L, "Bob", "Noob", "mail@first.pl", "Warszawa", "APPS", "Developer");
 		Mockito.when(personService.findAll()).thenReturn(Collections.singletonList(personDto));
 		
-		mockMvc.perform(get("/people"))
+		mockMvc.perform(get("/persons"))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(jsonPath("$[0].id").value(personDto.getId()))
@@ -64,14 +61,13 @@ public class PersonRestControllerTest {
 				.andExpect(jsonPath("$[0].role").value(personDto.getRole()));
 	}
 	
-	@Ignore
 	@Test
 	public void shouldGetPersonById() throws Exception {
 		Long testId = 2L;
-		PersonDto personDto = new PersonDto(testId, "Adam", "Kowalski", "kowalski@o2.pl", "Krawko", "Active", "Manager");
+		PersonDto personDto = new PersonDto(testId,"Adam", "Kowalski", "kowalski@o2.pl", "Krawko", "Active", "Manager");
 		Mockito.when(personService.findById(testId)).thenReturn(Optional.of(personDto));
 		
-		mockMvc.perform(get("/people/" + personDto.getId()))
+		mockMvc.perform(get("/persons/{id}" + personDto.getId()))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(jsonPath("$.id").value(personDto.getId()));
@@ -81,24 +77,30 @@ public class PersonRestControllerTest {
 	@Test
 	public void shouldDeletePersonById() throws Exception {
 		Mockito.doCallRealMethod().when(personService).deleteById(1L);
-		mockMvc.perform(delete("/people/{id}", 1L)
+		mockMvc.perform(delete("/person/{id}", 1L)
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isNotFound());
 	}
 	
 	@Test
-	public void shouldUpdatePersonByPutRequest() throws Exception {
+	public void shouldUpdatePersonById() throws Exception {
 		PersonDto person = new PersonDto(1L, "Bob", "Noob", "mail@first.pl", "Warszawa", "APPS", "Developer");
-		Mockito.doThrow(new IllegalArgumentException()).when(personService).updatePersonById(1L, person);
-		
 		mockMvc.perform(
-				put("/persons/{id}", 1)
+				put("/persons/{id}", 2l)
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(new ObjectMapper().valueToTree(person).toString()))
-				.andExpect(status().isOk())
-				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-				.andExpect(jsonPath("$.id").value(person.getId()))
-				.andExpect(jsonPath("$.firstName").value(person.getFirstName()));
+				.andExpect(status().isOk());
 	}
 	
+	@Test
+	public void shouldSavePersonInDatabase() throws Exception {
+		PersonDto personDto = new PersonDto(1L, "Bob", "Noob", "mail@first.pl", "Warszawa", "APPS", "Developer");
+		Mockito.doNothing().when(personService).createPerson(personDto);
+		
+		mockMvc.perform(
+				post("/persons")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(new ObjectMapper().valueToTree(personDto).toString()))
+				.andExpect(status().isOk());
+	}
 }

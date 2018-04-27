@@ -3,7 +3,6 @@ package com.softwaremind.crew.people.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -63,10 +62,12 @@ public class PersonRestController {
 	 */
 	@PutMapping("/persons/{id}")
 	public ResponseEntity<PersonDto> updateById(@PathVariable(value = "id") long id, @RequestBody PersonDto personDto) {
-		return personService
-				.updatePersonById(id, personDto)
-				.map(ResponseEntity::ok)
-				.orElse(ResponseEntity.notFound().build());
+		try {
+			personService.updatePersonById(id, personDto);
+			return ResponseEntity.ok().build();
+		} catch (Exception e) {
+			return ResponseEntity.notFound().build();
+		}
 	}
 	
 	/**
@@ -75,8 +76,7 @@ public class PersonRestController {
 	 * @param id
 	 * @return
 	 */
-	
-	@DeleteMapping("/persons/{id}")
+	@DeleteMapping("/person/{id}")
 	public ResponseEntity<?> deleteById(@PathVariable Long id) {
 		try {
 			personService.deleteById(id);
@@ -98,7 +98,7 @@ public class PersonRestController {
 			personService.createPerson(personDto);
 			return ResponseEntity.ok(personDto);
 		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.CONFLICT);
+			return ResponseEntity.badRequest().build();
 		}
 	}
 	

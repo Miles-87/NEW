@@ -1,6 +1,7 @@
 package com.softwaremind.crew.people.service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import com.softwaremind.crew.people.model.Person;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.softwaremind.crew.people.model.dto.PersonDto;
 import com.softwaremind.crew.people.repository.PersonRepository;
+import org.springframework.util.Assert;
 
 import javax.transaction.Transactional;
 
@@ -95,21 +97,23 @@ public class PersonService {
 	 * @param personDto
 	 * @return
 	 */
+	
 	@Transactional
-	public Optional<PersonDto> updatePersonById(long id, PersonDto personDto) {
-		if (personRepository.findById(id).isPresent()) {
-			Person personEntity = personRepository.getOne(id);
-			personEntity.setFirstName(personDto.getFirstName());
-			personEntity.setLastName(personDto.getLastName());
-			personEntity.setLocation(personDto.getLocation());
-			personEntity.setEmail(personDto.getEmail());
-			personEntity.setRole(personDto.getRole());
-			personEntity.setStatus(personDto.getStatus());
-			personRepository.save(personEntity);
-			return Optional.of(modelMapper.map(personEntity, PersonDto.class));
-		} else {
-			throw new IllegalArgumentException("No such entity in database with given ID  ");
-		}
+	public void updatePersonById(long id, PersonDto personDto) throws NoSuchElementException {
+		Assert.notNull(id, "id can't be null");
+		Assert.notNull(personDto, "personDto can't be null");
+		personRepository.findById(id)
+				.map(person -> {
+					Person personEntity = personRepository.getOne(id);
+					personEntity.setFirstName(personDto.getFirstName());
+					personEntity.setLastName(personDto.getLastName());
+					personEntity.setLocation(personDto.getLocation());
+					personEntity.setEmail(personDto.getEmail());
+					personEntity.setRole(personDto.getRole());
+					personEntity.setStatus(personDto.getStatus());
+					personRepository.save(personEntity);
+					return personRepository.save(personEntity);
+				}).orElseThrow(NoSuchElementException::new);
 	}
 	
 }
