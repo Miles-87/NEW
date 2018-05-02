@@ -74,6 +74,7 @@ public class TeamService {
 		teamRepository.findById(id)
 				.map(team -> {
 					Team teamEntity = teamRepository.getOne(id);
+					teamEntity.setId(teamDto.getId());
 					teamEntity.setName(teamDto.getName());
 					teamEntity.setCity(teamDto.getCity());
 					teamEntity.setDescription(teamDto.getDescription());
