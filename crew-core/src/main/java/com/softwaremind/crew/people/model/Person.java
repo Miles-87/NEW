@@ -38,8 +38,8 @@ public class Person implements Serializable {
 	public Person() {
 	}
 	
-	public Person(Long version, String firstName, String lastName, String location, String email, String status, String role) {
-		this.version = version;
+	public Person(Long id, String firstName, String lastName, String location, String email, String status, String role) {
+		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.location = location;

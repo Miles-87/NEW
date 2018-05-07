@@ -1,6 +1,7 @@
 package com.softwaremind.crew.people.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.times;
 
 import java.util.Arrays;
 import java.util.List;
@@ -11,6 +12,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.modelmapper.ModelMapper;
 
 import com.softwaremind.crew.people.model.Person;
 import com.softwaremind.crew.people.model.dto.PersonDto;
@@ -27,6 +29,7 @@ import com.softwaremind.crew.people.repository.PersonRepository;
 public class PersonServiceTest {
 	
 	private PersonService personService;
+	private ModelMapper mapper;
 	
 	@Mock
 	private PersonRepository personRepository;
@@ -35,12 +38,13 @@ public class PersonServiceTest {
 	public void initTest() {
 		MockitoAnnotations.initMocks(this);
 		personService = new PersonService(personRepository);
+		mapper = new ModelMapper();
 	}
 	
 	@Before
 	public void initMockRepository() {
 		Person person1 = new Person(1L, "jan", "mucha", "krakow", "email1@onet.com", "Programing", "Developer");
-		Person person2 = new Person(3L, "Alicja", "Kowalska", "Warszawa", "email2@gmail.com", "Business", "Designer");
+		Person person2 = new Person(1L, "Alicja", "Kowalska", "Warszawa", "email2@gmail.com", "Business", "Designer");
 		Mockito.when(personRepository.findAll()).thenReturn(Arrays.asList(person1, person2));
 	}
 	
@@ -56,6 +60,34 @@ public class PersonServiceTest {
 		
 		Optional<PersonDto> result = personService.findById(3L);
 		assertThat(result).isNotNull();
+	}
+	
+	@Test
+	public void shouldDeletePersonById() {
+		personService.deleteById(1l);
+		Mockito.verify(personRepository, times(1)).deleteById(1l);
+	}
+	
+	@Test
+	public void shouldAddPersonToDatabase() {
+		Person person1 = new Person(1L, "jan", "mucha", "krakow", "email1@onet.com", "Programing", "Developer");
+		personService.createPerson(mapper.map(person1, PersonDto.class));
+		Mockito.verify(personRepository, times(1)).save(person1);
+	}
+	
+	@Test
+	public void shouldUpdatePersonInDatabase() {
+		Person person1 = new Person(1L, "jan", "mucha", "warszawa", "email1@onet.com", "Programing", "Developer");
+		
+		Mockito.when(personRepository.save(person1)).thenReturn(person1);
+		Mockito.when(personRepository.findById(1L)).thenReturn(Optional.of(person1));
+		Mockito.when(personRepository.getOne(1L)).thenReturn(person1);
+		
+		personService.updatePersonById(1L, mapper.map(person1, PersonDto.class));
+		
+		Mockito.verify(personRepository, times(1)).save(person1);
+		Mockito.verify(personRepository, times(1)).findById(1L);
+		Mockito.verify(personRepository, times(1)).getOne(1L);
 	}
 	
 }

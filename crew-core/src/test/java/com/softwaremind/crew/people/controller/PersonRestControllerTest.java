@@ -64,10 +64,10 @@ public class PersonRestControllerTest {
 	@Test
 	public void shouldGetPersonById() throws Exception {
 		Long testId = 2L;
-		PersonDto personDto = new PersonDto(testId,"Adam", "Kowalski", "kowalski@o2.pl", "Krawko", "Active", "Manager");
+		PersonDto personDto = new PersonDto(testId, "Adam", "Kowalski", "kowalski@oo2.pl", "Krawko", "Active", "Manager");
 		Mockito.when(personService.findById(testId)).thenReturn(Optional.of(personDto));
 		
-		mockMvc.perform(get("/persons/{id}" + personDto.getId()))
+		mockMvc.perform(get("/persons/" + personDto.getId()))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(jsonPath("$.id").value(personDto.getId()));
@@ -83,6 +83,13 @@ public class PersonRestControllerTest {
 	}
 	
 	@Test
+	public void shouldNotDeletePersonByGivenId() throws Exception {
+		Mockito.doThrow(new PersonService.NoEntityFoundException()).when(personService).deleteById(1L);
+		mockMvc.perform(delete("/persons/{id}", 1L))
+				.andExpect(status().isBadRequest());
+	}
+	
+	@Test
 	public void shouldUpdatePersonById() throws Exception {
 		PersonDto person = new PersonDto(1L, "Bob", "Noob", "mail@first.pl", "Warszawa", "APPS", "Developer");
 		mockMvc.perform(
@@ -90,6 +97,18 @@ public class PersonRestControllerTest {
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(new ObjectMapper().valueToTree(person).toString()))
 				.andExpect(status().isOk());
+	}
+	
+	@Test
+	public void shouldNotUpdatePersonByPutRequest() throws Exception {
+		PersonDto personDto = new PersonDto(1L, "Bob", "Noob", "mail@first.pl", "Warszawa", "APPS", "Developer");
+		Mockito.doThrow(new PersonService.NoEntityFoundException()).when(personService).updatePersonById(1l, personDto);
+		
+		mockMvc.perform(
+				put("/persons/{id}", 1)
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(new ObjectMapper().valueToTree(personDto).toString()))
+				.andExpect(status().isNotFound());
 	}
 	
 	@Test
@@ -103,4 +122,17 @@ public class PersonRestControllerTest {
 						.content(new ObjectMapper().valueToTree(personDto).toString()))
 				.andExpect(status().isOk());
 	}
+	
+	@Test
+	public void shouldNotSavePersonToDatabase() throws Exception {
+		PersonDto personDto = new PersonDto(1L, "Bob", "Noob", "mail@first.pl", "Warszawa", "APPS", "Developer");
+		Mockito.doThrow(new IllegalArgumentException()).when(personService).createPerson(personDto);
+		
+		mockMvc.perform(
+				post("/persons")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(new ObjectMapper().valueToTree(personDto).toString()))
+				.andExpect(status().isBadRequest());
+	}
+	
 }

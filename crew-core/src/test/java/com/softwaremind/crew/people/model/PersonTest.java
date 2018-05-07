@@ -22,7 +22,7 @@ public class PersonTest {
 	@BeforeClass
 	public static void initObjects() {
 		person1 = new Person(1L, "Tomek", "Nowak", "Krkaów", "email@gmail.com", "APPS", "Developer");
-		person2 = new Person(2L, "Alicja", "Kowalska", "Warszawa", "email2@gmail.com", "Business", "Designer");
+		person2 = new Person(1L, "Alicja", "Kowalska", "Warszawa", "email2@gmail.com", "Business", "Designer");
 		
 	}
 	

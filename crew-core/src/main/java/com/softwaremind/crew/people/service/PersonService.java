@@ -81,9 +81,10 @@ public class PersonService {
 	 * @param personDto
 	 * @return
 	 */
+	
 	@Transactional
 	public void createPerson(PersonDto personDto) {
-		if (Optional.ofNullable(personDto).isPresent()) {
+		if (personDto != null) {
 			personRepository.save(modelMapper.map(personDto, Person.class));
 		} else {
 			throw new IllegalArgumentException("insert correct argument");
@@ -111,9 +112,18 @@ public class PersonService {
 					personEntity.setEmail(personDto.getEmail());
 					personEntity.setRole(personDto.getRole());
 					personEntity.setStatus(personDto.getStatus());
-					personRepository.save(personEntity);
 					return personRepository.save(personEntity);
 				}).orElseThrow(NoSuchElementException::new);
+	}
+	
+	/**
+	 * Class to handle own Exception of the lack of entity in the database
+	 */
+	public static class NoEntityFoundException extends RuntimeException {
+		public NoEntityFoundException() {
+			super("There is no Entity in database with this id.");
+		}
+		
 	}
 	
 }
