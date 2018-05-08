@@ -82,8 +82,7 @@ public class PersonRestControllerTest {
 	@Test
 	public void shouldDeletePersonById() throws Exception {
 		when(personService.deletePerson(isA(Long.class))).thenReturn(Optional.empty());
-		mockMvc.perform(delete("/people/{id}", 1L)
-				.accept(MediaType.APPLICATION_JSON))
+		mockMvc.perform(delete("/people/{id}", 1L))
 				.andExpect(status().isNotFound());
 	}
 	

@@ -90,12 +90,11 @@ public class PersonRestController {
 	 * @return
 	 */
 	@PostMapping("/people/add")
-	public ResponseEntity<PersonDto> createPerson(@RequestBody PersonDto personDto){
+	public ResponseEntity<PersonDto> createPerson(@RequestBody PersonDto personDto) {
 		return personService
 				.addPerson(personDto)
 				.map(ResponseEntity::ok)
 				.orElse(ResponseEntity.notFound().build());
 	}
-
 	
 }
