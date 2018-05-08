@@ -51,9 +51,7 @@ public class TeamService {
 	 * @return Team object
 	 */
 	public Optional<TeamDto> findTeamById(Long id) {
-		if (id == null) {
-			throw new IllegalArgumentException("An argument is missing ! ");
-		}
+		Assert.notNull(id, "An argument is missing ! ");
 		return teamRepository
 				.findById(id)
 				.map(p -> modelMapper.map(p, TeamDto.class));
@@ -108,13 +106,4 @@ public class TeamService {
 		teamRepository.save(modelMapper.map(teamDto, Team.class));
 	}
 	
-	/**
-	 * Class to handle own Exception of the lack of entity in the database
-	 */
-	public static class NoEntityFoundException extends RuntimeException {
-		public NoEntityFoundException() {
-			super("There is no Entity in database with given id.");
-		}
-		
-	}
 }

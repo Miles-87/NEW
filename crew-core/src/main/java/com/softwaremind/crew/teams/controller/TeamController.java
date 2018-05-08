@@ -94,11 +94,7 @@ public class TeamController {
 	 */
 	@PostMapping("/teams")
 	public ResponseEntity<?> createTeam(@RequestBody TeamDto teamDto) {
-		try {
-			teamService.createTeam(teamDto);
-			return ResponseEntity.ok(teamDto);
-		} catch (Exception e) {
-			return ResponseEntity.badRequest().body("Creating team process- failed.");
-		}
+		teamService.createTeam(teamDto);
+		return ResponseEntity.ok(teamDto);
 	}
 }

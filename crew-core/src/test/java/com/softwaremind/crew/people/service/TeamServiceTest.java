@@ -17,6 +17,7 @@ import org.modelmapper.ModelMapper;
 import com.softwaremind.crew.teams.model.Team;
 import com.softwaremind.crew.teams.model.TeamDto;
 import com.softwaremind.crew.teams.repository.TeamRepository;
+import com.softwaremind.crew.teams.service.NoEntityFoundException;
 import com.softwaremind.crew.teams.service.TeamService;
 
 /**
@@ -129,11 +130,11 @@ public class TeamServiceTest {
 	public void shouldNotUpdateTeamToDatabase() {
 		TeamDto teamDto = new TeamDto(1l, "TestCase1", "Description1", "Krakow", 12);
 		
-		Mockito.when(teamRepository.findById(1l)).thenThrow(new TeamService.NoEntityFoundException());
+		Mockito.when(teamRepository.findById(1l)).thenThrow(new NoEntityFoundException());
 		Mockito.when(teamRepository.findById(2l)).thenThrow(new IllegalArgumentException());
 		Mockito.when(teamRepository.findById(null)).thenThrow(new IllegalArgumentException());
 		
-		assertThatExceptionOfType(TeamService.NoEntityFoundException.class)
+		assertThatExceptionOfType(NoEntityFoundException.class)
 				.isThrownBy(() -> teamService.updateTeamById(1l, teamDto))
 				.withMessage("There is no Entity in database with given id.");
 		assertThatExceptionOfType(IllegalArgumentException.class)
