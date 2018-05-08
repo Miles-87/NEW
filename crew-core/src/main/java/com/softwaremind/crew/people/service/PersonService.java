@@ -108,15 +108,6 @@ public class PersonService {
 					return personRepository.save(personEntity);
 				}).orElseThrow(NoSuchElementException::new);
 	}
-	
-	/**
-	 * Class to handle own Exception of the lack of entity in the database
-	 */
-	public static class NoEntityFoundException extends RuntimeException {
-		public NoEntityFoundException() {
-			super("There is no Entity in database with this id.");
-		}
-		
-	}
+
 	
 }

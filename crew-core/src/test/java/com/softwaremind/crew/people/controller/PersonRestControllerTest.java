@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.Collections;
 import java.util.Optional;
 
+import com.softwaremind.crew.people.service.NoEntityFoundException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -88,7 +89,7 @@ public class PersonRestControllerTest {
 	
 	@Test
 	public void shouldNotDeletePersonByGivenId() throws Exception {
-		Mockito.doThrow(new PersonService.NoEntityFoundException()).when(personService).deletePerson(1L);
+		Mockito.doThrow(new NoEntityFoundException()).when(personService).deletePerson(1L);
 		mockMvc.perform(delete("/people/{id}", 1L))
 				.andExpect(status().isBadRequest());
 	}
@@ -106,7 +107,7 @@ public class PersonRestControllerTest {
 	@Test
 	public void shouldNotUpdatePersonByPutRequest() throws Exception {
 		PersonDto personDto = new PersonDto(1L, "Bob", "Noob", "mail@first.pl", "Warszawa", "APPS", "Developer");
-		Mockito.doThrow(new PersonService.NoEntityFoundException()).when(personService).updatePersonById(1l, personDto);
+		Mockito.doThrow(new NoEntityFoundException()).when(personService).updatePersonById(1l, personDto);
 		
 		mockMvc.perform(
 				put("/people/{id}", 1)
