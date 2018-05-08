@@ -24,6 +24,7 @@ import javax.transaction.Transactional;
  * @since 09.04.2018
  */
 @Service
+@Transactional
 public class PersonService {
 	
 	private final PersonRepository personRepository;
@@ -52,9 +53,7 @@ public class PersonService {
 	 * @return
 	 */
 	public Optional<PersonDto> findById(Long id) {
-		if (id == null) {
-			throw new IllegalArgumentException("id shouldn't be null");
-		}
+		Assert.notNull(id, "id can't be null");
 		return personRepository
 				.findById(id)
 				.map(p -> modelMapper.map(p, PersonDto.class));
@@ -66,13 +65,11 @@ public class PersonService {
 	 *
 	 * @param id
 	 */
-	@Transactional
-	public void deleteById(Long id) {
-		if (id == null) {
-			throw new IllegalArgumentException("id shouldn't be null");
-		}
-		personRepository.deleteById(id);
-		
+	public Optional<PersonDto> deletePerson(Long id) {
+		Assert.notNull(id, "id can't be null");
+		Optional<Person> personOptional = personRepository.findById(id);
+		personRepository.delete(personOptional.orElse(new Person()));
+		return personOptional.map(p -> modelMapper.map(p, PersonDto.class));
 	}
 	
 	/**
@@ -81,14 +78,11 @@ public class PersonService {
 	 * @param personDto
 	 * @return
 	 */
-	
-	@Transactional
-	public void createPerson(PersonDto personDto) {
-		if (personDto != null) {
-			personRepository.save(modelMapper.map(personDto, Person.class));
-		} else {
-			throw new IllegalArgumentException("insert correct argument");
-		}
+	public Optional<PersonDto> addPerson(PersonDto personDto) {
+		Assert.notNull(personDto, "personDto can't be null");
+		Person person = personRepository
+				.save(modelMapper.map(personDto, Person.class));
+		return Optional.of(modelMapper.map(person, PersonDto.class));
 	}
 	
 	/**
@@ -99,7 +93,6 @@ public class PersonService {
 	 * @return
 	 */
 	
-	@Transactional
 	public void updatePersonById(long id, PersonDto personDto) throws NoSuchElementException {
 		Assert.notNull(id, "id can't be null");
 		Assert.notNull(personDto, "personDto can't be null");

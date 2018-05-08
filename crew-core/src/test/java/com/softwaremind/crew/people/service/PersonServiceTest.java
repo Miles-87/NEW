@@ -14,6 +14,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 
+
 import com.softwaremind.crew.people.model.Person;
 import com.softwaremind.crew.people.model.dto.PersonDto;
 import com.softwaremind.crew.people.repository.PersonRepository;
@@ -64,14 +65,14 @@ public class PersonServiceTest {
 	
 	@Test
 	public void shouldDeletePersonById() {
-		personService.deleteById(1l);
+		personService.deletePerson(1l);
 		Mockito.verify(personRepository, times(1)).deleteById(1l);
 	}
 	
 	@Test
 	public void shouldAddPersonToDatabase() {
 		Person person1 = new Person(1L, "jan", "mucha", "krakow", "email1@onet.com", "Programing", "Developer");
-		personService.createPerson(mapper.map(person1, PersonDto.class));
+		personService.addPerson(mapper.map(person1, PersonDto.class));
 		Mockito.verify(personRepository, times(1)).save(person1);
 	}
 	
