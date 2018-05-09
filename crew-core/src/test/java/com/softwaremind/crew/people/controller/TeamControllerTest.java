@@ -1,6 +1,8 @@
 package com.softwaremind.crew.people.controller;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -11,7 +13,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -50,7 +51,7 @@ public class TeamControllerTest {
 	@Test
 	public void shouldGetTeamsResource() throws Exception {
 		TeamDto teamDto = new TeamDto(1, "Jan", "local", "wawa", 6);
-		Mockito.when(teamService.findAll()).thenReturn(Collections.singletonList(teamDto));
+		when(teamService.findAll()).thenReturn(Collections.singletonList(teamDto));
 		
 		mockMvc.perform(get("/teams"))
 				.andExpect(status().isOk())
@@ -66,7 +67,7 @@ public class TeamControllerTest {
 	@Test
 	public void shouldGetTeamByIdFromPath() throws Exception {
 		TeamDto team = new TeamDto(1, "Jan", "local", "wawa", 6);
-		Mockito.when(teamService.findTeamById(1l)).thenReturn(Optional.of(team));
+		when(teamService.findTeamById(1l)).thenReturn(Optional.of(team));
 		
 		mockMvc.perform(get("/teams/" + 1))
 				.andExpect(status().isOk())
@@ -76,7 +77,7 @@ public class TeamControllerTest {
 	
 	@Test
 	public void shouldNotGetTeamByIdFromPath() throws Exception {
-		Mockito.doThrow(new IllegalArgumentException()).when(teamService).findTeamById(null);
+		doThrow(new IllegalArgumentException()).when(teamService).findTeamById(null);
 		
 		mockMvc.perform(get("/teams/" + 1))
 				.andExpect(status().isNotFound());
@@ -95,7 +96,7 @@ public class TeamControllerTest {
 	@Test
 	public void shouldNotUpdateTeamByPutRequest() throws Exception {
 		TeamDto team = new TeamDto(1, "Jan", "local", "wawa", 6);
-		Mockito.doThrow(new NoEntityFoundException()).when(teamService).updateTeamById(1l, team);
+		doThrow(new NoEntityFoundException()).when(teamService).updateTeamById(1l, team);
 		
 		mockMvc.perform(
 				put("/teams/{id}", 1)
@@ -106,14 +107,14 @@ public class TeamControllerTest {
 	
 	@Test
 	public void shouldDeleteTeamByGivenId() throws Exception {
-		Mockito.doNothing().when(teamService).deleteTeamById(isA(Long.class));
+		doNothing().when(teamService).deleteTeamById(isA(Long.class));
 		mockMvc.perform(delete("/teams/{id}", 1))
 				.andExpect(status().isOk());
 	}
 	
 	@Test
 	public void shouldNotDeleteTeamByGivenId() throws Exception {
-		Mockito.doThrow(new NoEntityFoundException()).when(teamService).deleteTeamById(1l);
+		doThrow(new NoEntityFoundException()).when(teamService).deleteTeamById(1l);
 		
 		mockMvc.perform(delete("/teams/{id}", 1))
 				.andExpect(status().isBadRequest());
@@ -122,7 +123,7 @@ public class TeamControllerTest {
 	@Test
 	public void shouldAddTeamToDatabase() throws Exception {
 		TeamDto teamDto = new TeamDto(1, "Jan", "local", "wawa", 6);
-		Mockito.doNothing().when(teamService).createTeam(teamDto);
+		doNothing().when(teamService).createTeam(teamDto);
 		
 		mockMvc.perform(
 				post("/teams")
@@ -134,13 +135,15 @@ public class TeamControllerTest {
 	@Test
 	public void shouldNotAddTeamToDatabase() throws Exception {
 		TeamDto teamDto = new TeamDto(1, "Jan", "local", "wawa", 6);
-		Mockito.doNothing().when(teamService).createTeam(teamDto);
-		// to do..
+		
+		verify(teamService, times(0)).createTeam(teamDto);
+		teamService.createTeam(any());
+		
 		mockMvc.perform(
 				post("/teams")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(mappingObject.valueToTree(teamDto).toString()))
-				.andExpect(status().isOk());
+				.andReturn();
 	}
 	
 }
