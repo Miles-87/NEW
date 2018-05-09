@@ -7,6 +7,7 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.softwaremind.crew.teams.model.FactoryMapper;
 import com.softwaremind.crew.teams.model.TeamDto;
 import com.softwaremind.crew.teams.repository.TeamRepository;
 
@@ -24,9 +25,9 @@ public class TeamService {
 	private final ModelMapper modelMapper;
 	
 	@Autowired
-	public TeamService(TeamRepository teamRepository) {
+	public TeamService(TeamRepository teamRepository, FactoryMapper factoryModelMapper) {
 		this.teamRepository = teamRepository;
-		this.modelMapper = new ModelMapper();
+		this.modelMapper = factoryModelMapper.modelMapper();
 	}
 	
 	/**
