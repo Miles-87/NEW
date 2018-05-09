@@ -9,12 +9,10 @@ import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 
-import com.softwaremind.crew.teams.model.FactoryMapper;
 import com.softwaremind.crew.teams.model.Team;
 import com.softwaremind.crew.teams.model.TeamDto;
 import com.softwaremind.crew.teams.repository.TeamRepository;
@@ -34,18 +32,13 @@ public class TeamServiceTest {
 	
 	@Mock
 	private TeamRepository teamRepository;
-	@InjectMocks
-	private FactoryMapper factoryModelMapper;
 	
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-<<<<<<< HEAD
-		teamService = new TeamService(teamRepository, factoryModelMapper);
-=======
-		teamService = new TeamService(teamRepository);
-		mapper = new ModelMapper();
->>>>>>> origin
+		this.mapper = new ModelMapper();
+		teamService = new TeamService(teamRepository, this.mapper);
+		
 	}
 	
 	@Test

@@ -10,11 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-<<<<<<< HEAD
-import com.softwaremind.crew.teams.model.FactoryMapper;
-=======
 import com.softwaremind.crew.teams.model.Team;
->>>>>>> origin
 import com.softwaremind.crew.teams.model.TeamDto;
 import com.softwaremind.crew.teams.repository.TeamRepository;
 
@@ -32,9 +28,9 @@ public class TeamService {
 	private final ModelMapper modelMapper;
 	
 	@Autowired
-	public TeamService(TeamRepository teamRepository, FactoryMapper factoryModelMapper) {
+	public TeamService(TeamRepository teamRepository, ModelMapper modelMapper) {
 		this.teamRepository = teamRepository;
-		this.modelMapper = factoryModelMapper.modelMapper();
+		this.modelMapper = modelMapper;
 	}
 	
 	/**
