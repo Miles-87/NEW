@@ -1,6 +1,7 @@
 package com.softwaremind.crew.teams.model;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import javax.persistence.*;
 
@@ -33,7 +34,8 @@ public class Team {
 	public Team() {
 	}
 	
-	public Team(String name, String description, String city, Integer headcount) {
+	public Team(Long id, String name, String description, String city, Integer headcount) {
+		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.city = city;
@@ -123,5 +125,31 @@ public class Team {
 				", createdOn=" + createdOn +
 				", modifiedOn=" + modifiedOn +
 				'}';
+	}
+	
+	/*
+	 * Implementation of equals and hashCode for testing purposes
+	 */
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Team team = (Team) o;
+		return Objects.equals(id, team.id) &&
+				Objects.equals(version, team.version) &&
+				Objects.equals(name, team.name) &&
+				Objects.equals(description, team.description) &&
+				Objects.equals(city, team.city) &&
+				Objects.equals(headcount, team.headcount) &&
+				Objects.equals(createdOn, team.createdOn) &&
+				Objects.equals(modifiedOn, team.modifiedOn);
+	}
+	
+	@Override
+	public int hashCode() {
+		
+		return Objects.hash(id, version, name, description, city, headcount, createdOn, modifiedOn);
 	}
 }

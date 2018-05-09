@@ -8,7 +8,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.Collections;
 import java.util.Optional;
 
-import com.softwaremind.crew.people.service.NoEntityFoundException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,6 +22,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.softwaremind.crew.people.model.dto.PersonDto;
+import com.softwaremind.crew.people.service.NoEntityFoundException;
 import com.softwaremind.crew.people.service.PersonService;
 
 /**

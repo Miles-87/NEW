@@ -1,15 +1,18 @@
 package com.softwaremind.crew.people.controller;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.util.Collections;
+import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -17,8 +20,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.softwaremind.crew.teams.controller.TeamController;
 import com.softwaremind.crew.teams.model.TeamDto;
+import com.softwaremind.crew.teams.service.NoEntityFoundException;
 import com.softwaremind.crew.teams.service.TeamService;
 
 /**
@@ -33,6 +38,7 @@ import com.softwaremind.crew.teams.service.TeamService;
 @AutoConfigureMockMvc
 public class TeamControllerTest {
 	
+	private ObjectMapper mappingObject = new ObjectMapper();
 	private MockMvc mockMvc;
 	@Mock
 	private TeamService teamService;
@@ -45,7 +51,7 @@ public class TeamControllerTest {
 	@Test
 	public void shouldGetTeamsResource() throws Exception {
 		TeamDto teamDto = new TeamDto(1, "Jan", "local", "wawa", 6);
-		Mockito.when(teamService.findAll()).thenReturn(Collections.singletonList(teamDto));
+		when(teamService.findAll()).thenReturn(Collections.singletonList(teamDto));
 		
 		mockMvc.perform(get("/teams"))
 				.andExpect(status().isOk())
@@ -57,4 +63,87 @@ public class TeamControllerTest {
 				.andExpect(jsonPath("$[0].headcount").value(teamDto.getHeadcount()));
 		
 	}
+	
+	@Test
+	public void shouldGetTeamByIdFromPath() throws Exception {
+		TeamDto team = new TeamDto(1, "Jan", "local", "wawa", 6);
+		when(teamService.findTeamById(1l)).thenReturn(Optional.of(team));
+		
+		mockMvc.perform(get("/teams/" + 1))
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+				.andExpect(jsonPath("$.id").value(team.getId()));
+	}
+	
+	@Test
+	public void shouldNotGetTeamByIdFromPath() throws Exception {
+		doThrow(new IllegalArgumentException()).when(teamService).findTeamById(null);
+		
+		mockMvc.perform(get("/teams/" + 1))
+				.andExpect(status().isNotFound());
+	}
+	
+	@Test
+	public void shouldUpdateTeamByPutRequest() throws Exception {
+		TeamDto team = new TeamDto(1, "Jan", "local", "wawa", 6);
+		mockMvc.perform(
+				put("/teams/{id}", 2l)
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(mappingObject.valueToTree(team).toString()))
+				.andExpect(status().isOk());
+	}
+	
+	@Test
+	public void shouldNotUpdateTeamByPutRequest() throws Exception {
+		TeamDto team = new TeamDto(1, "Jan", "local", "wawa", 6);
+		doThrow(new NoEntityFoundException()).when(teamService).updateTeamById(1l, team);
+		
+		mockMvc.perform(
+				put("/teams/{id}", 1)
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(mappingObject.valueToTree(team).toString()))
+				.andExpect(status().isNotFound());
+	}
+	
+	@Test
+	public void shouldDeleteTeamByGivenId() throws Exception {
+		doNothing().when(teamService).deleteTeamById(isA(Long.class));
+		mockMvc.perform(delete("/teams/{id}", 1))
+				.andExpect(status().isOk());
+	}
+	
+	@Test
+	public void shouldNotDeleteTeamByGivenId() throws Exception {
+		doThrow(new NoEntityFoundException()).when(teamService).deleteTeamById(1l);
+		
+		mockMvc.perform(delete("/teams/{id}", 1))
+				.andExpect(status().isBadRequest());
+	}
+	
+	@Test
+	public void shouldAddTeamToDatabase() throws Exception {
+		TeamDto teamDto = new TeamDto(1, "Jan", "local", "wawa", 6);
+		doNothing().when(teamService).createTeam(teamDto);
+		
+		mockMvc.perform(
+				post("/teams")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(mappingObject.valueToTree(teamDto).toString()))
+				.andExpect(status().isOk());
+	}
+	
+	@Test
+	public void shouldNotAddTeamToDatabase() throws Exception {
+		TeamDto teamDto = new TeamDto(1, "Jan", "local", "wawa", 6);
+		
+		verify(teamService, times(0)).createTeam(teamDto);
+		teamService.createTeam(any());
+		
+		mockMvc.perform(
+				post("/teams")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(mappingObject.valueToTree(teamDto).toString()))
+				.andReturn();
+	}
+	
 }
