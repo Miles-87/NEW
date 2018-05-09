@@ -21,8 +21,9 @@ public class PersonTest {
 	 */
 	@BeforeClass
 	public static void initObjects() {
-		person1 = new Person(1, "Tomek", "Nowak", "Krkaów", "email@gmail.com", "APPS", "Developer");
-		person2 = new Person(1, "Alicja", "Kowalska", "Warszawa", "email2@gmail.com", "Business", "Designer");
+		person1 = new Person(1L, "Tomek", "Nowak", "Krkaów", "email@gmail.com", "APPS", "Developer");
+		person2 = new Person(1L, "Alicja", "Kowalska", "Warszawa", "email2@gmail.com", "Business", "Designer");
+		
 	}
 	
 	@Test
