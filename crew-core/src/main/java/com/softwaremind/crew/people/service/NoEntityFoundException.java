@@ -1,7 +1,7 @@
 package com.softwaremind.crew.people.service;
 
 /**
- * Class to handle own Exception of the lack of entity in the database
+ * Class check Exception of the lack of entity in the database
  * 
  * @author Mateusz Michoński
  * @since 08.05.2018
