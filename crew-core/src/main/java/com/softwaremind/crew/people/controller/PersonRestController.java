@@ -1,22 +1,14 @@
 package com.softwaremind.crew.people.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.softwaremind.crew.people.model.Person;
 import com.softwaremind.crew.people.model.dto.PersonDto;
 import com.softwaremind.crew.people.service.PersonService;
-
-import javax.swing.text.html.parser.Entity;
-import javax.xml.ws.Response;
 
 /**
  * PersonRestController class for managing Persons
@@ -56,6 +48,51 @@ public class PersonRestController {
 	public ResponseEntity<PersonDto> getPersonById(@PathVariable long id) {
 		return personService
 				.findById(id)
+				.map(ResponseEntity::ok)
+				.orElse(ResponseEntity.notFound().build());
+	}
+	
+	/**
+	 * Update person in database
+	 *
+	 * @param id
+	 * @param personDto
+	 * @return
+	 */
+	@PutMapping(value = "/people/{id}")
+	public ResponseEntity<PersonDto> updateById(@PathVariable(value = "id") long id, @RequestBody PersonDto personDto) {
+		try {
+			personService.updatePersonById(id, personDto);
+			return ResponseEntity.ok().build();
+		} catch (Exception e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
+	
+	/**
+	 * Delete person from database
+	 *
+	 * @param id
+	 * @return
+	 */
+	@DeleteMapping("/people/{id}")
+	public ResponseEntity<PersonDto> deletePerson(@PathVariable Long id) {
+		return personService
+				.deletePerson(id)
+				.map(ResponseEntity::ok)
+				.orElse(ResponseEntity.notFound().build());
+	}
+	
+	/**
+	 * Add new person to database
+	 *
+	 * @param personDto
+	 * @return
+	 */
+	@PostMapping("/people/add")
+	public ResponseEntity<PersonDto> createPerson(@RequestBody PersonDto personDto) {
+		return personService
+				.addPerson(personDto)
 				.map(ResponseEntity::ok)
 				.orElse(ResponseEntity.notFound().build());
 	}

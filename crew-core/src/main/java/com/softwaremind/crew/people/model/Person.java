@@ -18,7 +18,7 @@ import javax.persistence.*;
 public class Person implements Serializable {
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	@Version
 	private Long version;
