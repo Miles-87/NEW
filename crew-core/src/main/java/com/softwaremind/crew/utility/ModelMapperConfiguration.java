@@ -1,11 +1,11 @@
-package com.softwaremind.crew.teams.model;
+package com.softwaremind.crew.utility;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class FactoryMapper {
+public class ModelMapperConfiguration {
 	
 	@Bean
 	public ModelMapper modelMapper() {
