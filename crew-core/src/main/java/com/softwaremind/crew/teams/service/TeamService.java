@@ -51,7 +51,7 @@ public class TeamService {
 	 * @return Team object
 	 */
 	public Optional<TeamDto> findTeamById(Long id) {
-		Assert.notNull(id, "An argument is missing ! ");
+		Assert.notNull(id, "ID must exist ");
 		return teamRepository
 				.findById(id)
 				.map(p -> modelMapper.map(p, TeamDto.class));
@@ -78,7 +78,7 @@ public class TeamService {
 					teamEntity.setDescription(teamDto.getDescription());
 					teamEntity.setHeadcount(teamDto.getHeadcount());
 					return teamRepository.save(teamEntity);
-				}).orElseThrow(NoEntityFoundException::new);
+				}).orElseThrow(() -> new NoEntityFoundException("Update Team"));
 	}
 	
 	/**
@@ -102,7 +102,8 @@ public class TeamService {
 	 */
 	@Transactional
 	public void createTeam(TeamDto teamDto) {
-		Assert.notNull(teamDto, "Entity can't be null !");
+		Assert.notNull(teamDto);
+		Assert.notNull(teamDto.getName());
 		teamRepository.save(modelMapper.map(teamDto, Team.class));
 	}
 	

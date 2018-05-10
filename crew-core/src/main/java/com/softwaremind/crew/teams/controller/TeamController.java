@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.softwaremind.crew.teams.model.TeamDto;
+import com.softwaremind.crew.teams.service.CreateEntityException;
+import com.softwaremind.crew.teams.service.NoEntityFoundException;
 import com.softwaremind.crew.teams.service.TeamService;
 
 /**
@@ -50,7 +52,7 @@ public class TeamController {
 			teamService.updateTeamById(id, teamDto);
 			return ResponseEntity.ok().build();
 		} catch (Exception e) {
-			return ResponseEntity.notFound().build();
+			throw new NoEntityFoundException("Update Team");
 		}
 	}
 	
@@ -66,7 +68,7 @@ public class TeamController {
 		return teamService
 				.findTeamById(id)
 				.map(ResponseEntity::ok)
-				.orElse(ResponseEntity.notFound().build());
+				.orElseThrow(() -> new IllegalArgumentException("There is no Team with given ID", new Throwable("Find Team")));
 	}
 	
 	/**
@@ -82,7 +84,7 @@ public class TeamController {
 			teamService.deleteTeamById(id);
 			return ResponseEntity.ok().build();
 		} catch (Exception e) {
-			return ResponseEntity.badRequest().build();
+			throw new IllegalArgumentException("Deleting failed. Object with given id does not exist");
 		}
 	}
 	
@@ -94,8 +96,11 @@ public class TeamController {
 	 */
 	@PostMapping("/teams")
 	public ResponseEntity<?> createTeam(@RequestBody TeamDto teamDto) {
-		
-		teamService.createTeam(teamDto);
-		return ResponseEntity.ok(teamDto);
+		try {
+			teamService.createTeam(teamDto);
+			return ResponseEntity.ok(teamDto);
+		} catch (Exception e) {
+			throw new CreateEntityException("Create Team");
+		}
 	}
 }
