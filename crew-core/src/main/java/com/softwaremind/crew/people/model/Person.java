@@ -1,8 +1,13 @@
 package com.softwaremind.crew.people.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.softwaremind.crew.teams.model.Team;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -31,6 +36,8 @@ public class Person implements Serializable {
 	private String role;
 	private LocalDateTime createdOn;
 	private LocalDateTime modifiedOn;
+	@ManyToMany(mappedBy = "people")
+	private Set<Team> teams = new HashSet<Team>();
 	
 	/**
 	 * Creating for Testing using Jackson, which requires a default constructor

@@ -1,7 +1,11 @@
 package com.softwaremind.crew.teams.model;
 
+import com.softwaremind.crew.people.model.Person;
+
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -27,6 +31,11 @@ public class Team {
 	private Integer headcount;
 	private LocalDateTime createdOn;
 	private LocalDateTime modifiedOn;
+	@ManyToMany(cascade = CascadeType.MERGE)
+	@JoinTable(name = "persons_teams",
+			joinColumns = @JoinColumn(name = "teamId"),
+			inverseJoinColumns = @JoinColumn(name = "personId"))
+	private Set<Person> people = new HashSet<>();
 	
 	/**
 	 * Default constructor using for ModelMapper
