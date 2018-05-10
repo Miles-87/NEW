@@ -28,9 +28,9 @@ public class TeamService {
 	private final ModelMapper modelMapper;
 	
 	@Autowired
-	public TeamService(TeamRepository teamRepository) {
+	public TeamService(TeamRepository teamRepository, ModelMapper modelMapper) {
 		this.teamRepository = teamRepository;
-		this.modelMapper = new ModelMapper();
+		this.modelMapper = modelMapper;
 	}
 	
 	/**
