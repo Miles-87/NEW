@@ -1,4 +1,3 @@
-
 INSERT INTO Person(version,first_name,last_name,email,location,role,status) VALUES (0,'ADAM','mucha','mial@mail.com','warszawa','admin','developer');
 INSERT INTO Person(version,first_name,last_name,email,location,role,status) VALUES (0,'EWA','kowalksa','mial2@mail.com','Krakow','user','support');
 INSERT INTO Person(version,first_name,last_name,email,location,role,status) VALUES (0,'Jurek','mickiewicz','mial3@mail.com','Rzeszow','user','technic');

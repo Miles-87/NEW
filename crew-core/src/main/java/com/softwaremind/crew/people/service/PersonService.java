@@ -15,7 +15,6 @@ import com.softwaremind.crew.people.model.Person;
 import com.softwaremind.crew.people.model.dto.PersonDto;
 import com.softwaremind.crew.people.repository.PersonRepository;
 
-
 /**
  * PersonService class for managing {@link PersonRepository}
  *

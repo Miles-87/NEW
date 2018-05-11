@@ -36,8 +36,9 @@ public class TeamServiceTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		teamService = new TeamService(teamRepository);
-		mapper = new ModelMapper();
+		this.mapper = new ModelMapper();
+		teamService = new TeamService(teamRepository, this.mapper);
+		
 	}
 	
 	@Test
