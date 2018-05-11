@@ -33,9 +33,10 @@ public class Team {
 	private LocalDateTime modifiedOn;
 	@ManyToMany(cascade = CascadeType.MERGE)
 	@JoinTable(name = "persons_teams",
-			joinColumns = @JoinColumn(name = "teamId"),
-			inverseJoinColumns = @JoinColumn(name = "personId"))
+			joinColumns = @JoinColumn(name = "team_id"),
+			inverseJoinColumns = @JoinColumn(name = "person_id"))
 	private Set<Person> people = new HashSet<>();
+	
 	/**
 	 * Default constructor using for ModelMapper
 	 */
@@ -120,6 +121,14 @@ public class Team {
 	
 	public void setModifiedOn(LocalDateTime modifiedOn) {
 		this.modifiedOn = modifiedOn;
+	}
+	
+	public Set<Person> getPeople() {
+		return people;
+	}
+	
+	public void setPeople(Set<Person> people) {
+		this.people = people;
 	}
 	
 	@Override

@@ -1,8 +1,5 @@
 package com.softwaremind.crew.people.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.softwaremind.crew.teams.model.Team;
-
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -10,6 +7,8 @@ import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.*;
+
+import com.softwaremind.crew.teams.model.Team;
 
 /**
  * Person class represents the Person entity
@@ -135,6 +134,14 @@ public class Person implements Serializable {
 	
 	public void setModifiedOn(LocalDateTime modifiedOn) {
 		this.modifiedOn = modifiedOn;
+	}
+	
+	public Set<Team> getTeams() {
+		return teams;
+	}
+	
+	public void setTeams(Set<Team> teams) {
+		this.teams = teams;
 	}
 	
 	@Override
