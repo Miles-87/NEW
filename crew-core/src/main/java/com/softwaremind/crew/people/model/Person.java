@@ -2,7 +2,6 @@ package com.softwaremind.crew.people.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -36,7 +35,7 @@ public class Person implements Serializable {
 	private LocalDateTime createdOn;
 	private LocalDateTime modifiedOn;
 	@ManyToMany(mappedBy = "people")
-	private Set<Team> teams = new HashSet<Team>();
+	private Set<Team> teams;
 	
 	/**
 	 * Creating for Testing using Jackson, which requires a default constructor

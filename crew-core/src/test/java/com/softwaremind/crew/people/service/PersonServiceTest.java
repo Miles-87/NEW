@@ -37,8 +37,9 @@ public class PersonServiceTest {
 	@Before
 	public void initTest() {
 		MockitoAnnotations.initMocks(this);
-		personService = new PersonService(personRepository);
 		mapper = new ModelMapper();
+		personService = new PersonService(personRepository, this.mapper);
+		
 	}
 	
 	@Before
@@ -64,7 +65,7 @@ public class PersonServiceTest {
 	
 	@Test
 	public void shouldDeletePersonById() {
-		personService.deletePerson(1l);
+		personService.deletePerson(1L);
 		Mockito.verify(personRepository, times(1)).deleteById(1l);
 	}
 	

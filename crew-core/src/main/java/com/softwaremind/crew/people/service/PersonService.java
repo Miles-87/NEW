@@ -30,9 +30,9 @@ public class PersonService {
 	private final ModelMapper modelMapper;
 	
 	@Autowired
-	public PersonService(PersonRepository personRepository) {
+	public PersonService(PersonRepository personRepository, ModelMapper modelMapper) {
 		this.personRepository = personRepository;
-		this.modelMapper = new ModelMapper();
+		this.modelMapper = modelMapper;
 	}
 	
 	/**
@@ -64,10 +64,11 @@ public class PersonService {
 	 *
 	 * @param id
 	 */
+	
 	public Optional<PersonDto> deletePerson(Long id) {
 		Assert.notNull(id, "id can't be null");
 		Optional<Person> personOptional = personRepository.findById(id);
-		personRepository.delete(personOptional.orElse(new Person()));
+		personRepository.deleteById(id);
 		return personOptional.map(p -> modelMapper.map(p, PersonDto.class));
 	}
 	
@@ -77,11 +78,10 @@ public class PersonService {
 	 * @param personDto
 	 * @return
 	 */
-	public Optional<PersonDto> addPerson(PersonDto personDto) {
-		Assert.notNull(personDto, "personDto can't be null");
-		Person person = personRepository
-				.save(modelMapper.map(personDto, Person.class));
-		return Optional.of(modelMapper.map(person, PersonDto.class));
+	public void addPerson(PersonDto personDto) {
+		Assert.notNull(personDto);
+		Assert.notNull(personDto.getFirstName());
+		personRepository.save(modelMapper.map(personDto, Person.class));
 	}
 	
 	/**
