@@ -21,9 +21,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.softwaremind.crew.common.NoEntityFoundException;
+import com.softwaremind.crew.handlers.GlobalExceptionHandler;
 import com.softwaremind.crew.teams.controller.TeamController;
 import com.softwaremind.crew.teams.model.TeamDto;
-import com.softwaremind.crew.teams.service.NoEntityFoundException;
 import com.softwaremind.crew.teams.service.TeamService;
 
 /**
@@ -45,7 +46,10 @@ public class TeamControllerTest {
 	
 	@Before
 	public void initTest() {
-		mockMvc = MockMvcBuilders.standaloneSetup(new TeamController(teamService)).build();
+		mockMvc = MockMvcBuilders
+				.standaloneSetup(new TeamController(teamService))
+				.setControllerAdvice(GlobalExceptionHandler.class)
+				.build();
 	}
 	
 	@Test
@@ -102,7 +106,7 @@ public class TeamControllerTest {
 				put("/teams/{id}", 1)
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(mappingObject.valueToTree(team).toString()))
-				.andExpect(status().isNotFound());
+				.andExpect(status().isBadRequest());
 	}
 	
 	@Test

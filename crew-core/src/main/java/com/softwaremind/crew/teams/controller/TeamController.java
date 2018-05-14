@@ -7,8 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.softwaremind.crew.teams.model.TeamDto;
-import com.softwaremind.crew.teams.service.CreateEntityException;
-import com.softwaremind.crew.teams.service.NoEntityFoundException;
 import com.softwaremind.crew.teams.service.TeamService;
 
 /**
@@ -32,6 +30,7 @@ public class TeamController {
 	 * This method return all teams
 	 *
 	 * @return
+	 * 		list of teams
 	 */
 	@GetMapping("/teams")
 	public List<TeamDto> findAll() {
@@ -44,16 +43,13 @@ public class TeamController {
 	 * @param id
 	 *            of team
 	 * @param teamDto
+	 *            represent Team object
 	 * @return updated Team
 	 */
 	@PutMapping("teams/{id}")
 	public ResponseEntity<?> updateById(@PathVariable(value = "id") Long id, @RequestBody TeamDto teamDto) {
-		try {
-			teamService.updateTeamById(id, teamDto);
-			return ResponseEntity.ok().build();
-		} catch (Exception e) {
-			throw new NoEntityFoundException("Update Team");
-		}
+		teamService.updateTeamById(id, teamDto);
+		return ResponseEntity.ok().build();
 	}
 	
 	/**
@@ -68,7 +64,7 @@ public class TeamController {
 		return teamService
 				.findTeamById(id)
 				.map(ResponseEntity::ok)
-				.orElseThrow(() -> new IllegalArgumentException("There is no Team with given ID", new Throwable("Find Team")));
+				.orElseThrow(() -> new IllegalArgumentException("There is no Team with given ID"));
 	}
 	
 	/**
@@ -80,27 +76,20 @@ public class TeamController {
 	 */
 	@DeleteMapping("teams/{id}")
 	public ResponseEntity<?> deleteById(@PathVariable Long id) {
-		try {
-			teamService.deleteTeamById(id);
-			return ResponseEntity.ok().build();
-		} catch (Exception e) {
-			throw new IllegalArgumentException("Deleting failed. Object with given id does not exist");
-		}
+		teamService.deleteTeamById(id);
+		return ResponseEntity.ok().build();
 	}
 	
 	/**
 	 * Method creates new Team
 	 *
 	 * @param teamDto
+	 *            represent Team object
 	 * @return new Team
 	 */
 	@PostMapping("/teams")
 	public ResponseEntity<?> createTeam(@RequestBody TeamDto teamDto) {
-		try {
-			teamService.createTeam(teamDto);
-			return ResponseEntity.ok(teamDto);
-		} catch (Exception e) {
-			throw new CreateEntityException("Create Team");
-		}
+		teamService.createTeam(teamDto);
+		return ResponseEntity.ok(teamDto);
 	}
 }
