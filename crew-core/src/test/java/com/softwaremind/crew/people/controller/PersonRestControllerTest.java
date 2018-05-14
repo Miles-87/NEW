@@ -141,16 +141,4 @@ public class PersonRestControllerTest {
 				.andReturn();
 	}
 	
-	/*
-	 * @Test
-	 * public void shouldNotSavePersonToDatabase() throws Exception {
-	 * PersonDto personDto = new PersonDto(1L, "Bob", "Noob", "mail@first.pl", "Warszawa", "APPS", "Developer");
-	 * Mockito.doThrow(new IllegalArgumentException()).when(personService).addPerson(personDto);
-	 * mockMvc.perform(
-	 * post("/people")
-	 * .contentType(MediaType.APPLICATION_JSON)
-	 * .content(objectMapper.valueToTree(personDto).toString()))
-	 * .andExpect(status().isBadRequest());
-	 * }
-	 */
 }
