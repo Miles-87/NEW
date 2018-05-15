@@ -117,6 +117,15 @@ public class TeamServiceTest {
 	}
 	
 	@Test
+	public void shouldNotDeleteWhenTeamNotExist() {
+		doThrow(new IllegalStateException()).when(teamRepository).deleteById(11l);
+		
+		assertThatExceptionOfType(IllegalStateException.class)
+				.isThrownBy(() -> teamService.deleteTeamById(11l))
+				.withMessage("Team with given id, does not exist ! ");
+	}
+	
+	@Test
 	public void shouldUpdateTeamInDatabase() {
 		Team team1 = new Team(1l, "Name1", "description1", "city1", 2);
 		

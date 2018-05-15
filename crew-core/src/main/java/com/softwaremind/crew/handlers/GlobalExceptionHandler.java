@@ -38,4 +38,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		return handleExceptionInternal(ex, new ExceptionErrorInfo(ex.getMessage()),
 				new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
 	}
+	
+	@ExceptionHandler(IllegalStateException.class)
+	public ResponseEntity<Object> handleIllegalStateException(IllegalStateException ex, WebRequest request) {
+		return handleExceptionInternal(ex, new ExceptionErrorInfo(ex.getMessage()),
+				new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+	}
 }

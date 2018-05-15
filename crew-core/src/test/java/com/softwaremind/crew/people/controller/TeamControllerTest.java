@@ -118,10 +118,10 @@ public class TeamControllerTest {
 	
 	@Test
 	public void shouldNotDeleteTeamByGivenId() throws Exception {
-		doThrow(new NoEntityFoundException()).when(teamService).deleteTeamById(1l);
+		doThrow(new IllegalStateException()).when(teamService).deleteTeamById(1l);
 		
 		mockMvc.perform(delete("/teams/{id}", 1))
-				.andExpect(status().isBadRequest());
+				.andExpect(status().isNotFound());
 	}
 	
 	@Test

@@ -96,7 +96,7 @@ public class TeamService {
 		try {
 			teamRepository.deleteById(id);
 		} catch (Exception e) {
-			throw new IllegalArgumentException("Team with given id, does not exist ! ");
+			throw new IllegalStateException("Team with given id, does not exist ! ");
 		}
 	}
 	
@@ -116,5 +116,4 @@ public class TeamService {
 			throw new CreateEntityException();
 		}
 	}
-	
 }
