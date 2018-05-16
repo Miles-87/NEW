@@ -6,6 +6,9 @@ import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.softwaremind.crew.teams.model.Team;
 
@@ -22,18 +25,38 @@ public class Person implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "Person_ID")
 	private long id;
+	
 	@Version
 	private Long version;
 	
+	@NotNull
+	@Size(max = 25)
+	@Column(name = "First_Name")
 	private String firstName;
+	
+	@NotNull
+	@Size(max = 25)
+	@Column(name = "Last_Name")
 	private String lastName;
+	
+	@Column(name = "Location")
 	private String location;
+	
+	@NotNull
+	@Email
 	private String email;
+	
+	@Column(name = "Status")
 	private String status;
+	
+	@Column(name = "Role")
 	private String role;
+	
 	private LocalDateTime createdOn;
 	private LocalDateTime modifiedOn;
+	
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "persons_teams",
 			joinColumns = @JoinColumn(name = "person_id"),
