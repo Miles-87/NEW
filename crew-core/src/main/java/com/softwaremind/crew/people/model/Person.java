@@ -46,6 +46,7 @@ public class Person implements Serializable {
 	
 	@NotNull
 	@Email
+	@Column(name = "Email")
 	private String email;
 	
 	@Column(name = "Status")
