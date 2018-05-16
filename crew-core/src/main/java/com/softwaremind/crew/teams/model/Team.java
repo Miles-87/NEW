@@ -30,11 +30,8 @@ public class Team {
 	private Integer headcount;
 	private LocalDateTime createdOn;
 	private LocalDateTime modifiedOn;
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "persons_teams",
-			joinColumns = @JoinColumn(name = "team_id"),
-			inverseJoinColumns = @JoinColumn(name = "person_id"))
-	private Set<Person> people;
+	@ManyToMany(mappedBy = "teams")
+	private Set<Person> persons;
 	
 	/**
 	 * Default constructor using for ModelMapper
@@ -122,12 +119,12 @@ public class Team {
 		this.modifiedOn = modifiedOn;
 	}
 	
-	public Set<Person> getPeople() {
-		return people;
+	public Set<Person> getPersons() {
+		return persons;
 	}
 	
-	public void setPeople(Set<Person> people) {
-		this.people = people;
+	public void setPersons(Set<Person> persons) {
+		this.persons = persons;
 	}
 	
 	@Override

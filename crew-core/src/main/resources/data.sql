@@ -6,5 +6,5 @@ INSERT INTO Team(version ,name,description,created_on,modified_on) VALUES (1,'Ap
 INSERT INTO Team(version ,name,description,created_on,modified_on) VALUES (1,'Apacze','grupa programistow',parsedatetime('17-09-2012 18:47:52.69', 'dd-MM-yyyy hh:mm:ss.SS'),null);
 INSERT INTO Team(version ,name,description,created_on,modified_on) VALUES (1,'Apacze','grupa programistow',parsedatetime('17-09-2012 18:47:52.69', 'dd-MM-yyyy hh:mm:ss.SS'),null);
 INSERT INTO Team(version ,name,description,created_on,modified_on) VALUES (1,'Apacze','grupa programistow',parsedatetime('17-09-2012 18:47:52.69', 'dd-MM-yyyy hh:mm:ss.SS'),null);
-INSERT INTO persons_teams(team_id, person_id) VALUES (1,2)
+INSERT INTO persons_teams(person_id , team_id) VALUES (3,3)
 

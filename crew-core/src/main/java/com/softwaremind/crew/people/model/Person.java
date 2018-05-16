@@ -34,7 +34,10 @@ public class Person implements Serializable {
 	private String role;
 	private LocalDateTime createdOn;
 	private LocalDateTime modifiedOn;
-	@ManyToMany(mappedBy = "people")
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "persons_teams",
+			joinColumns = @JoinColumn(name = "person_id"),
+			inverseJoinColumns = @JoinColumn(name = "team_id"))
 	private Set<Team> teams;
 	
 	/**
