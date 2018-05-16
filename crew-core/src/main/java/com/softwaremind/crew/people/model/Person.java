@@ -3,8 +3,11 @@ package com.softwaremind.crew.people.model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.*;
+
+import com.softwaremind.crew.teams.model.Team;
 
 /**
  * Person class represents the Person entity
@@ -31,6 +34,11 @@ public class Person implements Serializable {
 	private String role;
 	private LocalDateTime createdOn;
 	private LocalDateTime modifiedOn;
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "persons_teams",
+			joinColumns = @JoinColumn(name = "person_id"),
+			inverseJoinColumns = @JoinColumn(name = "team_id"))
+	private Set<Team> teams;
 	
 	/**
 	 * Creating for Testing using Jackson, which requires a default constructor
@@ -128,6 +136,14 @@ public class Person implements Serializable {
 	
 	public void setModifiedOn(LocalDateTime modifiedOn) {
 		this.modifiedOn = modifiedOn;
+	}
+	
+	public Set<Team> getTeams() {
+		return teams;
+	}
+	
+	public void setTeams(Set<Team> teams) {
+		this.teams = teams;
 	}
 	
 	@Override

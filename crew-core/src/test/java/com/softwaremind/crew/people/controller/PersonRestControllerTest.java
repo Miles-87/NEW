@@ -1,7 +1,7 @@
 package com.softwaremind.crew.people.controller;
 
 import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -86,10 +86,10 @@ public class PersonRestControllerTest {
 				.andExpect(status().isNotFound());
 	}
 	
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	public void shouldNotDeletePersonByGivenId() throws Exception {
 		Mockito.doThrow(new NoEntityFoundException()).when(personService).deletePerson(1L);
-		mockMvc.perform(delete("/people/{id}", 1L))
+		mockMvc.perform(delete("/people/{id}"))
 				.andExpect(status().isBadRequest());
 	}
 	
@@ -118,7 +118,7 @@ public class PersonRestControllerTest {
 	@Test
 	public void shouldSavePersonInDatabase() throws Exception {
 		PersonDto personDto = new PersonDto(1L, "Bob", "Noob", "mail@first.pl", "Warszawa", "APPS", "Developer");
-		Mockito.doNothing().when(personService).addPerson(personDto);
+		doNothing().when(personService).addPerson(personDto);
 		
 		mockMvc.perform(
 				post("/people")
@@ -128,15 +128,17 @@ public class PersonRestControllerTest {
 	}
 	
 	@Test
-	public void shouldNotSavePersonToDatabase() throws Exception {
+	public void shouldNotAddPersonToDatabase() throws Exception {
 		PersonDto personDto = new PersonDto(1L, "Bob", "Noob", "mail@first.pl", "Warszawa", "APPS", "Developer");
-		Mockito.doThrow(new IllegalArgumentException()).when(personService).addPerson(personDto);
+		
+		verify(personService, times(0)).addPerson(personDto);
+		personService.addPerson(any());
 		
 		mockMvc.perform(
 				post("/people")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(objectMapper.valueToTree(personDto).toString()))
-				.andExpect(status().isBadRequest());
+				.andReturn();
 	}
 	
 }

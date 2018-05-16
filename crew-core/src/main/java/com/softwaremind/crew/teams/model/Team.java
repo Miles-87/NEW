@@ -2,8 +2,11 @@ package com.softwaremind.crew.teams.model;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.*;
+
+import com.softwaremind.crew.people.model.Person;
 
 /**
  * Team represents entity in the database
@@ -27,6 +30,8 @@ public class Team {
 	private Integer headcount;
 	private LocalDateTime createdOn;
 	private LocalDateTime modifiedOn;
+	@ManyToMany(mappedBy = "teams")
+	private Set<Person> persons;
 	
 	/**
 	 * Default constructor using for ModelMapper
@@ -112,6 +117,14 @@ public class Team {
 	
 	public void setModifiedOn(LocalDateTime modifiedOn) {
 		this.modifiedOn = modifiedOn;
+	}
+	
+	public Set<Person> getPersons() {
+		return persons;
+	}
+	
+	public void setPersons(Set<Person> persons) {
+		this.persons = persons;
 	}
 	
 	@Override

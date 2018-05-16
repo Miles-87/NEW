@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.softwaremind.crew.people.model.dto.PersonDto;
+import com.softwaremind.crew.people.service.NoEntityFoundException;
 import com.softwaremind.crew.people.service.PersonService;
 
 /**
@@ -75,6 +76,7 @@ public class PersonRestController {
 	 * @param id
 	 * @return
 	 */
+	
 	@DeleteMapping("/people/{id}")
 	public ResponseEntity<PersonDto> deletePerson(@PathVariable Long id) {
 		return personService
@@ -89,12 +91,14 @@ public class PersonRestController {
 	 * @param personDto
 	 * @return
 	 */
-	@PostMapping("/people/add")
-	public ResponseEntity<PersonDto> createPerson(@RequestBody PersonDto personDto) {
-		return personService
-				.addPerson(personDto)
-				.map(ResponseEntity::ok)
-				.orElse(ResponseEntity.notFound().build());
+	@PostMapping("/people")
+	public ResponseEntity<?> createPerson(@RequestBody PersonDto personDto) {
+		try {
+			personService.addPerson(personDto);
+			return ResponseEntity.ok(personDto);
+		} catch (Exception e) {
+			throw new NoEntityFoundException();
+		}
 	}
 	
 }
