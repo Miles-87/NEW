@@ -21,8 +21,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.softwaremind.crew.common.NoEntityFoundException;
 import com.softwaremind.crew.people.model.dto.PersonDto;
-import com.softwaremind.crew.people.service.NoEntityFoundException;
 import com.softwaremind.crew.people.service.PersonService;
 
 /**

@@ -13,10 +13,10 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 
+import com.softwaremind.crew.common.NoEntityFoundException;
 import com.softwaremind.crew.teams.model.Team;
 import com.softwaremind.crew.teams.model.TeamDto;
 import com.softwaremind.crew.teams.repository.TeamRepository;
-import com.softwaremind.crew.teams.service.NoEntityFoundException;
 import com.softwaremind.crew.teams.service.TeamService;
 
 /**
@@ -70,7 +70,7 @@ public class TeamServiceTest {
 		
 		assertThatExceptionOfType(IllegalArgumentException.class)
 				.isThrownBy(() -> teamService.findTeamById(null))
-				.withMessage("An argument is missing ! ");
+				.withMessage("ID must exist ");
 	}
 	
 	@Test
@@ -97,7 +97,7 @@ public class TeamServiceTest {
 		
 		assertThatExceptionOfType(IllegalArgumentException.class)
 				.isThrownBy(() -> teamService.createTeam(null))
-				.withMessage("Entity can't be null !");
+				.withMessage("Object can't be null!");
 	}
 	
 	@Test
@@ -114,6 +114,15 @@ public class TeamServiceTest {
 		assertThatExceptionOfType(IllegalArgumentException.class)
 				.isThrownBy(() -> teamService.deleteTeamById(null))
 				.withMessage("Id can't be null !");
+	}
+	
+	@Test
+	public void shouldNotDeleteWhenTeamNotExist() {
+		doThrow(new IllegalStateException()).when(teamRepository).deleteById(11l);
+		
+		assertThatExceptionOfType(IllegalStateException.class)
+				.isThrownBy(() -> teamService.deleteTeamById(11l))
+				.withMessage("Team with given id, does not exist ! ");
 	}
 	
 	@Test

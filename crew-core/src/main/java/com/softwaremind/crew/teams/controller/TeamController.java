@@ -30,6 +30,7 @@ public class TeamController {
 	 * This method return all teams
 	 *
 	 * @return
+	 * 		list of teams
 	 */
 	@GetMapping("/teams")
 	public List<TeamDto> findAll() {
@@ -42,16 +43,13 @@ public class TeamController {
 	 * @param id
 	 *            of team
 	 * @param teamDto
+	 *            represent Team object
 	 * @return updated Team
 	 */
 	@PutMapping("teams/{id}")
 	public ResponseEntity<?> updateById(@PathVariable(value = "id") Long id, @RequestBody TeamDto teamDto) {
-		try {
-			teamService.updateTeamById(id, teamDto);
-			return ResponseEntity.ok().build();
-		} catch (Exception e) {
-			return ResponseEntity.notFound().build();
-		}
+		teamService.updateTeamById(id, teamDto);
+		return ResponseEntity.ok().build();
 	}
 	
 	/**
@@ -66,7 +64,7 @@ public class TeamController {
 		return teamService
 				.findTeamById(id)
 				.map(ResponseEntity::ok)
-				.orElse(ResponseEntity.notFound().build());
+				.orElseThrow(() -> new IllegalArgumentException("There is no Team with given ID"));
 	}
 	
 	/**
@@ -78,23 +76,19 @@ public class TeamController {
 	 */
 	@DeleteMapping("teams/{id}")
 	public ResponseEntity<?> deleteById(@PathVariable Long id) {
-		try {
-			teamService.deleteTeamById(id);
-			return ResponseEntity.ok().build();
-		} catch (Exception e) {
-			return ResponseEntity.badRequest().build();
-		}
+		teamService.deleteTeamById(id);
+		return ResponseEntity.ok().build();
 	}
 	
 	/**
 	 * Method creates new Team
 	 *
 	 * @param teamDto
+	 *            represent Team object
 	 * @return new Team
 	 */
 	@PostMapping("/teams")
 	public ResponseEntity<?> createTeam(@RequestBody TeamDto teamDto) {
-		
 		teamService.createTeam(teamDto);
 		return ResponseEntity.ok(teamDto);
 	}
