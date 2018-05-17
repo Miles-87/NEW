@@ -7,8 +7,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.softwaremind.crew.common.NoEntityFoundException;
 import com.softwaremind.crew.people.model.dto.PersonDto;
-import com.softwaremind.crew.people.service.NoEntityFoundException;
 import com.softwaremind.crew.people.service.PersonService;
 
 /**
@@ -100,5 +100,4 @@ public class PersonRestController {
 			throw new NoEntityFoundException();
 		}
 	}
-	
 }
