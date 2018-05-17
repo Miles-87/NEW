@@ -8,7 +8,6 @@ import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import com.softwaremind.crew.teams.model.Team;
 
@@ -32,12 +31,10 @@ public class Person implements Serializable {
 	private Long version;
 	
 	@NotNull
-	@Size(max = 25)
 	@Column(name = "First_Name")
 	private String firstName;
 	
 	@NotNull
-	@Size(max = 25)
 	@Column(name = "Last_Name")
 	private String lastName;
 	
