@@ -5,6 +5,9 @@ import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.softwaremind.crew.people.model.Person;
 
@@ -24,11 +27,20 @@ public class Team {
 	@Version
 	private Long version;
 	
+	@NotNull
+	@Size(min = 4, max = 35, message = "Name should be between 4-35 characters.")
 	private String name;
+	@NotNull
+	@Size(max = 100, message = "Description should be less then 100 characters")
 	private String description;
+	@NotNull
+	@Size(min = 3, max = 20)
 	private String city;
+	@Min(value = 0)
 	private Integer headcount;
+	@Column(name = "Creation_time")
 	private LocalDateTime createdOn;
+	@Column(name = "Modification_time")
 	private LocalDateTime modifiedOn;
 	@ManyToMany(mappedBy = "teams")
 	private Set<Person> persons;
