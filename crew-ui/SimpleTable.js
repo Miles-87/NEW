@@ -24,16 +24,12 @@ const styles = theme => ({
         minWidth: 700,
     },
     head: {
-        backgroundColor: '#ff6666',
-        color: 'white',
         fontSize: '20px',
-
     },
     innerRow: {
-        backgroundColor: '#ffffc7',
         fontSize: '15',
-        fontWeight: 'bold',
     }
+
 });
 
 let id = 0;
