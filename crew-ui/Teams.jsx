@@ -7,8 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import spacing from "@material-ui/core/es/styles/spacing";
-import AddIcon from '@material-ui/icons/Add';
-import CreateTeamForm from "./CreateTeamForm";
+import DialogPanel from "./DialogPanel";
 
 {/*
    @author Wiktor Religo
@@ -19,17 +18,16 @@ class Teams extends React.Component {
     render() {
         return (
             <div>
-                <ButtonNavigation/>
+                <NavigationMenu/>
                 <SimpleTable/>
-                <AddTeamButton/>
-                <CreateTeamForm/>
+                <DialogPanel/>
             </div>
 
         );
     }
 }
 
-const ButtonNavigation = () => {
+const NavigationMenu = () => {
     return (
         <div className={styles2.root}>
             <AppBar position="static">
@@ -46,15 +44,7 @@ const ButtonNavigation = () => {
         </div>
     );
 }
-const AddTeamButton = () => {
-    return (
-        <div style={{marginTop: '15px'}}>
-            <Button variant="fab" color="secondary" aria-label="add" className={styles2.button}>
-                <AddIcon/>
-            </Button>
-        </div>
-    );
-}
+
 const styles2 = {
     root: {
         flexGrow: 1,
@@ -71,6 +61,4 @@ const styles2 = {
         margin: spacing.unit,
     },
 };
-
-
 export default Teams;

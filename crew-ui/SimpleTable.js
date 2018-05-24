@@ -34,7 +34,7 @@ const styles = theme => ({
 
 let id = 0;
 
-function createData(name, city, description, headcount) {
+export function createData(name, city, description, headcount) {
     id += 1;
     return {id, name, city, description, headcount};
 }
