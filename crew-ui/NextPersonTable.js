@@ -26,7 +26,7 @@ function createData(name, lastname, location, email, status, role) {
     return {name, lastname, location, email, status, role};
 }
 
-const data = [
+export var dataTable = [
     createData('Jan', 'mucha', 'krakow', 'mail@mail', 'remote', 'admin'),
     createData('Jan', 'mucha', 'krakow', 'mail@mail', 'remote', 'admin'),
     createData('Jan', 'mucha', 'krakow', 'mail@mail', 'remote', 'admin'),
@@ -41,26 +41,29 @@ function NextPersonTable(props) {
             <Table className={classes.table}>
                 <TableHead>
                     <TableRow>
-                        <TableCell>Name</TableCell>
-                        <TableCell>Lastname</TableCell>
-                        <TableCell>Location</TableCell>
-                        <TableCell>Email</TableCell>
-                        <TableCell>Status</TableCell>
-                        <TableCell>Role</TableCell>
+                        <TableCell className={classes.head}>ID:</TableCell>
+                        <TableCell className={classes.head} numeric>Name:</TableCell>
+                        <TableCell className={classes.head} numeric>Lastname</TableCell>
+                        <TableCell className={classes.head} numeric>Location</TableCell>
+                        <TableCell className={classes.head} numeric>Email</TableCell>
+                        <TableCell className={classes.head} numeric>Status</TableCell>
+                        <TableCell className={classes.head} numeric>Role</TableCell>
+
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {data.map(n => {
+                    {dataTable.map(n => {
                         return (
                             <TableRow key={n.id}>
-                                <TableCell component="th" scope="row">
-                                    {n.name}
+                                <TableCell className={classes.innerRow} component="th" scope="row">
+                                    {n.id}
                                 </TableCell>
-                                <TableCell>{n.lastname}</TableCell>
-                                <TableCell>{n.location}</TableCell>
-                                <TableCell>{n.email}</TableCell>
-                                <TableCell>{n.status}</TableCell>
-                                <TableCell>{n.role}</TableCell>
+                                <TableCell className={classes.innerRow} numeric>{n.name}</TableCell>
+                                <TableCell className={classes.innerRow} numeric>{n.lastname}</TableCell>
+                                <TableCell className={classes.innerRow} numeric>{n.location}</TableCell>
+                                <TableCell className={classes.innerRow} numeric>{n.email}</TableCell>
+                                <TableCell className={classes.innerRow} numeric>{n.status}</TableCell>
+                                <TableCell className={classes.innerRow} numeric>{n.role}</TableCell>
                             </TableRow>
                         );
                     })}
