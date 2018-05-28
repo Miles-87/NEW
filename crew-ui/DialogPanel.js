@@ -8,6 +8,9 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Save from "@material-ui/icons/es/Save";
 import Delete from "@material-ui/icons/es/Delete";
+import {createData, dataTable} from "./SimpleTable";
+import ReactDOM from "react-dom";
+import Teams from "./Teams.jsx";
 
 class DialogPanel extends React.Component {
     constructor() {
@@ -24,20 +27,25 @@ class DialogPanel extends React.Component {
         };
 
         this.handleClose = () => {
-            this.setState(
-                {
-                    open: false,
-                    name: 'Test',
-                    description: 'Test2',
-                    city: 'Kraków',
-                    headcount: '22',
-                },
-            )
-            ;
-
+            this.setState({open: false});
+            this.publish();
         };
     }
 
+    handleChanges({target}) {
+        this.setState(
+            {
+                [target.name]: target.value
+            }
+        )
+
+    }
+
+    publish() {
+        console.log("Data:" + this.state.name, this.state.city, this.state.description, this.state.headcount);
+        dataTable.push(createData(this.state.name, this.state.city, this.state.description, this.state.headcount));
+        ReactDOM.render(<Teams/>, document.getElementById('app'));
+    }
 
     render() {
         return (
@@ -56,34 +64,41 @@ class DialogPanel extends React.Component {
                         <TextField
                             autoFocus
                             margin="dense"
-                            id="name"
+                            name="name"
                             label="Name of the team"
                             type="text"
                             fullWidth
+                            value={this.state.name}
+                            onChange={this.handleChanges.bind(this)}
                         />
                         <TextField
                             autoFocus
                             margin="dense"
-                            id="city"
+                            name="city"
                             label="City"
                             type="text"
-                            ref={this.city}
+                            value={this.state.city}
+                            onChange={this.handleChanges.bind(this)}
                             fullWidth
                         />
                         <TextField
                             autoFocus
                             margin="dense"
-                            id="description"
+                            name="description"
                             label="Description"
                             type="text"
+                            onChange={this.handleChanges.bind(this)}
+                            value={this.state.description}
                             fullWidth
                         />
                         <TextField
                             autoFocus
                             margin="dense"
-                            id="headcount"
+                            name="headcount"
                             label="Headcount"
                             type="number"
+                            value={this.state.headcount}
+                            onChange={this.handleChanges.bind(this)}
                             fullWidth
                         />
                     </DialogContent>

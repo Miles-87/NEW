@@ -39,7 +39,7 @@ export function createData(name, city, description, headcount) {
     return {id, name, city, description, headcount};
 }
 
-const data = [
+export var dataTable = [
     createData("Cebule z Polski", "Kraków", "Kilka danych o drużynie ", 12),
     createData("Pierogi jak u Mamy", "Rzeszów", "Kilka danych odrużynie", 15),
     createData("Koksy z Huty", "Kraków", "Kilka danych odrużynie", 32),
@@ -63,7 +63,7 @@ function SimpleTable(props) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {data.map(n => {
+                    {dataTable.map(n => {
                         return (
                             <TableRow key={n.id}>
                                 <TableCell className={classes.innerRow} component="th" scope="row">
