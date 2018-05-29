@@ -1,5 +1,5 @@
 import React from 'react';
-import SimpleTable from './SimpleTable.js';
+import SimpleTable from './TeamTable.js';
 import {AppBar} from '@material-ui/core/';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -7,20 +7,20 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import spacing from "@material-ui/core/es/styles/spacing";
-import DialogPanel from "./DialogPanel";
+import TeamDialog from "./TeamDialog";
 
 {/*
    @author Wiktor Religo
  * @since 21.05.2018*/
 }
 
-class Teams extends React.Component {
+class TeamPage extends React.Component {
     render() {
         return (
             <div>
                 <NavigationMenu/>
-                <SimpleTable/>
-                <DialogPanel/>
+                <SimpleTable ref="userTable"/>
+                <TeamDialog/>
             </div>
 
         );
@@ -61,4 +61,4 @@ const styles2 = {
         margin: spacing.unit,
     },
 };
-export default Teams;
+export default TeamPage;

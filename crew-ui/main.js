@@ -1,5 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Teams from './Teams.jsx';
+import TeamPage from './TeamPage.jsx';
 
-ReactDOM.render(<Teams/>, document.getElementById('app'));
+ReactDOM.render(<TeamPage/>, document.getElementById('app'));

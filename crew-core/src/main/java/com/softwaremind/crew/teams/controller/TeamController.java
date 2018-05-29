@@ -89,6 +89,7 @@ public class TeamController {
 	 * @return new Team
 	 */
 	@PostMapping("/teams")
+	@CrossOrigin
 	public ResponseEntity<?> createTeam(@RequestBody TeamDto teamDto) {
 		teamService.createTeam(teamDto);
 		return ResponseEntity.ok(teamDto);

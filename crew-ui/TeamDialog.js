@@ -8,11 +8,9 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Save from "@material-ui/icons/es/Save";
 import Delete from "@material-ui/icons/es/Delete";
-import {createData, dataTable} from "./SimpleTable";
-import ReactDOM from "react-dom";
-import Teams from "./Teams.jsx";
+import {createData} from "./TeamTable";
 
-class DialogPanel extends React.Component {
+class TeamDialog extends React.Component {
     constructor() {
         super()
         this.state = {
@@ -43,8 +41,23 @@ class DialogPanel extends React.Component {
 
     publish() {
         console.log("Data:" + this.state.name, this.state.city, this.state.description, this.state.headcount);
-        dataTable.push(createData(this.state.name, this.state.city, this.state.description, this.state.headcount));
-        ReactDOM.render(<Teams/>, document.getElementById('app'));
+        // dataTable.push(createData(this.state.name, this.state.city, this.state.description, this.state.headcount));
+        this.addTeamToDatabase(createData(this.state.name, this.state.city, this.state.description, this.state.headcount));
+    }
+
+    addTeamToDatabase(teamProps) {
+        fetch('http://localhost:9090/teams',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'mode': 'no-corse',
+                },
+                body: JSON.stringify(teamProps)
+            }).then(
+            resp => window.location.reload()
+        ).catch(err => console.error(err))
     }
 
     render() {
@@ -118,4 +131,4 @@ class DialogPanel extends React.Component {
     }
 }
 
-export default DialogPanel;
+export default TeamDialog;

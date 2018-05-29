@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -7,14 +6,15 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import fetchData from "./StoreTeamFromDatabase";
+import * as theme from "material-ui/styles/index";
+
 
 {/*
    @author Wiktor Religo
  * @since 22.05.2018*/
 }
 
-const styles = theme => ({
+const styles = {
     root: {
         width: '100%',
         marginTop: theme.spacing.unit * 3,
@@ -28,9 +28,10 @@ const styles = theme => ({
     },
     innerRow: {
         fontSize: '15',
+        color: 'black',
+        textAlign: 'left',
     }
-
-});
+};
 
 let id = 0;
 
@@ -47,7 +48,7 @@ export var dataTable = [
     createData("Grubi Anorektycy", "Poznań", "Kilka danych odrużynie", 56),
 ];
 
-class SimpleTable extends React.Component {
+class TeamTable extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -56,39 +57,41 @@ class SimpleTable extends React.Component {
     }
 
     componentDidMount() {
-        this.fetchTableData();
+        this.fetchDataToTable();
     }
 
-    fetchTableData() {
-        fetchData().then(data => {
-            this.setState({teamData: data});
-        });
+    fetchDataToTable() {
+        fetch('http://localhost:9090/teams')
+            .then(response => response.json())
+            .then(data => {
+                this.setState({teamData: data});
+            });
     }
 
     render() {
         return (
-            <Paper>
+            <Paper style={styles.root}>
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell>ID:</TableCell>
-                            <TableCell> numeric>Name:</TableCell>
-                            <TableCell> numeric>City</TableCell>
-                            <TableCell> numeric>Description</TableCell>
-                            <TableCell> numeric>Headcount</TableCell>
+                            <TableCell style={styles.head}>ID:</TableCell>
+                            <TableCell style={styles.head}> Name:</TableCell>
+                            <TableCell style={styles.head}>City:</TableCell>
+                            <TableCell style={styles.head}>Description: </TableCell>
+                            <TableCell style={styles.head}>Headcount</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {this.state.teamData.map(n => {
                             return (
                                 <TableRow key={n.id}>
-                                    <TableCell component="th" scope="row">
+                                    <TableCell style={styles.innerRow} component="th" scope="row">
                                         {n.id}
                                     </TableCell>
-                                    <TableCell numeric>{n.name}</TableCell>
-                                    <TableCell numeric>{n.city}</TableCell>
-                                    <TableCell numeric>{n.description}</TableCell>
-                                    <TableCell numeric>{n.headcount}</TableCell>
+                                    <TableCell numeric style={styles.innerRow}>{n.name}</TableCell>
+                                    <TableCell numeric style={styles.innerRow}>{n.city}</TableCell>
+                                    <TableCell numeric style={styles.innerRow}>{n.description}</TableCell>
+                                    <TableCell numeric style={styles.innerRow}>{n.headcount}</TableCell>
                                 </TableRow>
                             );
                         })}
@@ -99,7 +102,4 @@ class SimpleTable extends React.Component {
     }
 }
 
-SimpleTable.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
-export default withStyles(styles)(SimpleTable);
+export default withStyles(styles)(TeamTable);
