@@ -1,3 +1,4 @@
+/*
 import React from 'react';
 
 class App extends React.Component {
@@ -32,3 +33,4 @@ class Content extends React.Component {
     }
 }
 export default App;
+*/

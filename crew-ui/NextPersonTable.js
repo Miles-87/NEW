@@ -17,60 +17,78 @@ const styles = theme => ({
     table: {
         minWidth: 700,
     },
+    innerRow: {
+        fontSize: '15',
+        color: 'black',
+        textAlign: 'left',
+    }
+
 });
 
 let id = 0;
 
-function createData(name, lastname, location, email, status, role) {
+export function dataTable(firstName, lastName, location, mail, status, role) {
     id += 1;
-    return {name, lastname, location, email, status, role};
+    return {id, firstName, lastName, location, mail, status, role};
 }
 
-export var dataTable = [
-    createData('Jan', 'mucha', 'krakow', 'mail@mail', 'remote', 'admin'),
-    createData('Jan', 'mucha', 'krakow', 'mail@mail', 'remote', 'admin'),
-    createData('Jan', 'mucha', 'krakow', 'mail@mail', 'remote', 'admin'),
-    createData('Jan', 'mucha', 'krakow', 'mail@mail', 'remote', 'admin'),
-];
 
-function NextPersonTable(props) {
-    const {classes} = props;
+class NextPersonTable extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            personData: []
+        }
+    }
 
-    return (
-        <Paper className={classes.root}>
-            <Table className={classes.table}>
-                <TableHead>
-                    <TableRow>
-                        <TableCell className={classes.head}>ID:</TableCell>
-                        <TableCell className={classes.head} numeric>Name:</TableCell>
-                        <TableCell className={classes.head} numeric>Lastname</TableCell>
-                        <TableCell className={classes.head} numeric>Location</TableCell>
-                        <TableCell className={classes.head} numeric>Email</TableCell>
-                        <TableCell className={classes.head} numeric>Status</TableCell>
-                        <TableCell className={classes.head} numeric>Role</TableCell>
+    componentDidMount() {
+        this.fetchTableData();
+    }
 
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {dataTable.map(n => {
-                        return (
-                            <TableRow key={n.id}>
-                                <TableCell className={classes.innerRow} component="th" scope="row">
-                                    {n.id}
-                                </TableCell>
-                                <TableCell className={classes.innerRow} numeric>{n.name}</TableCell>
-                                <TableCell className={classes.innerRow} numeric>{n.lastname}</TableCell>
-                                <TableCell className={classes.innerRow} numeric>{n.location}</TableCell>
-                                <TableCell className={classes.innerRow} numeric>{n.email}</TableCell>
-                                <TableCell className={classes.innerRow} numeric>{n.status}</TableCell>
-                                <TableCell className={classes.innerRow} numeric>{n.role}</TableCell>
-                            </TableRow>
-                        );
-                    })}
-                </TableBody>
-            </Table>
-        </Paper>
-    );
+    fetchTableData() {
+        fetch('http://localhost:9090/people')
+            .then(response => response.json())
+            .then(data => {
+                this.setState({personData: data});
+            });
+    }
+
+    render() {
+        return (
+            <Paper>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell style={styles.head}>ID:</TableCell>
+                            <TableCell style={styles.head}>Name:</TableCell>
+                            <TableCell style={styles.head}>Lastname</TableCell>
+                            <TableCell style={styles.head}>Location</TableCell>
+                            <TableCell style={styles.head}>Email</TableCell>
+                            <TableCell style={styles.head}>Status</TableCell>
+                            <TableCell style={styles.head}>Role</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {this.state.personData.map(n => {
+                            return (
+                                <TableRow key={n.id}>
+                                    <TableCell style={styles.innerRow} component="th" scope="row">
+                                        {n.id}
+                                    </TableCell>
+                                    <TableCell numeric style={styles.innerRow}>{n.firstName}</TableCell>
+                                    <TableCell numeric style={styles.innerRow}>{n.lastName}</TableCell>
+                                    <TableCell numeric style={styles.innerRow}>{n.location}</TableCell>
+                                    <TableCell numeric style={styles.innerRow}>{n.email}</TableCell>
+                                    <TableCell numeric style={styles.innerRow}>{n.status}</TableCell>
+                                    <TableCell numeric style={styles.innerRow}>{n.role}</TableCell>
+                                </TableRow>
+                            );
+                        })}
+                    </TableBody>
+                </Table>
+            </Paper>
+        );
+    }
 }
 
 NextPersonTable.propTypes = {

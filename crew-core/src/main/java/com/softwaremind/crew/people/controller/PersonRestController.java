@@ -34,6 +34,7 @@ public class PersonRestController {
 	 * @return
 	 */
 	@GetMapping("/people")
+	@CrossOrigin
 	public List<PersonDto> findAll() {
 		return personService.findAll();
 	}
@@ -92,6 +93,7 @@ public class PersonRestController {
 	 * @return
 	 */
 	@PostMapping("/people")
+	@CrossOrigin
 	public ResponseEntity<?> createPerson(@RequestBody PersonDto personDto) {
 		try {
 			personService.addPerson(personDto);

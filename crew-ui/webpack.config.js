@@ -1,3 +1,5 @@
+var webpack = require('webpack');
+
 var config = {
     entry: './main.js',
     output: {
@@ -8,6 +10,13 @@ var config = {
         inline: true,
         port: 8080
     },
+    plugins: [
+        new webpack.DefinePlugin({
+            "process.env": {
+                NODE_ENV: JSON.stringify("dev")
+            }
+        })
+    ],
     module: {
         rules: [
             {
@@ -49,4 +58,7 @@ var config = {
         ]
     }
 };
+
+
+
 module.exports = config;

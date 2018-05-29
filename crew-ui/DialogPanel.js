@@ -9,9 +9,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import AddIcon from '@material-ui/icons/Add';
 import Save from "@material-ui/icons/es/Save";
 import Delete from "@material-ui/icons/es/Delete";
-import {createData, dataTable} from "./NextPersonTable";
-import Persons from "./Persons.jsx";
-import ReactDOM from "react-dom";
+import {dataTable} from "./NextPersonTable";
 
 class DialogPanel extends React.Component {
     constructor() {
@@ -34,6 +32,7 @@ class DialogPanel extends React.Component {
             this.publish();
         };
     }
+
     handleChanges({target}) {
         this.setState(
             {
@@ -42,12 +41,29 @@ class DialogPanel extends React.Component {
         )
 
     }
+    addPersonToDatabase(personProps) {
+        fetch('http://localhost:9090/people',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'mode': 'no-corse',
+                },
+                body: JSON.stringify(personProps)
+            }).then(
+            resp => window.location.reload()
+        ).catch(err => console.error(err))
+    }
+
 
     publish() {
         console.log("Data:" + this.state.name, this.state.lastname, this.state.location, this.state.email, this.state.status, this.state.role);
-        dataTable.push(createData(this.state.name, this.state.lastname, this.state.location, this.state.email, this.state.status, this.state.role));
-        ReactDOM.render(<Persons/>, document.getElementById('app'));
+        //dataTable.push(createData(this.state.name, this.state.lastname, this.state.location, this.state.email, this.state.status, this.state.role));
+        // ReactDOM.render(<Persons/>, document.getElementById('app'));
+        this.addPersonToDatabase(dataTable(this.state.name, this.state.lastname, this.state.location, this.state.email, this.state.status, this.state.role));
     }
+
 
 
     render() {
