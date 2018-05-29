@@ -1,20 +1,6 @@
-import React from 'react';
+function fetchData() {
+    return fetch('http://localhost:9090/teams')
+        .then(response => response.json())
+};
 
-class StoreTeamFromDatabase extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            teams: []
-        };
-    }
-
-    componentDidMount() {
-        fetch('http://localhost:8080/teams')
-            .then(response => response.json())
-            .then(teamData => this.setState({
-                teams: teamData,
-            }));
-    }
-}
-
-export default StoreTeamFromDatabase;
+export default fetchData;

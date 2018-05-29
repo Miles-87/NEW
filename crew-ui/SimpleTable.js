@@ -7,7 +7,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-
+import fetchData from "./StoreTeamFromDatabase";
 
 {/*
    @author Wiktor Religo
@@ -47,39 +47,56 @@ export var dataTable = [
     createData("Grubi Anorektycy", "Poznań", "Kilka danych odrużynie", 56),
 ];
 
+class SimpleTable extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            teamData: []
+        }
+    }
 
-function SimpleTable(props) {
-    const {classes} = props;
-    return (
-        <Paper className={classes.root}>
-            <Table>
-                <TableHead>
-                    <TableRow>
-                        <TableCell className={classes.head}>ID:</TableCell>
-                        <TableCell className={classes.head} numeric>Name:</TableCell>
-                        <TableCell className={classes.head} numeric>City</TableCell>
-                        <TableCell className={classes.head} numeric>Description</TableCell>
-                        <TableCell className={classes.head} numeric>Headcount</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {dataTable.map(n => {
-                        return (
-                            <TableRow key={n.id}>
-                                <TableCell className={classes.innerRow} component="th" scope="row">
-                                    {n.id}
-                                </TableCell>
-                                <TableCell className={classes.innerRow} numeric>{n.name}</TableCell>
-                                <TableCell className={classes.innerRow} numeric>{n.city}</TableCell>
-                                <TableCell className={classes.innerRow} numeric>{n.description}</TableCell>
-                                <TableCell className={classes.innerRow} numeric>{n.headcount}</TableCell>
-                            </TableRow>
-                        );
-                    })}
-                </TableBody>
-            </Table>
-        </Paper>
-    );
+    componentDidMount() {
+        this.fetchTableData();
+    }
+
+    fetchTableData() {
+        fetchData().then(data => {
+            this.setState({teamData: data});
+        });
+    }
+
+    render() {
+        return (
+            <Paper>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>ID:</TableCell>
+                            <TableCell> numeric>Name:</TableCell>
+                            <TableCell> numeric>City</TableCell>
+                            <TableCell> numeric>Description</TableCell>
+                            <TableCell> numeric>Headcount</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {this.state.teamData.map(n => {
+                            return (
+                                <TableRow key={n.id}>
+                                    <TableCell component="th" scope="row">
+                                        {n.id}
+                                    </TableCell>
+                                    <TableCell numeric>{n.name}</TableCell>
+                                    <TableCell numeric>{n.city}</TableCell>
+                                    <TableCell numeric>{n.description}</TableCell>
+                                    <TableCell numeric>{n.headcount}</TableCell>
+                                </TableRow>
+                            );
+                        })}
+                    </TableBody>
+                </Table>
+            </Paper>
+        );
+    }
 }
 
 SimpleTable.propTypes = {

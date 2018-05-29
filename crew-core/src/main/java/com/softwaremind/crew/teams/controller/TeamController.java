@@ -33,6 +33,7 @@ public class TeamController {
 	 * 		list of teams
 	 */
 	@GetMapping("/teams")
+	@CrossOrigin
 	public List<TeamDto> findAll() {
 		return teamService.findAll();
 	}
