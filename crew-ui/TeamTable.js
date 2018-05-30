@@ -6,7 +6,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import * as theme from "material-ui/styles/index";
+import spacing from "@material-ui/core/es/styles/spacing";
 
 
 {/*
@@ -17,7 +17,7 @@ import * as theme from "material-ui/styles/index";
 const styles = {
     root: {
         width: '100%',
-        marginTop: theme.spacing.unit * 3,
+        marginTop: spacing.unit * 3,
         overflowX: 'auto',
     },
     table: {
@@ -30,6 +30,24 @@ const styles = {
         fontSize: '15',
         color: 'black',
         textAlign: 'left',
+    },
+    deleted: {
+        textAlign: 'center',
+        fontSize: '20px',
+    },
+    innerLastRow: {
+        textAlign: 'center',
+    },
+    deleteIcon: {
+        backgroundColor: '#1e90ff',
+        border: 'none',
+        color: '#f8f8ff',
+        padding: '10px',
+        fontSize: '15px',
+        cursor: 'pointer',
+    },
+    anIcon: {
+        marginLeft: '10px',
     }
 };
 
@@ -60,6 +78,7 @@ class TeamTable extends React.Component {
         this.fetchDataToTable();
     }
 
+
     fetchDataToTable() {
         fetch('http://localhost:9090/teams')
             .then(response => response.json())
@@ -78,7 +97,8 @@ class TeamTable extends React.Component {
                             <TableCell style={styles.head}> Name:</TableCell>
                             <TableCell style={styles.head}>City:</TableCell>
                             <TableCell style={styles.head}>Description: </TableCell>
-                            <TableCell style={styles.head}>Headcount</TableCell>
+                            <TableCell style={styles.head}>Headcount:</TableCell>
+                            <TableCell style={styles.deleted}>Delete</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -92,7 +112,13 @@ class TeamTable extends React.Component {
                                     <TableCell numeric style={styles.innerRow}>{n.city}</TableCell>
                                     <TableCell numeric style={styles.innerRow}>{n.description}</TableCell>
                                     <TableCell numeric style={styles.innerRow}>{n.headcount}</TableCell>
+                                    <TableCell numeric style={styles.innerLastRow}>
+                                        <button style={styles.deleteIcon}>Delete <i className="fa fa-trash" style={styles.anIcon}
+                                        ></i>
+                                        </button>
+                                    </TableCell>
                                 </TableRow>
+
                             );
                         })}
                     </TableBody>

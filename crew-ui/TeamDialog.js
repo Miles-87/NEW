@@ -9,6 +9,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Save from "@material-ui/icons/es/Save";
 import Delete from "@material-ui/icons/es/Delete";
 import {createData} from "./TeamTable";
+import * as ReactDom from "react-dom";
+import TeamPage from "./TeamPage.jsx";
 
 class TeamDialog extends React.Component {
     constructor() {
@@ -29,6 +31,7 @@ class TeamDialog extends React.Component {
             this.publish();
         };
     }
+
 
     handleChanges({target}) {
         this.setState(
@@ -56,9 +59,10 @@ class TeamDialog extends React.Component {
                 },
                 body: JSON.stringify(teamProps)
             }).then(
-            resp => window.location.reload()
+            resp => ReactDom.render(<TeamPage/>, document.getElementById('app'))
         ).catch(err => console.error(err))
     }
+
 
     render() {
         return (

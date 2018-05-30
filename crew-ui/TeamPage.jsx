@@ -1,5 +1,5 @@
 import React from 'react';
-import SimpleTable from './TeamTable.js';
+import TeamTable from './TeamTable.js';
 import {AppBar} from '@material-ui/core/';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -19,13 +19,14 @@ class TeamPage extends React.Component {
         return (
             <div>
                 <NavigationMenu/>
-                <SimpleTable ref="userTable"/>
+                <TeamTable/>
                 <TeamDialog/>
             </div>
 
         );
     }
 }
+
 
 const NavigationMenu = () => {
     return (
