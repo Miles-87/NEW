@@ -58,14 +58,6 @@ export function createData(name, city, description, headcount) {
     return {id, name, city, description, headcount};
 }
 
-export var dataTable = [
-    createData("Cebule z Polski", "Kraków", "Kilka danych o drużynie ", 12),
-    createData("Pierogi jak u Mamy", "Rzeszów", "Kilka danych odrużynie", 15),
-    createData("Koksy z Huty", "Kraków", "Kilka danych odrużynie", 32),
-    createData("Wiemy że nie wiemy", "Warszawa", "Kilka danych odrużynie", 11),
-    createData("Grubi Anorektycy", "Poznań", "Kilka danych odrużynie", 56),
-];
-
 class TeamTable extends React.Component {
     constructor() {
         super();
@@ -74,10 +66,14 @@ class TeamTable extends React.Component {
         }
     }
 
+    updateTableWithNewData() {
+        this.fetchDataToTable()
+    };
+
     componentDidMount() {
+        this.props.onRef(this);
         this.fetchDataToTable();
     }
-
 
     fetchDataToTable() {
         fetch('http://localhost:9090/teams')
@@ -87,43 +83,56 @@ class TeamTable extends React.Component {
             });
     }
 
+    deleteTeamFromBase(teamId) {
+        console.log("Podane id: " + teamId);
+        fetch('http://localhost:9090/teams/' + teamId,
+            {method: 'DELETE',})
+            .then(
+                res => this.fetchDataToTable()
+            )
+            .catch(err => console.error(err))
+    }
+
     render() {
         return (
-            <Paper style={styles.root}>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell style={styles.head}>ID:</TableCell>
-                            <TableCell style={styles.head}> Name:</TableCell>
-                            <TableCell style={styles.head}>City:</TableCell>
-                            <TableCell style={styles.head}>Description: </TableCell>
-                            <TableCell style={styles.head}>Headcount:</TableCell>
-                            <TableCell style={styles.deleted}>Delete</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {this.state.teamData.map(n => {
-                            return (
-                                <TableRow key={n.id}>
-                                    <TableCell style={styles.innerRow} component="th" scope="row">
-                                        {n.id}
-                                    </TableCell>
-                                    <TableCell numeric style={styles.innerRow}>{n.name}</TableCell>
-                                    <TableCell numeric style={styles.innerRow}>{n.city}</TableCell>
-                                    <TableCell numeric style={styles.innerRow}>{n.description}</TableCell>
-                                    <TableCell numeric style={styles.innerRow}>{n.headcount}</TableCell>
-                                    <TableCell numeric style={styles.innerLastRow}>
-                                        <button style={styles.deleteIcon}>Delete <i className="fa fa-trash" style={styles.anIcon}
-                                        ></i>
-                                        </button>
-                                    </TableCell>
-                                </TableRow>
-
-                            );
-                        })}
-                    </TableBody>
-                </Table>
-            </Paper>
+            <div>
+                <Paper style={styles.root}>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell style={styles.head}>ID:</TableCell>
+                                <TableCell style={styles.head}> Name:</TableCell>
+                                <TableCell style={styles.head}>City:</TableCell>
+                                <TableCell style={styles.head}>Description: </TableCell>
+                                <TableCell style={styles.head}>Headcount:</TableCell>
+                                <TableCell style={styles.deleted}>Delete</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {this.state.teamData.map(n => {
+                                return (
+                                    <TableRow key={n.id}>
+                                        <TableCell style={styles.innerRow} component="th" scope="row">
+                                            {n.id}
+                                        </TableCell>
+                                        <TableCell numeric style={styles.innerRow}>{n.name}</TableCell>
+                                        <TableCell numeric style={styles.innerRow}>{n.city}</TableCell>
+                                        <TableCell numeric style={styles.innerRow}>{n.description}</TableCell>
+                                        <TableCell numeric style={styles.innerRow}>{n.headcount}</TableCell>
+                                        <TableCell numeric style={styles.innerLastRow}>
+                                            <button onClick={e => {
+                                                this.deleteTeamFromBase(n.id);
+                                            }} style={styles.deleteIcon}>Delete <i className="fa fa-trash" style={styles.anIcon}
+                                            ></i>
+                                            </button>
+                                        </TableCell>
+                                    </TableRow>
+                                )
+                            })}
+                        </TableBody>
+                    </Table>
+                </Paper>
+            </div>
         );
     }
 }

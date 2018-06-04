@@ -15,20 +15,29 @@ import TeamDialog from "./TeamDialog";
 }
 
 class TeamPage extends React.Component {
+
+    constructor() {
+        super();
+        this.teamAddedCallback = () => {
+            this.tableRef.updateTableWithNewData();
+        }
+    }
+
     render() {
         return (
             <div>
                 <NavigationMenu/>
-                <TeamTable/>
-                <TeamDialog/>
+                <TeamTable onRef={ref => {
+                    (this.tableRef = ref);
+                }}/>
+                <TeamDialog onSave={this.teamAddedCallback}/>
             </div>
 
         );
     }
 }
 
-
-const NavigationMenu = () => {
+export const NavigationMenu = () => {
     return (
         <div className={styles2.root}>
             <AppBar position="static">
@@ -37,21 +46,25 @@ const NavigationMenu = () => {
                         <MenuIcon/>
                     </IconButton>
                     <Typography variant="title" color="inherit" className={styles2.flex}>
-                        Title
+                        Home TeamTable
                     </Typography>
-                    <Button color="inherit">Login</Button>
+                    <Button color="inherit"
+                            style={{marginLeft: '50px', letterSpacing: 1.5, opacity: 0.7, border: '1.5px solid #00BFFF'}}> About </Button>
+                    <Button color="inherit" style={{marginLeft: '50px', backgroundColor: 'rgb(220, 20, 60,0.8)', letterSpacing: 1.5}}> show
+                        PersonTable </Button>
                 </Toolbar>
             </AppBar>
         </div>
     );
 }
 
-const styles2 = {
+export const styles2 = {
     root: {
         flexGrow: 1,
     },
     flex: {
         flex: 1,
+        marginRight: '15px',
     },
     menuButton: {
         float: 'right',

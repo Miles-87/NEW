@@ -8,9 +8,8 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Save from "@material-ui/icons/es/Save";
 import Delete from "@material-ui/icons/es/Delete";
-import {createData} from "./TeamTable";
-import * as ReactDom from "react-dom";
-import TeamPage from "./TeamPage.jsx";
+import {createData, globalFetchData} from "./TeamTable";
+
 
 class TeamDialog extends React.Component {
     constructor() {
@@ -23,15 +22,23 @@ class TeamDialog extends React.Component {
             headcount: '',
         };
         this.handleClickOpen = () => {
-            this.setState({open: true});
+            this.setState({
+                open: true,
+                name: '',
+                description: '',
+                city: '',
+                headcount: '',
+            });
         };
 
         this.handleClose = () => {
             this.setState({open: false});
-            this.publish();
         };
+        this.handleCloseWithChanges = () => {
+            this.publish();
+            this.setState({open: false});
+        }
     }
-
 
     handleChanges({target}) {
         this.setState(
@@ -39,12 +46,10 @@ class TeamDialog extends React.Component {
                 [target.name]: target.value
             }
         )
-
     }
 
     publish() {
         console.log("Data:" + this.state.name, this.state.city, this.state.description, this.state.headcount);
-        // dataTable.push(createData(this.state.name, this.state.city, this.state.description, this.state.headcount));
         this.addTeamToDatabase(createData(this.state.name, this.state.city, this.state.description, this.state.headcount));
     }
 
@@ -58,8 +63,7 @@ class TeamDialog extends React.Component {
                     'mode': 'no-corse',
                 },
                 body: JSON.stringify(teamProps)
-            }).then(
-            resp => ReactDom.render(<TeamPage/>, document.getElementById('app'))
+            }).then(respData => this.props.onSave(respData)
         ).catch(err => console.error(err))
     }
 
@@ -124,7 +128,7 @@ class TeamDialog extends React.Component {
                             Cancel
                             <Delete/>
                         </Button>
-                        <Button variant="raised" size="small" onClick={this.handleClose} color="primary">
+                        <Button variant="raised" size="small" onClick={this.handleCloseWithChanges} color="primary">
                             Save
                             <Save/>
                         </Button>
@@ -134,5 +138,6 @@ class TeamDialog extends React.Component {
         );
     }
 }
+
 
 export default TeamDialog;

@@ -76,6 +76,7 @@ public class TeamController {
 	 * @return deleted team
 	 */
 	@DeleteMapping("teams/{id}")
+	@CrossOrigin
 	public ResponseEntity<?> deleteById(@PathVariable Long id) {
 		teamService.deleteTeamById(id);
 		return ResponseEntity.ok().build();

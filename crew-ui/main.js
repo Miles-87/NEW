@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import TeamPage from './TeamPage.jsx';
+import PageRouting from "./PageRouting.jsx";
 
-ReactDOM.render(<TeamPage/>, document.getElementById('app'));
+
+ReactDOM.render(<PageRouting/>, document.getElementById('app'));
