@@ -9,7 +9,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import AddIcon from '@material-ui/icons/Add';
 import Save from "@material-ui/icons/es/Save";
 import Delete from "@material-ui/icons/es/Delete";
-import {dataTable, globalFetchData} from "./NextPersonTable";
+import {dataTable2, globalFetchData} from "./NextPersonTable";
 
 class DialogPanel extends React.Component {
     constructor() {
@@ -63,9 +63,6 @@ class DialogPanel extends React.Component {
 
 
     addPersonToDatabase(personProps) {
-
-        var data = JSON.stringify(personProps);
-        console.log(data);
         fetch('http://localhost:9090/people',
             {
                 method: 'POST',
@@ -74,10 +71,11 @@ class DialogPanel extends React.Component {
                     'Access-Control-Allow-Origin': '*',
                     'mode': 'no-corse',
                 },
-                body: data
-            }).then(a => console.log(a))
-        .catch(err => console.error(err))
+                body: JSON.stringify(personProps)
+            }).then(respData => this.props.onSave(respData)
+        ).catch(err => console.error(err))
     }
+
 
 
     render() {

@@ -79,6 +79,7 @@ public class PersonRestController {
 	 */
 	
 	@DeleteMapping("/people/{id}")
+	@CrossOrigin
 	public ResponseEntity<PersonDto> deletePerson(@PathVariable Long id) {
 		return personService
 				.deletePerson(id)

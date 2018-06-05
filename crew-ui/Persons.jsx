@@ -15,14 +15,23 @@ import DialogPanel from "./DialogPanel";
 
 class Persons extends React.Component {
 
+    constructor() {
+        super();
+        this.personAddedCallback = () => {
+            this.tableRef.updateTableWithNewData();
+        }
+    }
 
 
     render() {
         return (
             <div>
                 <ButtonNavigation/>
-                <NextPersonTable/>
-                <DialogPanel/>
+                <NextPersonTable onRef={ref => {
+                    (this.tableRef = ref);
+                }}
+                />
+                <DialogPanel onSave={this.personAddedCallback}/>
             </div>
 
         );

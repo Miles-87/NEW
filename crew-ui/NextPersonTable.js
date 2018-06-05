@@ -29,6 +29,25 @@ const styles = theme => ({
         color: 'black',
         textAlign: 'left',
     },
+    deleted: {
+        textAlign: 'center',
+        fontSize: '20px',
+    },
+    innerLastRow: {
+        textAlign: 'center',
+    },
+    deleteIcon: {
+        backgroundColor: '#1e90ff',
+        border: 'none',
+        color: '#f8f8ff',
+        padding: '10px',
+        fontSize: '15px',
+        cursor: 'pointer',
+    },
+    anIcon: {
+        marginLeft: '10px',
+    }
+
 
 
 });
@@ -53,8 +72,8 @@ class NextPersonTable extends React.Component {
         this.fetchTableData()
     };
 
-
     componentDidMount() {
+        this.props.onRef(this);
         this.fetchTableData();
     }
 
@@ -66,8 +85,19 @@ class NextPersonTable extends React.Component {
             });
     }
 
+    deletePersonFromBase(personId) {
+        console.log("by id: " + personId);
+        fetch('http://localhost:9090/people/' + personId,
+            {method: 'DELETE',})
+            .then(
+                res => this.fetchTableData()
+            )
+            .catch(err => console.error(err))
+    }
+
+
     render() {
-        const { classes } = this.props;
+        const {classes} = this.props;
 
         return (
             <Paper>
@@ -109,6 +139,14 @@ class NextPersonTable extends React.Component {
                                                scope="row">{n.status}</TableCell>
                                     <TableCell className={this.props.classes.innerRow} component="th"
                                                scope="row">{n.role}</TableCell>
+                                    <TableCell numeric style={styles.innerLastRow}>
+                                        <button onClick={e => {
+                                            this.deletePersonFromBase(n.id);
+                                        }} style={styles.deleteIcon}>Delete <i className="fa fa-trash" style={styles.anIcon}
+                                        ></i>
+                                        </button>
+                                    </TableCell>
+
                                 </TableRow>
                             );
                         })}
