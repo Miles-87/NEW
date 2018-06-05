@@ -1,12 +1,15 @@
+var path = require('path');
+
 var config = {
     entry: './main.js',
     output: {
-        path: '/',
+        path: path.resolve(__dirname, 'dist'),
         filename: 'index.js',
     },
     devServer: {
         inline: true,
-        port: 8080
+        port: 8080,
+        historyApiFallback: true,
     },
     module: {
         rules: [

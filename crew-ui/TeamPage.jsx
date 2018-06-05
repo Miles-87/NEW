@@ -8,6 +8,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import spacing from "@material-ui/core/es/styles/spacing";
 import TeamDialog from "./TeamDialog";
+import {Link,} from 'react-router-dom';
 
 {/*
    @author Wiktor Religo
@@ -25,14 +26,13 @@ class TeamPage extends React.Component {
 
     render() {
         return (
-            <div>
+            <div style={{textAlign: 'left'}}>
                 <NavigationMenu/>
                 <TeamTable onRef={ref => {
                     (this.tableRef = ref);
                 }}/>
                 <TeamDialog onSave={this.teamAddedCallback}/>
             </div>
-
         );
     }
 }
@@ -45,17 +45,29 @@ export const NavigationMenu = () => {
                     <IconButton className={styles2.menuButton} color="inherit" aria-label="Menu">
                         <MenuIcon/>
                     </IconButton>
-                    <Typography variant="title" color="inherit" className={styles2.flex}>
-                        Home TeamTable
-                    </Typography>
+                    <Link style={styles2.link} exact to="/">
+                        <Typography variant="title" color="inherit" className={styles2.flex}>
+                            Home TeamTable
+                        </Typography>
+                    </Link>
                     <Button color="inherit"
-                            style={{marginLeft: '50px', letterSpacing: 1.5, opacity: 0.7, border: '1.5px solid #00BFFF'}}> About </Button>
-                    <Button color="inherit" style={{marginLeft: '50px', backgroundColor: 'rgb(220, 20, 60,0.8)', letterSpacing: 1.5}}> show
-                        PersonTable </Button>
+                            style={{
+                                marginLeft: '50px',
+                                letterSpacing: 1.5,
+                                opacity: 0.7,
+                                border: '1.5px solid #00BFFF'
+                            }}>
+                        <Link style={styles2.link} to="/manage">Manage</Link></Button>
+                    <Link style={styles2.link} to="/persons">
+                        <Button color="inherit"
+                                style={{marginLeft: '50px', backgroundColor: 'rgb(220, 20, 60,0.8)', letterSpacing: 1.5}}> show
+                            PersonTable </Button>
+                    </Link>
                 </Toolbar>
             </AppBar>
         </div>
-    );
+    )
+        ;
 }
 
 export const styles2 = {
@@ -74,5 +86,9 @@ export const styles2 = {
     button: {
         margin: spacing.unit,
     },
+    link: {
+        textDecoration: 'none',
+        color: 'white',
+    }
 };
 export default TeamPage;
