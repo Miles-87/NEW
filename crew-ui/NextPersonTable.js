@@ -109,15 +109,15 @@ class NextPersonTable extends React.Component {
                             <TableCell className={this.props.classes.head} component="th"
                                        scope="row">Name:</TableCell>
                             <TableCell className={this.props.classes.head} component="th"
-                                       scope="row">Lastname</TableCell>
+                                       scope="row">Lastname:</TableCell>
                             <TableCell className={this.props.classes.head} component="th"
-                                       scope="row">Location</TableCell>
+                                       scope="row">Location:</TableCell>
                             <TableCell className={this.props.classes.head} component="th"
-                                       scope="row">Email</TableCell>
+                                       scope="row">Email:</TableCell>
                             <TableCell className={this.props.classes.head} component="th"
-                                       scope="row">Status</TableCell>
+                                       scope="row">Status:</TableCell>
                             <TableCell className={this.props.classes.head} component="th"
-                                       scope="row">Role</TableCell>
+                                       scope="row">Role:</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
