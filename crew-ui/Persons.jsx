@@ -15,6 +15,8 @@ import DialogPanel from "./DialogPanel";
 
 class Persons extends React.Component {
 
+
+
     render() {
         return (
             <div>
@@ -33,7 +35,7 @@ const ButtonNavigation = () => {
         <div className={styles2.root}>
             <AppBar position="static">
                 <Toolbar>
-                    <IconButton className={styles2.menuButton} color="inherit" aria-label="Menu">
+                    <IconButton color="inherit" aria-label="Menu">
                         <MenuIcon/>
                     </IconButton>
                 </Toolbar>

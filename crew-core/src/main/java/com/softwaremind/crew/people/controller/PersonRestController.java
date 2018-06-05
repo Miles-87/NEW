@@ -99,7 +99,7 @@ public class PersonRestController {
 			personService.addPerson(personDto);
 			return ResponseEntity.ok(personDto);
 		} catch (Exception e) {
-			throw new NoEntityFoundException();
+			throw new NoEntityFoundException(e);
 		}
 	}
 }

@@ -9,7 +9,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import AddIcon from '@material-ui/icons/Add';
 import Save from "@material-ui/icons/es/Save";
 import Delete from "@material-ui/icons/es/Delete";
-import {dataTable} from "./NextPersonTable";
+import {dataTable, globalFetchData} from "./NextPersonTable";
 
 class DialogPanel extends React.Component {
     constructor() {
@@ -24,14 +24,24 @@ class DialogPanel extends React.Component {
             role: '',
         };
         this.handleClickOpen = () => {
-            this.setState({open: true});
+            this.setState({
+                open: true,
+                name: '',
+                lastname: '',
+                location: '',
+                email: '',
+                status: '',
+                role: '',
+            });
         };
-
         this.handleClose = () => {
             this.setState({open: false});
             this.publish();
         };
+
+
     }
+
 
     handleChanges({target}) {
         this.setState(
@@ -41,7 +51,21 @@ class DialogPanel extends React.Component {
         )
 
     }
+
+    publish() {
+        console.log("Data:" + this.state.name, this.state.lastname, this.state.location, this.state.email, this.state.status, this.state.role);
+        this.addPersonToDatabase(this.dataTable2(this.state.name, this.state.lastname, this.state.location, this.state.email, this.state.status, this.state.role));
+    }
+
+    dataTable2(firstName, lastName, location, email, status, role) {
+        return {firstName, lastName, location, email, status, role};
+    }
+
+
     addPersonToDatabase(personProps) {
+
+        var data = JSON.stringify(personProps);
+        console.log(data);
         fetch('http://localhost:9090/people',
             {
                 method: 'POST',
@@ -50,20 +74,10 @@ class DialogPanel extends React.Component {
                     'Access-Control-Allow-Origin': '*',
                     'mode': 'no-corse',
                 },
-                body: JSON.stringify(personProps)
-            }).then(
-            resp => window.location.reload()
-        ).catch(err => console.error(err))
+                body: data
+            }).then(a => console.log(a))
+        .catch(err => console.error(err))
     }
-
-
-    publish() {
-        console.log("Data:" + this.state.name, this.state.lastname, this.state.location, this.state.email, this.state.status, this.state.role);
-        //dataTable.push(createData(this.state.name, this.state.lastname, this.state.location, this.state.email, this.state.status, this.state.role));
-        // ReactDOM.render(<Persons/>, document.getElementById('app'));
-        this.addPersonToDatabase(dataTable(this.state.name, this.state.lastname, this.state.location, this.state.email, this.state.status, this.state.role));
-    }
-
 
 
     render() {
@@ -76,7 +90,7 @@ class DialogPanel extends React.Component {
                     onClose={this.handleClose}
                     aria-labelledby="form-dialog-title"
                 >
-                    <DialogTitle id="form-dialog-title">Adding person to table: </DialogTitle>
+                    <DialogTitle id="form-dialog-title">Adding Person to table: </DialogTitle>
                     <DialogContent>
                         <DialogContentText>
                             Pleas fill data.
@@ -90,6 +104,7 @@ class DialogPanel extends React.Component {
                             fullWidth
                             value={this.state.name}
                             onChange={this.handleChanges.bind(this)}
+
 
                         />
                         <TextField
@@ -149,11 +164,11 @@ class DialogPanel extends React.Component {
                         />
                     </DialogContent>
                     <DialogActions>
-                        <Button variant="raised" onClick={this.handleClose} color="secondary">
+                        <Button variant="raised" onClick={this.handleClose.bind(this)} color="secondary">
                             Cancel
                             <Delete/>
                         </Button>
-                        <Button variant="raised" size="small" onClick={this.handleClose} color="primary">
+                        <Button variant="raised" size="small" onClick={this.handleClose.bind(this)} color="primary">
                             Save
                             <Save/>
                         </Button>
