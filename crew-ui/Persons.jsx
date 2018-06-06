@@ -71,3 +71,4 @@ const styles2 = {
 
 
 export default Persons;
+

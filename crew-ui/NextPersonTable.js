@@ -49,7 +49,6 @@ const styles = theme => ({
     }
 
 
-
 });
 
 let id = 0;
@@ -142,7 +141,8 @@ class NextPersonTable extends React.Component {
                                     <TableCell numeric style={styles.innerLastRow}>
                                         <button onClick={e => {
                                             this.deletePersonFromBase(n.id);
-                                        }} style={styles.deleteIcon}>Delete <i className="fa fa-trash" style={styles.anIcon}
+                                        }} style={styles.deleteIcon}>Delete <i className="fa fa-trash"
+                                                                               style={styles.anIcon}
                                         ></i>
                                         </button>
                                     </TableCell>
