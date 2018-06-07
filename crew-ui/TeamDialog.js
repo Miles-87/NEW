@@ -10,6 +10,10 @@ import Save from "@material-ui/icons/es/Save";
 import Delete from "@material-ui/icons/es/Delete";
 import {createData, globalFetchData} from "./TeamTable";
 
+{/*
+   @author Wiktor Religo
+ * @since 21.05.2018*/
+}
 
 class TeamDialog extends React.Component {
     constructor() {

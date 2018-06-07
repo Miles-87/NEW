@@ -45,11 +45,12 @@ export const NavigationMenu = () => {
                     <IconButton className={styles2.menuButton} color="inherit" aria-label="Menu">
                         <MenuIcon/>
                     </IconButton>
-                    <Link style={styles2.link} exact to="/">
+                    <Link style={styles2.link} to="/">
                         <Typography variant="title" color="inherit" className={styles2.flex}>
-                            Home TeamTable
+                            Back to Home
                         </Typography>
                     </Link>
+
                     <Button color="inherit"
                             style={{
                                 marginLeft: '50px',
@@ -58,6 +59,11 @@ export const NavigationMenu = () => {
                                 border: '1.5px solid #00BFFF'
                             }}>
                         <Link style={styles2.link} to="/manage">Manage</Link></Button>
+                    <Link style={styles2.link} to="/teams">
+                        <Button color="inherit"
+                                style={{marginLeft: '50px', backgroundColor: 'rgb(220, 20, 60,0.8)', letterSpacing: 1.5}}> show
+                            show TeamTable </Button>
+                    </Link>
                     <Link style={styles2.link} to="/persons">
                         <Button color="inherit"
                                 style={{marginLeft: '50px', backgroundColor: 'rgb(220, 20, 60,0.8)', letterSpacing: 1.5}}> show
