@@ -4,3 +4,5 @@ spring:
   application:
     name: Crew Tool
     version: @project.version@
+server:
+  port: 9090
