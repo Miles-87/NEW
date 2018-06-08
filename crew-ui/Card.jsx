@@ -10,6 +10,10 @@ import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 
+{/*
+   @author Wiktor Religo
+ * @since 07.06.2018*/
+}
 const styles = theme => ({
     card: {
         display: 'flex',

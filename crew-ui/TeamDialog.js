@@ -8,7 +8,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Save from "@material-ui/icons/es/Save";
 import Delete from "@material-ui/icons/es/Delete";
-import {createData, globalFetchData} from "./TeamTable";
+import {createData} from "./TeamTable";
 
 {/*
    @author Wiktor Religo
@@ -39,7 +39,7 @@ class TeamDialog extends React.Component {
             this.setState({open: false});
         };
         this.handleCloseWithChanges = () => {
-            this.publish();
+            this.publishData();
             this.setState({open: false});
         }
     }
@@ -52,8 +52,7 @@ class TeamDialog extends React.Component {
         )
     }
 
-    publish() {
-        console.log("Data:" + this.state.name, this.state.city, this.state.description, this.state.headcount);
+    publishData() {
         this.addTeamToDatabase(createData(this.state.name, this.state.city, this.state.description, this.state.headcount));
     }
 
@@ -142,6 +141,5 @@ class TeamDialog extends React.Component {
         );
     }
 }
-
 
 export default TeamDialog;

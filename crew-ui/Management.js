@@ -2,12 +2,10 @@ import React from 'react';
 import Card from "./Card.jsx";
 import {NavigationMenu} from "./TeamPage";
 
-
 {/*
    @author Wiktor Religo
  * @since 05.06.2018*/
 }
-
 
 export class Management extends React.Component {
     constructor() {
@@ -22,7 +20,6 @@ export class Management extends React.Component {
             rightContainer: [],
             leftContainer: []
         }
-
 
         this.onDragStart = (event, value) => {
             event.dataTransfer.dropEffect = "move";
@@ -78,22 +75,22 @@ export class Management extends React.Component {
         return (
             <div>
                 <NavigationMenu/>
-                <div style={secondStyles.droppable}>
-                    <div style={secondStyles.left} onDragOver={this.allowDrop} onDrop={this.onDropLeft}>Left Container
+                <div style={classStyle.droppable}>
+                    <div style={classStyle.left} onDragOver={this.allowDrop} onDrop={this.onDropLeft}>Left Container
                         {
                             leftContainer.map(itm => {
                                 return <p>{itm}</p>
                             })
                         }
                     </div>
-                    <div style={secondStyles.right} onDragOver={this.allowDrop} onDrop={this.onDropRight}>Right Container
+                    <div style={classStyle.right} onDragOver={this.allowDrop} onDrop={this.onDropRight}>Right Container
                         {
                             rightContainer.map(itm => {
                                 return <p>{itm}</p>
                             })
                         }
                     </div>
-                    <div style={secondStyles.mainInner}>Main
+                    <div style={classStyle.mainInner}>Main
                         <div style={{marginTop: '55px'}}>
                             <div style={{display: 'inline-block'}}>
                                 {
@@ -112,30 +109,7 @@ export class Management extends React.Component {
     }
 }
 
-export const styling = {
-    list: {
-        backgroundColor: '#3f51b5',
-        width: '100%',
-        minWidth: 450,
-        minHeight: 75,
-    },
-    link: {
-        textDecoration: 'none',
-    },
-    button: {
-        marginLeft: 20,
-        marginRight: 20,
-        width: 200,
-        paddingLeft: '25px',
-        border: '1.5px solid #00BFFF',
-        color: 'white',
-        textAlign: 'center',
-        letterSpacing: 1.8,
-        fontWeight: 'bold',
-    }
-}
-
-export const secondStyles = {
+export const classStyle = {
     left: {
         marginLeft: '50px',
         marginTop: '50px',
@@ -177,6 +151,4 @@ export const secondStyles = {
         float: 'left'
     }
 }
-
-
 export default Management;

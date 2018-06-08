@@ -3,6 +3,7 @@ import React from 'react';
 {/*
    @author Mateusz Michoński
  * @since 18.05.2018*/}
+
 class App extends React.Component {
     constructor() {
         super();

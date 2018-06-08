@@ -1,5 +1,3 @@
-
-
 var config = {
     entry: './main.js',
     output: {
@@ -19,8 +17,13 @@ var config = {
                 query: {
                     presets: ['es2015', 'react']
                 }
+            },
+            {
+                test: /\.(png|jpg)$/,
+                loader: 'url-loader'
             }
         ]
+
     }
 }
 module.exports = config

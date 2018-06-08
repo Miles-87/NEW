@@ -39,14 +39,14 @@ class TeamPage extends React.Component {
 
 export const NavigationMenu = () => {
     return (
-        <div className={styles2.root}>
+        <div className={pageStyle.root}>
             <AppBar position="static">
                 <Toolbar>
-                    <IconButton className={styles2.menuButton} color="inherit" aria-label="Menu">
+                    <IconButton className={pageStyle.menuButton} color="inherit" aria-label="Menu">
                         <MenuIcon/>
                     </IconButton>
-                    <Link style={styles2.link} to="/">
-                        <Typography variant="title" color="inherit" className={styles2.flex}>
+                    <Link style={pageStyle.link} to="/">
+                        <Typography variant="title" color="inherit" className={pageStyle.flex}>
                             Back to Home
                         </Typography>
                     </Link>
@@ -55,16 +55,15 @@ export const NavigationMenu = () => {
                             style={{
                                 marginLeft: '50px',
                                 letterSpacing: 1.5,
-                                opacity: 0.7,
                                 border: '1.5px solid #00BFFF'
                             }}>
-                        <Link style={styles2.link} to="/manage">Manage</Link></Button>
-                    <Link style={styles2.link} to="/teams">
+                        <Link style={pageStyle.link} to="/manage">Manage</Link></Button>
+                    <Link style={pageStyle.link} to="/teams">
                         <Button color="inherit"
                                 style={{marginLeft: '50px', backgroundColor: 'rgb(220, 20, 60,0.8)', letterSpacing: 1.5}}> show
                             show TeamTable </Button>
                     </Link>
-                    <Link style={styles2.link} to="/persons">
+                    <Link style={pageStyle.link} to="/persons">
                         <Button color="inherit"
                                 style={{marginLeft: '50px', backgroundColor: 'rgb(220, 20, 60,0.8)', letterSpacing: 1.5}}> show
                             PersonTable </Button>
@@ -76,9 +75,10 @@ export const NavigationMenu = () => {
         ;
 }
 
-export const styles2 = {
+export const pageStyle = {
     root: {
         flexGrow: 1,
+        padding: '15px',
     },
     flex: {
         flex: 1,
@@ -95,6 +95,7 @@ export const styles2 = {
     link: {
         textDecoration: 'none',
         color: 'white',
+        fontWeight: 'bold',
     }
 };
 export default TeamPage;

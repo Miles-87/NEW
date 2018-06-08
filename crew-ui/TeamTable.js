@@ -14,7 +14,7 @@ import spacing from "@material-ui/core/es/styles/spacing";
  * @since 22.05.2018*/
 }
 
-const styles = {
+const tableStyle = {
     root: {
         width: '100%',
         marginTop: spacing.unit * 3,
@@ -84,7 +84,6 @@ class TeamTable extends React.Component {
     }
 
     deleteTeamFromBase(teamId) {
-        console.log("Podane id: " + teamId);
         fetch('http://localhost:9090/teams/' + teamId,
             {method: 'DELETE',})
             .then(
@@ -96,33 +95,33 @@ class TeamTable extends React.Component {
     render() {
         return (
             <div>
-                <Paper style={styles.root}>
+                <Paper style={tableStyle.root}>
                     <Table>
                         <TableHead>
                             <TableRow>
-                                <TableCell style={styles.head}>ID:</TableCell>
-                                <TableCell style={styles.head}> Name:</TableCell>
-                                <TableCell style={styles.head}>City:</TableCell>
-                                <TableCell style={styles.head}>Description: </TableCell>
-                                <TableCell style={styles.head}>Headcount:</TableCell>
-                                <TableCell style={styles.deleted}>Delete</TableCell>
+                                <TableCell style={tableStyle.head}>ID:</TableCell>
+                                <TableCell style={tableStyle.head}> Name:</TableCell>
+                                <TableCell style={tableStyle.head}>City:</TableCell>
+                                <TableCell style={tableStyle.head}>Description: </TableCell>
+                                <TableCell style={tableStyle.head}>Headcount:</TableCell>
+                                <TableCell style={tableStyle.deleted}>Delete</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {this.state.teamData.map(n => {
                                 return (
                                     <TableRow key={n.id}>
-                                        <TableCell style={styles.innerRow} component="th" scope="row">
+                                        <TableCell style={tableStyle.innerRow} component="th" scope="row">
                                             {n.id}
                                         </TableCell>
-                                        <TableCell numeric style={styles.innerRow}>{n.name}</TableCell>
-                                        <TableCell numeric style={styles.innerRow}>{n.city}</TableCell>
-                                        <TableCell numeric style={styles.innerRow}>{n.description}</TableCell>
-                                        <TableCell numeric style={styles.innerRow}>{n.headcount}</TableCell>
-                                        <TableCell numeric style={styles.innerLastRow}>
+                                        <TableCell numeric style={tableStyle.innerRow}>{n.name}</TableCell>
+                                        <TableCell numeric style={tableStyle.innerRow}>{n.city}</TableCell>
+                                        <TableCell numeric style={tableStyle.innerRow}>{n.description}</TableCell>
+                                        <TableCell numeric style={tableStyle.innerRow}>{n.headcount}</TableCell>
+                                        <TableCell numeric style={tableStyle.innerLastRow}>
                                             <button onClick={e => {
                                                 this.deleteTeamFromBase(n.id);
-                                            }} style={styles.deleteIcon}>Delete <i className="fa fa-trash" style={styles.anIcon}
+                                            }} style={tableStyle.deleteIcon}>Delete <i className="fa fa-trash" style={tableStyle.anIcon}
                                             ></i>
                                             </button>
                                         </TableCell>
@@ -137,4 +136,4 @@ class TeamTable extends React.Component {
     }
 }
 
-export default withStyles(styles)(TeamTable);
+export default withStyles(tableStyle)(TeamTable);
