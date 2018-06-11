@@ -4,17 +4,18 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import com.softwaremind.crew.people.model.Person;
+import com.softwaremind.crew.common.NoEntityFoundException;
+import com.softwaremind.crew.people.model.dto.PersonDto;
 import com.softwaremind.crew.people.service.PersonService;
 
 /**
- * PersonRestController class for managing and finding {@link Person}
+ * PersonRestController class for managing Persons
  *
  * @author Wiktor Religo
+ * @author Mateusz Michoński
  * @since 09.04.2018
  */
 @RestController
@@ -28,12 +29,12 @@ public class PersonRestController {
 	}
 	
 	/**
-	 * Method returns all People
+	 * This method return all Persons
 	 *
-	 * @return list of People
+	 * @return
 	 */
-	@GetMapping(value = "/people")
-	public List<Person> findAll() {
+	@GetMapping("/people")
+	public List<PersonDto> findAll() {
 		return personService.findAll();
 	}
 	
@@ -41,12 +42,62 @@ public class PersonRestController {
 	 * Method returns an Person entity selected id
 	 *
 	 * @param id
-	 *            id of Person
-	 * @return matched Person
+	 * @return
 	 */
+	
 	@GetMapping(value = "/people/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Person getPersonById(@PathVariable long id) {
-		return personService.getPersonById(id);
+	public ResponseEntity<PersonDto> getPersonById(@PathVariable long id) {
+		return personService
+				.findById(id)
+				.map(ResponseEntity::ok)
+				.orElse(ResponseEntity.notFound().build());
 	}
 	
+	/**
+	 * Update person in database
+	 *
+	 * @param id
+	 * @param personDto
+	 * @return
+	 */
+	@PutMapping(value = "/people/{id}")
+	public ResponseEntity<PersonDto> updateById(@PathVariable(value = "id") long id, @RequestBody PersonDto personDto) {
+		try {
+			personService.updatePersonById(id, personDto);
+			return ResponseEntity.ok().build();
+		} catch (Exception e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
+	
+	/**
+	 * Delete person from database
+	 *
+	 * @param id
+	 * @return
+	 */
+	
+	@DeleteMapping("/people/{id}")
+	public ResponseEntity<PersonDto> deletePerson(@PathVariable Long id) {
+		return personService
+				.deletePerson(id)
+				.map(ResponseEntity::ok)
+				.orElse(ResponseEntity.notFound().build());
+	}
+	
+	/**
+	 * Add new person to database
+	 *
+	 * @param personDto
+	 * @return
+	 */
+	@PostMapping("/people")
+	public ResponseEntity<?> createPerson(@RequestBody PersonDto personDto) {
+		try {
+			personService.addPerson(personDto);
+			return ResponseEntity.ok(personDto);
+		} catch (Exception e) {
+			throw new NoEntityFoundException();
+		}
+	}
 }

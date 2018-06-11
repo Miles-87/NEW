@@ -1,8 +1,15 @@
 package com.softwaremind.crew.teams.model;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import com.softwaremind.crew.people.model.Person;
 
 /**
  * Team represents entity in the database
@@ -20,12 +27,23 @@ public class Team {
 	@Version
 	private Long version;
 	
+	@NotNull
+	@Size(min = 4, max = 35, message = "Name should be between 4-35 characters.")
 	private String name;
+	@NotNull
+	@Size(max = 100, message = "Description should be less then 100 characters")
 	private String description;
+	@NotNull
+	@Size(min = 3, max = 20)
 	private String city;
+	@Min(value = 0)
 	private Integer headcount;
+	@Column(name = "Creation_time")
 	private LocalDateTime createdOn;
+	@Column(name = "Modification_time")
 	private LocalDateTime modifiedOn;
+	@ManyToMany(mappedBy = "teams")
+	private Set<Person> persons;
 	
 	/**
 	 * Default constructor using for ModelMapper
@@ -33,7 +51,8 @@ public class Team {
 	public Team() {
 	}
 	
-	public Team(String name, String description, String city, Integer headcount) {
+	public Team(Long id, String name, String description, String city, Integer headcount) {
+		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.city = city;
@@ -112,6 +131,14 @@ public class Team {
 		this.modifiedOn = modifiedOn;
 	}
 	
+	public Set<Person> getPersons() {
+		return persons;
+	}
+	
+	public void setPersons(Set<Person> persons) {
+		this.persons = persons;
+	}
+	
 	@Override
 	public String toString() {
 		return "Team{" +
@@ -123,5 +150,31 @@ public class Team {
 				", createdOn=" + createdOn +
 				", modifiedOn=" + modifiedOn +
 				'}';
+	}
+	
+	/*
+	 * Implementation of equals and hashCode for testing purposes
+	 */
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Team team = (Team) o;
+		return Objects.equals(id, team.id) &&
+				Objects.equals(version, team.version) &&
+				Objects.equals(name, team.name) &&
+				Objects.equals(description, team.description) &&
+				Objects.equals(city, team.city) &&
+				Objects.equals(headcount, team.headcount) &&
+				Objects.equals(createdOn, team.createdOn) &&
+				Objects.equals(modifiedOn, team.modifiedOn);
+	}
+	
+	@Override
+	public int hashCode() {
+		
+		return Objects.hash(id, version, name, description, city, headcount, createdOn, modifiedOn);
 	}
 }
