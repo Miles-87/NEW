@@ -17,7 +17,8 @@ ReactDOM.render(
             <Route exact path="/" component={Home}/>
             <Route path="/teams" component={TeamPage}/>
             <Route path="/persons" component={App}/>
-            <Route path="/manage" component={Management}/>
+            <Route path="/manage" component={
+                Management}/>
         </Switch>
     </Router>
     , document.getElementById('app'));
