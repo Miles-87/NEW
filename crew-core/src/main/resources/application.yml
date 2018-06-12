@@ -5,5 +5,9 @@ spring:
     name: Crew Tool
     version: @project.version@
 server:
+<<<<<<< HEAD
   port: 9090
 
+=======
+  port: 9090
+>>>>>>> 39ac9b38e7d73887c204d06bd182322e71f80e60

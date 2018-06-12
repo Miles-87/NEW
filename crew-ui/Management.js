@@ -16,7 +16,6 @@ class Management extends React.Component {
         return (
             <div>
                 <NavigationMenu/>
-                <Board/>
             </div>
         );
     }

@@ -38,6 +38,7 @@
     "react-router-dom": "^4.2.2",
     "redux": "latest",
     "underscore": "latest",
-    "dnd-core": "latest"
+    "dnd-core": "latest",
+    "react-router": "^4.2.0"
   }
 }

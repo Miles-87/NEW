@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+
 import TeamPage from "./TeamPage.js";
 import Management from "./Management.js";
 import App from "./App.jsx";
@@ -9,6 +10,7 @@ import Home from "./Home.jsx"
 
 {/*
    @author Wiktor Religo
+   @author Mateusz Michoński
  * @since 03.06.2018*/
 }
 ReactDOM.render(
@@ -22,3 +24,4 @@ ReactDOM.render(
         </Switch>
     </Router>
     , document.getElementById('app'));
+
