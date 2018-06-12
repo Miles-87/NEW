@@ -56,7 +56,7 @@ public class TeamControllerTest {
 	
 	@Test
 	public void shouldGetTeamsResource() throws Exception {
-		TeamDto teamDto = new TeamDto(1, "Jan", "local", "wawa", 6);
+		TeamDto teamDto = prepareTeamDto();
 		when(teamService.findAll()).thenReturn(Collections.singletonList(teamDto));
 		
 		mockMvc.perform(get("/teams"))
@@ -72,7 +72,7 @@ public class TeamControllerTest {
 	
 	@Test
 	public void shouldGetTeamByIdFromPath() throws Exception {
-		TeamDto team = new TeamDto(1, "Jan", "local", "wawa", 6);
+		TeamDto team = prepareTeamDto();
 		when(teamService.findTeamById(1l)).thenReturn(Optional.of(team));
 		
 		mockMvc.perform(get("/teams/" + 1))
@@ -91,7 +91,7 @@ public class TeamControllerTest {
 	
 	@Test
 	public void shouldUpdateTeamByPutRequest() throws Exception {
-		TeamDto team = new TeamDto(1, "Jan", "local", "wawa", 6);
+		TeamDto team = prepareTeamDto();
 		mockMvc.perform(
 				put("/teams/{id}", 2l)
 						.contentType(MediaType.APPLICATION_JSON)
@@ -101,7 +101,7 @@ public class TeamControllerTest {
 	
 	@Test
 	public void shouldNotUpdateTeamByPutRequest() throws Exception {
-		TeamDto team = new TeamDto(1, "Jan", "local", "wawa", 6);
+		TeamDto team = prepareTeamDto();
 		doThrow(new NoEntityFoundException()).when(teamService).updateTeamById(1l, team);
 		
 		mockMvc.perform(
@@ -128,7 +128,7 @@ public class TeamControllerTest {
 	
 	@Test
 	public void shouldAddTeamToDatabase() throws Exception {
-		TeamDto teamDto = new TeamDto(1, "Jan", "local", "wawa", 6);
+		TeamDto teamDto = prepareTeamDto();
 		doNothing().when(teamService).createTeam(teamDto);
 		
 		mockMvc.perform(
@@ -137,19 +137,23 @@ public class TeamControllerTest {
 						.content(mappingObject.valueToTree(teamDto).toString()))
 				.andExpect(status().isOk());
 	}
-	
+
 	@Test
 	public void shouldNotAddTeamToDatabase() throws Exception {
-		TeamDto teamDto = new TeamDto(1, "Jan", "local", "wawa", 6);
-		
+		TeamDto teamDto = prepareTeamDto();
+
 		verify(teamService, times(0)).createTeam(teamDto);
 		teamService.createTeam(any());
-		
+
 		mockMvc.perform(
 				post("/teams")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(mappingObject.valueToTree(teamDto).toString()))
 				.andReturn();
 	}
-	
+
+	private TeamDto prepareTeamDto() {
+		return new TeamDto(1L, "Jan", "local", "wawa", 6);
+	}
+
 }

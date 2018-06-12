@@ -114,16 +114,21 @@ public class TeamService {
 	 *            represent Team object
 	 */
 	@Transactional
-	public void createTeam(TeamDto teamDto) {
+	public Team createTeam(TeamDto teamDto) {
 		Assert.notNull(teamDto, "Object can't be null!");
 		try {
 			Assert.notNull(teamDto.getName());
-			teamRepository.save(modelMapper.map(teamDto, Team.class));
+			return teamRepository.save(modelMapper.map(teamDto, Team.class));
 		} catch (Exception e) {
 			throw new CreateEntityException(e);
 		}
 	}
-	
+
+	@Transactional
+	public Optional<Team> findTeamEntityById(Long id ) {
+		return teamRepository.findById(id);
+	}
+
 	@Transactional
 	public boolean addPersonsToTeams(Long teamId, Long personId) {
 		Assert.notNull(personId, "Object can't be null!");
@@ -131,8 +136,7 @@ public class TeamService {
 		try {
 			Person person = personRepository.getOne(personId);
 			Team team = teamRepository.getOne(teamId);
-			person.getTeams().add(team);
-			personRepository.save(person);
+			team.getPersons().add(person);
 		} catch (Exception e) {
 			throw new CreateEntityException(e);
 		}

@@ -78,10 +78,10 @@ public class PersonService {
 	 * @param personDto
 	 * @return
 	 */
-	public void addPerson(PersonDto personDto) {
+	public Person addPerson(PersonDto personDto) {
 		Assert.notNull(personDto);
 		Assert.notNull(personDto.getFirstName());
-		personRepository.save(modelMapper.map(personDto, Person.class));
+		return personRepository.save(modelMapper.map(personDto, Person.class));
 	}
 	
 	/**

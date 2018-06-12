@@ -1,6 +1,7 @@
 package com.softwaremind.crew.teams.model;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -43,7 +44,7 @@ public class Team {
 	@Column(name = "Modification_time")
 	private LocalDateTime modifiedOn;
 	@ManyToMany(mappedBy = "teams")
-	private Set<Person> persons;
+	private Set<Person> persons = new HashSet<>();
 	
 	/**
 	 * Default constructor using for ModelMapper

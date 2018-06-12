@@ -2,6 +2,7 @@ package com.softwaremind.crew.people.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -59,7 +60,7 @@ public class Person implements Serializable {
 	@JoinTable(name = "persons_teams",
 			joinColumns = @JoinColumn(name = "person_id"),
 			inverseJoinColumns = @JoinColumn(name = "team_id"))
-	private Set<Team> teams;
+	private Set<Team> teams = new HashSet<>();
 	
 	/**
 	 * Creating for Testing using Jackson, which requires a default constructor
