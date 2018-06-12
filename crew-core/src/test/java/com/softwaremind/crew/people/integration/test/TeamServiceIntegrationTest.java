@@ -1,12 +1,10 @@
 package com.softwaremind.crew.people.integration.test;
 
-import com.softwaremind.crew.people.model.Person;
-import com.softwaremind.crew.people.model.dto.PersonDto;
-import com.softwaremind.crew.people.service.PersonService;
-import com.softwaremind.crew.teams.model.Team;
-import com.softwaremind.crew.teams.model.TeamDto;
-import com.softwaremind.crew.teams.service.TeamService;
-import org.junit.Assert;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.Optional;
+import java.util.Set;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +12,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-import java.util.Set;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import com.softwaremind.crew.people.model.Person;
+import com.softwaremind.crew.people.model.dto.PersonDto;
+import com.softwaremind.crew.people.service.PersonService;
+import com.softwaremind.crew.teams.model.Team;
+import com.softwaremind.crew.teams.model.TeamDto;
+import com.softwaremind.crew.teams.service.TeamService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -52,7 +52,6 @@ public class TeamServiceIntegrationTest {
 		assertThat(teamFromService.isPresent()).isTrue();
 		Set<Person> persons = teamFromService.get().getPersons();
 		assertThat(persons).hasSize(1);
-		
 		assertThat(persons.stream().filter(person1 -> person1.getId() == personId).findAny()).isPresent();
 	}
 	

@@ -165,22 +165,7 @@ public class TeamServiceTest {
 				.withMessage("Object can't be null!");
 	}
 	
-	@Test
-	public void shouldAddPersonToTeam() {
-		Team team = new Team(1L, "TestCase1", "Description1", "Krakow", 12);
-		Person person = new Person(1L, "jan", "mucha", "krakow", "email1@onet.com", "Programing", "Developer");
-		
-		doReturn(team).when(teamRepository).getOne(1L);
-		doReturn(person).when(personRepository).getOne(1L);
-		
-		teamService.createTeam(mapper.map(team, TeamDto.class));
-		personService.addPerson(mapper.map(person, PersonDto.class));
-		teamService.addPersonsToTeams(team.getId(), person.getId());
-		
-		verify(teamRepository).save(team);
-		verify(personRepository).save(person);
-	}
-	
+
 	private void initMockServiceTest() {
 		Team team1 = new Team(1l, "Name1", "description1", "city1", 2);
 		Team team2 = new Team(1l, "Name2", "description2", "city2", 5);
