@@ -106,8 +106,7 @@ public class TeamController {
 		personService.findById(teamsAndPersonsId.getPersonId());
 		teamService.addPersonsToTeams(personId, teamId);
 		return ResponseEntity.ok(teamsAndPersonsId);
-		
-		// return teamsAndPersonsId.getTeamId() + " " + teamsAndPersonsId.getPersonId();
+
 	}
 	
 }

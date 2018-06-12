@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import com.softwaremind.crew.common.CreateEntityException;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,9 +80,13 @@ public class PersonService {
 	 * @return
 	 */
 	public Person addPerson(PersonDto personDto) {
-		Assert.notNull(personDto);
-		Assert.notNull(personDto.getFirstName());
-		return personRepository.save(modelMapper.map(personDto, Person.class));
+		Assert.notNull(personDto, "Object can't be null!");
+		try {
+			Assert.notNull(personDto.getFirstName());
+			return personRepository.save(modelMapper.map(personDto, Person.class));
+		} catch (Exception e) {
+			throw new CreateEntityException(e);
+		}
 	}
 	
 	/**
