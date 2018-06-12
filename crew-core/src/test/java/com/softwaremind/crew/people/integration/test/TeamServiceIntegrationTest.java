@@ -22,42 +22,38 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class TeamServiceIntegrationTest {
-
-    @Autowired
-    private TeamService teamService;
-    @Autowired
-    private PersonService personService;
-
-
-    @Test
-    public void shouldAutowireServiceImplementation() {
-        assertThat(teamService).isNotNull();
-    }
-
-    @Test
-    @Transactional
-    public void shouldAddPersonToTeam() {
-
-        //Given
-        TeamDto teamDto = new TeamDto(null, "Janek", "local", "wawa", 6);
-        PersonDto personDto = new PersonDto(null, "janek", "mucha", "email1@onet.com", "krakow" , "Programing", "Developer");
-        Team team = teamService.createTeam(teamDto);
-        Person person = personService.addPerson(personDto);
-
-
-        //When
-        final long personId = person.getId();
-        teamService.addPersonsToTeams(team.getId(), personId);
-
-        //Then
-
-        Optional<Team> teamFromService = teamService.findTeamEntityById(team.getId());
-        assertThat(teamFromService.isPresent()).isTrue();
-        Set<Person> persons = teamFromService.get().getPersons();
-        assertThat(persons).hasSize(1);
-
-        assertThat(persons.stream().filter(person1 -> person1.getId() == personId).findAny()).isPresent();
-    }
-
-
+	
+	@Autowired
+	private TeamService teamService;
+	@Autowired
+	private PersonService personService;
+	
+	@Test
+	public void shouldAutowireServiceImplementation() {
+		assertThat(teamService).isNotNull();
+	}
+	
+	@Test
+	@Transactional
+	public void shouldAddPersonToTeam() {
+		
+		// Given
+		TeamDto teamDto = new TeamDto(null, "Janek", "local", "wawa", 6);
+		PersonDto personDto = new PersonDto(null, "janek", "mucha", "email1@onet.com", "krakow", "Programing", "Developer");
+		Team team = teamService.createTeam(teamDto);
+		Person person = personService.addPerson(personDto);
+		
+		// When
+		final long personId = person.getId();
+		teamService.addPersonsToTeams(team.getId(), personId);
+		
+		// Then
+		Optional<Team> teamFromService = teamService.findTeamEntityById(team.getId());
+		assertThat(teamFromService.isPresent()).isTrue();
+		Set<Person> persons = teamFromService.get().getPersons();
+		assertThat(persons).hasSize(1);
+		
+		assertThat(persons.stream().filter(person1 -> person1.getId() == personId).findAny()).isPresent();
+	}
+	
 }

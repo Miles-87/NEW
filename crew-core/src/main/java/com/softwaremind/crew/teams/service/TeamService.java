@@ -123,12 +123,12 @@ public class TeamService {
 			throw new CreateEntityException(e);
 		}
 	}
-
+	
 	@Transactional
-	public Optional<Team> findTeamEntityById(Long id ) {
+	public Optional<Team> findTeamEntityById(Long id) {
 		return teamRepository.findById(id);
 	}
-
+	
 	@Transactional
 	public boolean addPersonsToTeams(Long teamId, Long personId) {
 		Assert.notNull(personId, "Object can't be null!");
