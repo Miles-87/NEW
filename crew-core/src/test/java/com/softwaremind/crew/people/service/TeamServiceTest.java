@@ -7,6 +7,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import com.softwaremind.crew.people.model.Person;
+import com.softwaremind.crew.people.model.dto.PersonDto;
+import com.softwaremind.crew.people.repository.PersonRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -29,16 +32,19 @@ import com.softwaremind.crew.teams.service.TeamService;
 public class TeamServiceTest {
 	private TeamService teamService;
 	private ModelMapper mapper;
+	private PersonService personService;
 	
 	@Mock
 	private TeamRepository teamRepository;
+	@Mock
+	private PersonRepository personRepository;
 	
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 		this.mapper = new ModelMapper();
-		teamService = new TeamService(teamRepository, this.mapper);
-		
+		teamService = new TeamService(teamRepository,personRepository, this.mapper);
+		personService = new PersonService(personRepository, this.mapper);
 	}
 	
 	@Test
@@ -157,6 +163,22 @@ public class TeamServiceTest {
 		assertThatExceptionOfType(IllegalArgumentException.class)
 				.isThrownBy(() -> teamService.updateTeamById(2l, null))
 				.withMessage("Object can't be null!");
+	}
+	
+	@Test
+	public void shouldAddPersonToTeam() {
+		Team team = new Team(1L, "TestCase1", "Description1", "Krakow", 12);
+		Person person = new Person(1L, "jan", "mucha", "krakow", "email1@onet.com", "Programing", "Developer");
+		
+		doReturn(team).when(teamRepository).getOne(1L);
+		doReturn(person).when(personRepository).getOne(1L);
+		
+		teamService.createTeam(mapper.map(team, TeamDto.class));
+		personService.addPerson(mapper.map(person, PersonDto.class));
+		teamService.addPersonsToTeams(team.getId(), person.getId());
+		
+		verify(teamRepository).save(team);
+		verify(personRepository).save(person);
 	}
 	
 	private void initMockServiceTest() {

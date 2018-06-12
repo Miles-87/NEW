@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.Collections;
 import java.util.Optional;
 
+import com.softwaremind.crew.people.service.PersonService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,11 +44,12 @@ public class TeamControllerTest {
 	private MockMvc mockMvc;
 	@Mock
 	private TeamService teamService;
+	private PersonService personService;
 	
 	@Before
 	public void initTest() {
 		mockMvc = MockMvcBuilders
-				.standaloneSetup(new TeamController(teamService))
+				.standaloneSetup(new TeamController(teamService, personService))
 				.setControllerAdvice(GlobalExceptionHandler.class)
 				.build();
 	}

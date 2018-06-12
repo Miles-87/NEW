@@ -1,8 +1,13 @@
 package com.softwaremind.crew.teams.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
+import com.softwaremind.crew.people.model.Person;
+import com.softwaremind.crew.people.model.dto.PersonDto;
+import com.softwaremind.crew.people.repository.PersonRepository;
+import com.softwaremind.crew.people.service.PersonService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +33,13 @@ public class TeamService {
 	
 	private final TeamRepository teamRepository;
 	private final ModelMapper modelMapper;
+	PersonRepository personRepository;
 	
 	@Autowired
-	public TeamService(TeamRepository teamRepository, ModelMapper modelMapper) {
+	public TeamService(TeamRepository teamRepository, PersonRepository personRepository, ModelMapper modelMapper) {
 		this.teamRepository = teamRepository;
 		this.modelMapper = modelMapper;
+		this.personRepository = personRepository;
 	}
 	
 	/**
@@ -113,7 +120,22 @@ public class TeamService {
 			Assert.notNull(teamDto.getName());
 			teamRepository.save(modelMapper.map(teamDto, Team.class));
 		} catch (Exception e) {
-			throw new CreateEntityException();
+			throw new CreateEntityException(e);
 		}
+	}
+	
+	@Transactional
+	public boolean addPersonsToTeams(Long teamId, Long personId) {
+		Assert.notNull(personId, "Object can't be null!");
+		Assert.notNull(teamId, "Object can't be null!");
+		try {
+			Person person = personRepository.getOne(personId);
+			Team team = teamRepository.getOne(teamId);
+			person.getTeams().add(team);
+			personRepository.save(person);
+		} catch (Exception e) {
+			throw new CreateEntityException(e);
+		}
+		return true;
 	}
 }
