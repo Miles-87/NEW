@@ -34,6 +34,7 @@ public class PersonRestController {
 	 * @return
 	 */
 	@GetMapping("/people")
+	@CrossOrigin
 	public List<PersonDto> findAll() {
 		return personService.findAll();
 	}
@@ -78,6 +79,7 @@ public class PersonRestController {
 	 */
 	
 	@DeleteMapping("/people/{id}")
+	@CrossOrigin
 	public ResponseEntity<PersonDto> deletePerson(@PathVariable Long id) {
 		return personService
 				.deletePerson(id)
@@ -92,12 +94,13 @@ public class PersonRestController {
 	 * @return
 	 */
 	@PostMapping("/people")
+	@CrossOrigin
 	public ResponseEntity<?> createPerson(@RequestBody PersonDto personDto) {
 		try {
 			personService.addPerson(personDto);
 			return ResponseEntity.ok(personDto);
 		} catch (Exception e) {
-			throw new NoEntityFoundException();
+			throw new NoEntityFoundException(e);
 		}
 	}
 }
