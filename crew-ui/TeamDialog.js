@@ -6,42 +6,43 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import AddIcon from '@material-ui/icons/Add';
 import Save from "@material-ui/icons/es/Save";
 import Delete from "@material-ui/icons/es/Delete";
-import {dataTable2, globalFetchData} from "./NextPersonTable";
+import {createData} from "./TeamTable";
 
-class DialogPanel extends React.Component {
+{/*
+   @author Wiktor Religo
+ * @since 21.05.2018*/
+}
+
+class TeamDialog extends React.Component {
     constructor() {
-        super();
+        super()
         this.state = {
             open: false,
             name: '',
-            lastname: '',
-            location: '',
-            email: '',
-            status: '',
-            role: '',
+            description: '',
+            city: '',
+            headcount: '',
         };
         this.handleClickOpen = () => {
             this.setState({
                 open: true,
                 name: '',
-                lastname: '',
-                location: '',
-                email: '',
-                status: '',
-                role: '',
+                description: '',
+                city: '',
+                headcount: '',
             });
         };
+
         this.handleClose = () => {
             this.setState({open: false});
-            this.publish();
         };
-
-
+        this.handleCloseWithChanges = () => {
+            this.publishData();
+            this.setState({open: false});
+        }
     }
-
 
     handleChanges({target}) {
         this.setState(
@@ -49,21 +50,14 @@ class DialogPanel extends React.Component {
                 [target.name]: target.value
             }
         )
-
     }
 
-    publish() {
-        console.log("Data:" + this.state.name, this.state.lastname, this.state.location, this.state.email, this.state.status, this.state.role);
-        this.addPersonToDatabase(this.dataTable2(this.state.name, this.state.lastname, this.state.location, this.state.email, this.state.status, this.state.role));
+    publishData() {
+        this.addTeamToDatabase(createData(this.state.name, this.state.city, this.state.description, this.state.headcount));
     }
 
-    dataTable2(firstName, lastName, location, email, status, role) {
-        return {firstName, lastName, location, email, status, role};
-    }
-
-
-    addPersonToDatabase(personProps) {
-        fetch('http://localhost:9090/people',
+    addTeamToDatabase(teamProps) {
+        fetch('http://localhost:9090/teams',
             {
                 method: 'POST',
                 headers: {
@@ -71,7 +65,7 @@ class DialogPanel extends React.Component {
                     'Access-Control-Allow-Origin': '*',
                     'mode': 'no-corse',
                 },
-                body: JSON.stringify(personProps)
+                body: JSON.stringify(teamProps)
             }).then(respData => this.props.onSave(respData)
         ).catch(err => console.error(err))
     }
@@ -80,92 +74,64 @@ class DialogPanel extends React.Component {
     render() {
         return (
             <div style={{marginTop: '15px'}}>
-                <Button variant="raised" color="primary" aria-label="add"
-                        onClick={this.handleClickOpen}><AddIcon/></Button>
+                <Button variant="raised" color="secondary" aria-label="add" onClick={this.handleClickOpen}>Add Team</Button>
                 <Dialog
                     open={this.state.open}
                     onClose={this.handleClose}
                     aria-labelledby="form-dialog-title"
                 >
-                    <DialogTitle id="form-dialog-title">Adding Person to table: </DialogTitle>
+                    <DialogTitle id="form-dialog-title">Adding Team to table: </DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                            Pleas fill data.
+                            Please fill the form with correct data about your Team.
                         </DialogContentText>
                         <TextField
                             autoFocus
                             margin="dense"
                             name="name"
-                            label="Name"
+                            label="Name of the team"
                             type="text"
                             fullWidth
                             value={this.state.name}
                             onChange={this.handleChanges.bind(this)}
-
-
                         />
                         <TextField
                             autoFocus
                             margin="dense"
-                            name="lastname"
-                            label="Lastname"
+                            name="city"
+                            label="City"
                             type="text"
-                            fullWidth
-                            value={this.state.lastname}
+                            value={this.state.city}
                             onChange={this.handleChanges.bind(this)}
-
+                            fullWidth
                         />
                         <TextField
                             autoFocus
                             margin="dense"
-                            name="location"
-                            label="Location"
+                            name="description"
+                            label="Description"
                             type="text"
-                            fullWidth
-                            value={this.state.location}
                             onChange={this.handleChanges.bind(this)}
-
+                            value={this.state.description}
+                            fullWidth
                         />
                         <TextField
                             autoFocus
                             margin="dense"
-                            name="email"
-                            label="Email"
-                            type="text"
-                            fullWidth
-                            value={this.state.email}
+                            name="headcount"
+                            label="Headcount"
+                            type="number"
+                            value={this.state.headcount}
                             onChange={this.handleChanges.bind(this)}
-
-                        />
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            name="status"
-                            label="Status"
-                            type="text"
                             fullWidth
-                            value={this.state.status}
-                            onChange={this.handleChanges.bind(this)}
-
-                        />
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            name="role"
-                            label="Role"
-                            type="text"
-                            fullWidth
-                            value={this.state.role}
-                            onChange={this.handleChanges.bind(this)}
-
                         />
                     </DialogContent>
                     <DialogActions>
-                        <Button variant="raised" onClick={this.handleClose.bind(this)} color="secondary">
+                        <Button variant="raised" color="secondary" onClick={this.handleClose} color="secondary">
                             Cancel
                             <Delete/>
                         </Button>
-                        <Button variant="raised" size="small" onClick={this.handleClose.bind(this)} color="primary">
+                        <Button variant="raised" size="small" onClick={this.handleCloseWithChanges} color="primary">
                             Save
                             <Save/>
                         </Button>
@@ -176,5 +142,4 @@ class DialogPanel extends React.Component {
     }
 }
 
-export default DialogPanel;
-
+export default TeamDialog;
