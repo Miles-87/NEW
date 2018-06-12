@@ -1,5 +1,4 @@
 import React from 'react';
-import Board from "./testUtils/Board";
 import {NavigationMenu} from "./TeamPage";
 
 {/*
@@ -16,7 +15,6 @@ class Management extends React.Component {
         return (
             <div>
                 <NavigationMenu/>
-                <Board/>
             </div>
         );
     }
