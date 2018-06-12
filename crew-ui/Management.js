@@ -1,5 +1,4 @@
 import React from 'react';
-import Board from "./testUtils/Board";
 import {NavigationMenu} from "./TeamPage";
 
 {/*
