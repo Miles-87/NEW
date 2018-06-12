@@ -5,6 +5,12 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Avatar from "./Avatar";
+import IconButton from "@material-ui/core/es/IconButton/IconButton";
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import green from "@material-ui/core/es/colors/green";
+import pink from "@material-ui/core/es/colors/pink";
+import PageviewIcon from '@material-ui/icons/Pageview';
 
 {/*
    @author Wiktor Religo
@@ -13,7 +19,7 @@ import Avatar from "./Avatar";
 const styles = theme => ({
     card: {
         display: 'flex',
-        backgroundColor: '#87CEFA',
+        backgroundColor: '#F8F8FF',
     },
     details: {
         display: 'flex',
@@ -21,6 +27,17 @@ const styles = theme => ({
     },
     content: {
         flex: '1 0 auto',
+        paddingBottom: 5,
+    },
+    greenAvatar: {
+        margin: 10,
+        color: '#fff',
+        backgroundColor: green[500],
+    },
+    pinkAvatar: {
+        margin: 10,
+        color: '#fff',
+        backgroundColor: pink[500],
     },
 });
 
@@ -28,7 +45,8 @@ function TeamCard(props) {
     const {teamName, name, position, classes} = props;
 
     return (
-        <div style={{boxShadow: '6px -4px 27px -2px rgba(0,0,0,1)'}}>
+        <div
+            style={{boxShadow: '0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12)',}}>
             <Card className={classes.card}>
                 <Avatar teamName={teamName}/>
                 <div className={classes.details}>
@@ -40,12 +58,23 @@ function TeamCard(props) {
                             {position}
                         </Typography>
                     </CardContent>
-
+                    <div style={{float: 'right', marginLeft: 55, padding: 3}}>
+                        <IconButton aria-label="Add to favorites">
+                            <FavoriteIcon color='secondary'/>
+                        </IconButton>
+                        <IconButton>
+                            <AssignmentIcon className={classes.greenAvatar}/>
+                        </IconButton>
+                        <IconButton>
+                            <PageviewIcon className={classes.pinkAvatar}/>
+                        </IconButton>
+                    </div>
                 </div>
             </Card>
         </div>
     );
 }
+
 
 TeamCard.propTypes = {
     classes: PropTypes.object.isRequired,

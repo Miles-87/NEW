@@ -99,7 +99,7 @@ class NextPersonTable extends React.Component {
         const {classes} = this.props;
 
         return (
-            <Paper>
+            <Paper style={{marginTop: 24}}>
                 <Table>
                     <TableHead>
                         <TableRow>
