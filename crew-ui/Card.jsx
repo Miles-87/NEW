@@ -11,6 +11,7 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import green from "@material-ui/core/es/colors/green";
 import pink from "@material-ui/core/es/colors/pink";
 import PageviewIcon from '@material-ui/icons/Pageview';
+import Popup from "reactjs-popup";
 
 {/*
    @author Wiktor Religo
@@ -62,9 +63,15 @@ function TeamCard(props) {
                         <IconButton aria-label="Add to favorites">
                             <FavoriteIcon color='secondary'/>
                         </IconButton>
-                        <IconButton>
-                            <AssignmentIcon className={classes.greenAvatar}/>
-                        </IconButton>
+                        <Popup
+                            trigger={<IconButton>
+                                <AssignmentIcon className={classes.greenAvatar}/>
+                            </IconButton>}
+                            position="right bottom"
+                            on="hover"
+                        >
+                            <PopContext args={name}/>
+                        </Popup>
                         <IconButton>
                             <PageviewIcon className={classes.pinkAvatar}/>
                         </IconButton>
@@ -75,6 +82,37 @@ function TeamCard(props) {
     );
 }
 
+const PopContext = ({args}) => (
+    <div>
+        <div style={PopStyles.header}> {args} </div>
+        <div style={PopStyles.popContent}>
+            Tu znajdują się informacje o członku <br/>
+            <span style={PopStyles.span}>Staż pracy:</span>pracy: 5 miesięcy <br/>
+            <span style={PopStyles.span}>Rola</span> Developer <br/>
+            <span style={PopStyles.span}>Miejsce:</span> Kraków
+        </div>
+    </div>
+);
+
+const PopStyles = {
+    header: {
+        width: '100%',
+        borderBottom: '1px solid gray',
+        fontSize: 19,
+        textAlign: 'center',
+        padding: 5,
+    },
+    popContent: {
+        fontSize: 16,
+        width: '100%',
+        padding: '7px 3px',
+    },
+    span: {
+        color: 'red',
+        fontWeight: 'bold',
+    }
+
+}
 
 TeamCard.propTypes = {
     classes: PropTypes.object.isRequired,
@@ -83,5 +121,6 @@ TeamCard.propTypes = {
     position: PropTypes.object.isRequired,
     teamName: PropTypes.object.isRequired,
 };
+
 
 export default withStyles(styles, {withTheme: true})(TeamCard);
