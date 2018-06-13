@@ -9,13 +9,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.Collections;
 import java.util.Optional;
 
+import com.softwaremind.crew.people.model.Person;
+import com.softwaremind.crew.people.model.dto.PersonDto;
 import com.softwaremind.crew.people.service.PersonService;
+
+import com.softwaremind.crew.teams.model.Team;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.Request;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -44,6 +50,7 @@ public class TeamControllerTest {
 	private MockMvc mockMvc;
 	@Mock
 	private TeamService teamService;
+	@Mock
 	private PersonService personService;
 	
 	@Before
@@ -137,23 +144,41 @@ public class TeamControllerTest {
 						.content(mappingObject.valueToTree(teamDto).toString()))
 				.andExpect(status().isOk());
 	}
-
+	
 	@Test
 	public void shouldNotAddTeamToDatabase() throws Exception {
 		TeamDto teamDto = prepareTeamDto();
 
 		verify(teamService, times(0)).createTeam(teamDto);
 		teamService.createTeam(any());
-
+		
 		mockMvc.perform(
 				post("/teams")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(mappingObject.valueToTree(teamDto).toString()))
 				.andReturn();
 	}
-
+	
+	@Test
+	public void shouldAddPersonToTeam() throws Exception {
+		// Given
+		TeamDto teamDto = prepareTeamDto();
+		PersonDto personDto = preparePersonDto();
+		// When
+		when(teamService.createTeam(teamDto)).thenReturn(new Team());
+		when(personService.addPerson(personDto)).thenReturn(new Person());
+		// than
+		mockMvc.perform(post("/addPeopleToTeams/{teamId}/{personId}", 1, 1))
+				.andExpect(status().isOk());
+		
+	}
+	
+	private PersonDto preparePersonDto() {
+		return new PersonDto(1L, "Bob", "Noob", "mail@first.pl", "Warszawa", "APPS", "Developer");
+	}
+	
 	private TeamDto prepareTeamDto() {
 		return new TeamDto(1L, "Jan", "local", "wawa", 6);
 	}
-
+	
 }

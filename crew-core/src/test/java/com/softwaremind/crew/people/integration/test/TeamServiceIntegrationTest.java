@@ -42,7 +42,6 @@ public class TeamServiceIntegrationTest {
 		PersonDto personDto = new PersonDto(null, "janek", "mucha", "email1@onet.com", "krakow", "Programing", "Developer");
 		Team team = teamService.createTeam(teamDto);
 		Person person = personService.addPerson(personDto);
-		
 		// When
 		final long personId = person.getId();
 		teamService.addPersonsToTeams(team.getId(), personId);
