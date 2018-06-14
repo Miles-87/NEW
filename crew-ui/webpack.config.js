@@ -8,7 +8,7 @@ var config = {
     },
     devServer: {
         inline: true,
-        port: 8080
+        port: 8080,
     },
     plugins: [
         new webpack.DefinePlugin({
@@ -32,6 +32,11 @@ var config = {
                 }
             },
             {
+                test: /\.(png|jpg)$/,
+                loader: 'url-loader',
+            },
+            {
+
                 test: /\.css$/,
                 loader: "style-loader!css-loader"
             },
@@ -60,9 +65,9 @@ var config = {
                 loader: 'url?limit=10000&mimetype=image/svg+xml'
             }
         ]
+
     }
 };
-
 
 
 module.exports = config;

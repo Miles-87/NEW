@@ -37,6 +37,7 @@ public class TeamController {
 	 * 		list of teams
 	 */
 	@GetMapping("/teams")
+	@CrossOrigin
 	public List<TeamDto> findAll() {
 		return teamService.findAll();
 	}
@@ -79,6 +80,7 @@ public class TeamController {
 	 * @return deleted team
 	 */
 	@DeleteMapping("teams/{id}")
+	@CrossOrigin
 	public ResponseEntity<?> deleteById(@PathVariable Long id) {
 		teamService.deleteTeamById(id);
 		return ResponseEntity.ok().build();
@@ -92,6 +94,7 @@ public class TeamController {
 	 * @return new Team
 	 */
 	@PostMapping("/teams")
+	@CrossOrigin
 	public ResponseEntity<?> createTeam(@RequestBody TeamDto teamDto) {
 		teamService.createTeam(teamDto);
 		return ResponseEntity.ok(teamDto);

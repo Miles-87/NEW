@@ -6,3 +6,4 @@ spring:
     version: @project.version@
 server:
   port: 9090
+
