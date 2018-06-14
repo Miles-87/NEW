@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {findDOMNode} from 'react-dom';
 import {DragSource, DropTarget} from 'react-dnd';
 import flow from 'lodash/flow';
-import Card from "../Card.jsx";
+import Card from "./Card.jsx";
 
 {/*
    @author Wiktor Religo

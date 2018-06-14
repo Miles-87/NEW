@@ -19,7 +19,6 @@ class Persons extends React.Component {
         }
     }
 
-
     render() {
         return (
             <div>
@@ -35,5 +34,6 @@ class Persons extends React.Component {
     }
 
 }
+
 export default Persons;
 

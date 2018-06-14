@@ -61,13 +61,19 @@ export class TeamAsList extends Component {
                 backgroundColor: isActive ? 'lightgreen' : '#fafafa',
                 overflowY: 'auto',
                 boxShadow: '0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)',
+                fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif'
             }
         };
 
 
         return connectDropTarget(
             <div style={style.list}>
-                <h1>Team: <span style={{color: 'red', fontSize: "23px", padding: 5,}}>{this.props.teamName}</span></h1>
+                <h1>Team: <span style={{
+                    color: 'red',
+                    fontSize: "23px",
+                    padding: 5,
+                    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif'
+                }}>{this.props.teamName}</span></h1>
                 {cards.map((card, i) => {
                     return (
                         <DragCard

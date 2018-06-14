@@ -70,7 +70,8 @@ function TeamCard(props) {
                             position="right bottom"
                             on="hover"
                         >
-                            <PopContext args={name}/>
+                            <PopContext args={name}
+                                        args2={position}/>
                         </Popup>
                         <IconButton>
                             <PageviewIcon className={classes.pinkAvatar}/>
@@ -82,17 +83,19 @@ function TeamCard(props) {
     );
 }
 
-const PopContext = ({args}) => (
+const PopContext = ({args, args2}) => (
     <div>
         <div style={PopStyles.header}> {args} </div>
         <div style={PopStyles.popContent}>
             Tu znajdują się informacje o członku <br/>
-            <span style={PopStyles.span}>Staż pracy:</span>pracy: 5 miesięcy <br/>
-            <span style={PopStyles.span}>Rola</span> Developer <br/>
+
+            <span style={PopStyles.span}>Staż pracy:</span>pracy: miesięcy <br/>
+            <span style={PopStyles.span}>Rola:</span> {args2} <br/>
             <span style={PopStyles.span}>Miejsce:</span> Kraków
         </div>
     </div>
 );
+
 
 const PopStyles = {
     header: {
