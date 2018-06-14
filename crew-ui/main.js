@@ -4,9 +4,9 @@ import ReactDOM from 'react-dom';
 
 import TeamPage from "./TeamPage.js";
 import Management from "./Management.js";
-import App from "./App.jsx";
 import {HashRouter  as Router, Route, Switch} from 'react-router-dom'
 import Home from "./Home.jsx"
+import Persons from "./Persons.jsx";
 
 {/*
    @author Wiktor Religo
@@ -18,7 +18,7 @@ ReactDOM.render(
         <Switch>
             <Route exact path="/" component={Home}/>
             <Route path="/teams" component={TeamPage}/>
-            <Route path="/persons" component={App}/>
+            <Route path="/persons" component={Persons}/>
             <Route path="/manage" component={
                 Management}/>
         </Switch>
