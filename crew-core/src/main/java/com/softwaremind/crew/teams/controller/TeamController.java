@@ -104,8 +104,6 @@ public class TeamController {
 	@ResponseBody
 	public ResponseEntity<?> addPeopleToTeam(@PathVariable Long teamId, @PathVariable Long personId) {
 		TeamsAndPersonsId teamsAndPersonsId = new TeamsAndPersonsId(personId, teamId);
-		teamService.findTeamById(teamsAndPersonsId.getTeamId());
-		personService.findById(teamsAndPersonsId.getPersonId());
 		teamService.addPersonsToTeams(personId, teamId);
 		return ResponseEntity.ok(teamsAndPersonsId);
 		

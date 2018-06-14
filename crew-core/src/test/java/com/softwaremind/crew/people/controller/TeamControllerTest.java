@@ -164,7 +164,7 @@ public class TeamControllerTest {
 		// When
 		when(teamService.createTeam(teamDto)).thenReturn(new Team());
 		when(personService.addPerson(personDto)).thenReturn(new Person());
-		// than
+		// Then
 		mockMvc.perform(post("/addPeopleToTeams/{teamId}/{personId}", 1, 1))
 				.andExpect(status().isOk());
 		
