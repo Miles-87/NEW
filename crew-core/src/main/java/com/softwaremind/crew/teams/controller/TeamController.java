@@ -2,14 +2,13 @@ package com.softwaremind.crew.teams.controller;
 
 import java.util.List;
 
-import com.softwaremind.crew.people.model.dto.PersonDto;
-import com.softwaremind.crew.people.service.PersonService;
-import com.softwaremind.crew.teams.model.TeamsAndPersonsId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.softwaremind.crew.people.service.PersonService;
 import com.softwaremind.crew.teams.model.TeamDto;
+import com.softwaremind.crew.teams.model.TeamsAndPersonsId;
 import com.softwaremind.crew.teams.service.TeamService;
 
 /**
@@ -106,7 +105,7 @@ public class TeamController {
 		personService.findById(teamsAndPersonsId.getPersonId());
 		teamService.addPersonsToTeams(personId, teamId);
 		return ResponseEntity.ok(teamsAndPersonsId);
-
+		
 	}
 	
 }

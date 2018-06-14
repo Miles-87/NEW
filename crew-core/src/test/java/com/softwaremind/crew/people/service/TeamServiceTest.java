@@ -7,9 +7,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import com.softwaremind.crew.people.model.Person;
-import com.softwaremind.crew.people.model.dto.PersonDto;
-import com.softwaremind.crew.people.repository.PersonRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -17,6 +14,7 @@ import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 
 import com.softwaremind.crew.common.NoEntityFoundException;
+import com.softwaremind.crew.people.repository.PersonRepository;
 import com.softwaremind.crew.teams.model.Team;
 import com.softwaremind.crew.teams.model.TeamDto;
 import com.softwaremind.crew.teams.repository.TeamRepository;
@@ -43,7 +41,7 @@ public class TeamServiceTest {
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 		this.mapper = new ModelMapper();
-		teamService = new TeamService(teamRepository,personRepository, this.mapper);
+		teamService = new TeamService(teamRepository, personRepository, this.mapper);
 		personService = new PersonService(personRepository, this.mapper);
 	}
 	
@@ -165,7 +163,6 @@ public class TeamServiceTest {
 				.withMessage("Object can't be null!");
 	}
 	
-
 	private void initMockServiceTest() {
 		Team team1 = new Team(1l, "Name1", "description1", "city1", 2);
 		Team team2 = new Team(1l, "Name2", "description2", "city2", 5);

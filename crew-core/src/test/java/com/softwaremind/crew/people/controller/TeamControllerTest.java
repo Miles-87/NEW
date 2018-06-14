@@ -9,19 +9,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.Collections;
 import java.util.Optional;
 
-import com.softwaremind.crew.people.model.Person;
-import com.softwaremind.crew.people.model.dto.PersonDto;
-import com.softwaremind.crew.people.service.PersonService;
-
-import com.softwaremind.crew.teams.model.Team;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.Request;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -30,7 +23,11 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.softwaremind.crew.common.NoEntityFoundException;
 import com.softwaremind.crew.handlers.GlobalExceptionHandler;
+import com.softwaremind.crew.people.model.Person;
+import com.softwaremind.crew.people.model.dto.PersonDto;
+import com.softwaremind.crew.people.service.PersonService;
 import com.softwaremind.crew.teams.controller.TeamController;
+import com.softwaremind.crew.teams.model.Team;
 import com.softwaremind.crew.teams.model.TeamDto;
 import com.softwaremind.crew.teams.service.TeamService;
 
@@ -148,7 +145,7 @@ public class TeamControllerTest {
 	@Test
 	public void shouldNotAddTeamToDatabase() throws Exception {
 		TeamDto teamDto = prepareTeamDto();
-
+		
 		verify(teamService, times(0)).createTeam(teamDto);
 		teamService.createTeam(any());
 		
