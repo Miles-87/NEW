@@ -17,10 +17,12 @@
   "dependencies": {
     "@material-ui/core": "^1.0.0",
     "@material-ui/icons": "^1.0.0",
+    "React": "latest",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
+    "classnames": "latest",
     "html-webpack-plugin": "^3.2.0",
     "immutability-helper": "^2.7.0",
     "jquery": "^3.3.1",
@@ -33,6 +35,10 @@
     "react-dom": "^16.3.2",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
-    "reactjs-popup": "^1.1.1"
+    "reactjs-popup": "^1.1.1",
+    "redux": "latest",
+    "underscore": "latest",
+    "dnd-core": "latest"
+
   }
 }
