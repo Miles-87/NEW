@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Optional;
 import java.util.Set;
 
+import javax.persistence.EntityManager;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,9 @@ public class TeamServiceIntegrationTest {
 	@Autowired
 	private PersonService personService;
 	
+	@Autowired
+	private EntityManager entityManager;
+	
 	@Test
 	public void shouldAutowireServiceImplementation() {
 		assertThat(teamService).isNotNull();
@@ -42,10 +47,13 @@ public class TeamServiceIntegrationTest {
 		PersonDto personDto = new PersonDto(null, "janek", "mucha", "email1@onet.com", "krakow", "Programing", "Developer");
 		Team team = teamService.createTeam(teamDto);
 		Person person = personService.addPerson(personDto);
+		
 		// When
 		final long personId = person.getId();
 		teamService.addPersonsToTeams(team.getId(), personId);
 		
+		entityManager.flush();
+		entityManager.clear();
 		// Then
 		Optional<Team> teamFromService = teamService.findTeamEntityById(team.getId());
 		assertThat(teamFromService.isPresent()).isTrue();

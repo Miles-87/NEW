@@ -1,13 +1,8 @@
 package com.softwaremind.crew.teams.service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
-import com.softwaremind.crew.people.model.Person;
-import com.softwaremind.crew.people.model.dto.PersonDto;
-import com.softwaremind.crew.people.repository.PersonRepository;
-import com.softwaremind.crew.people.service.PersonService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +12,8 @@ import org.springframework.util.Assert;
 
 import com.softwaremind.crew.common.CreateEntityException;
 import com.softwaremind.crew.common.NoEntityFoundException;
+import com.softwaremind.crew.people.model.Person;
+import com.softwaremind.crew.people.repository.PersonRepository;
 import com.softwaremind.crew.teams.model.Team;
 import com.softwaremind.crew.teams.model.TeamDto;
 import com.softwaremind.crew.teams.repository.TeamRepository;

@@ -25,7 +25,6 @@ public class Person implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "Person_ID")
 	private long id;
 	
 	@Version
@@ -56,10 +55,7 @@ public class Person implements Serializable {
 	private LocalDateTime createdOn;
 	private LocalDateTime modifiedOn;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "persons_teams",
-			joinColumns = @JoinColumn(name = "person_id"),
-			inverseJoinColumns = @JoinColumn(name = "team_id"))
+	@ManyToMany(cascade = CascadeType.ALL, mappedBy = "persons")
 	private Set<Team> teams = new HashSet<>();
 	
 	/**

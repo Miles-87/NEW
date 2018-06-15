@@ -43,7 +43,11 @@ public class Team {
 	private LocalDateTime createdOn;
 	@Column(name = "Modification_time")
 	private LocalDateTime modifiedOn;
-	@ManyToMany(mappedBy = "teams")
+	
+	@ManyToMany
+	@JoinTable(name = "PERSONS_TEAMS",
+			joinColumns = { @JoinColumn(name = "team_id", referencedColumnName = "id") },
+			inverseJoinColumns = { @JoinColumn(name = "person_id", referencedColumnName = "id") })
 	private Set<Person> persons = new HashSet<>();
 	
 	/**
