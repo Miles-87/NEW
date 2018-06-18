@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.softwaremind.crew.people.service.PersonService;
 import com.softwaremind.crew.teams.model.TeamDto;
+import com.softwaremind.crew.teams.model.TeamsAndPersonsId;
 import com.softwaremind.crew.teams.service.TeamService;
 
 /**
@@ -20,10 +22,12 @@ import com.softwaremind.crew.teams.service.TeamService;
 public class TeamController {
 	
 	private final TeamService teamService;
+	private final PersonService personService;
 	
 	@Autowired
-	public TeamController(TeamService teamService) {
+	public TeamController(TeamService teamService, PersonService personService) {
 		this.teamService = teamService;
+		this.personService = personService;
 	}
 	
 	/**
@@ -95,4 +99,14 @@ public class TeamController {
 		teamService.createTeam(teamDto);
 		return ResponseEntity.ok(teamDto);
 	}
+	
+	@PostMapping("/addPeopleToTeams/{teamId}/{personId}")
+	@ResponseBody
+	public ResponseEntity<?> addPeopleToTeam(@PathVariable Long teamId, @PathVariable Long personId) {
+		TeamsAndPersonsId teamsAndPersonsId = new TeamsAndPersonsId(personId, teamId);
+		teamService.addPersonsToTeams(personId, teamId);
+		return ResponseEntity.ok(teamsAndPersonsId);
+		
+	}
+	
 }

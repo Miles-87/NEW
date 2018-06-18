@@ -14,6 +14,7 @@ import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 
 import com.softwaremind.crew.common.NoEntityFoundException;
+import com.softwaremind.crew.people.repository.PersonRepository;
 import com.softwaremind.crew.teams.model.Team;
 import com.softwaremind.crew.teams.model.TeamDto;
 import com.softwaremind.crew.teams.repository.TeamRepository;
@@ -29,16 +30,19 @@ import com.softwaremind.crew.teams.service.TeamService;
 public class TeamServiceTest {
 	private TeamService teamService;
 	private ModelMapper mapper;
+	private PersonService personService;
 	
 	@Mock
 	private TeamRepository teamRepository;
+	@Mock
+	private PersonRepository personRepository;
 	
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 		this.mapper = new ModelMapper();
-		teamService = new TeamService(teamRepository, this.mapper);
-		
+		teamService = new TeamService(teamRepository, personRepository, this.mapper);
+		personService = new PersonService(personRepository, this.mapper);
 	}
 	
 	@Test
