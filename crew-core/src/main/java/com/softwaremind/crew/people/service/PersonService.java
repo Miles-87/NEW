@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import com.softwaremind.crew.common.CreateEntityException;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import com.softwaremind.crew.common.CreateEntityException;
 import com.softwaremind.crew.people.model.Person;
 import com.softwaremind.crew.people.model.dto.PersonDto;
 import com.softwaremind.crew.people.repository.PersonRepository;
@@ -113,4 +113,13 @@ public class PersonService {
 				}).orElseThrow(NoSuchElementException::new);
 	}
 	
+	/**
+	 * Return all not Assigned People
+	 *
+	 * @return not Assigned Person's entities
+	 */
+	public List<PersonDto> findNotAssignedPeople() {
+		return modelMapper.map(personRepository.findAllNotAssignedPeople(), new TypeToken<List<PersonDto>>() {
+		}.getType());
+	}
 }

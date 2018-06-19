@@ -103,4 +103,16 @@ public class PersonRestController {
 			throw new NoEntityFoundException(e);
 		}
 	}
+	
+	/**
+	 * Return all not Assigned People
+	 *
+	 * @return not Assigned Person's entities
+	 */
+	@GetMapping("/people/unassigned")
+	@CrossOrigin
+	public List<PersonDto> findNotAssignedPeople() {
+		return personService.findNotAssignedPeople();
+	}
+	
 }

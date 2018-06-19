@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -133,7 +134,10 @@ public class TeamControllerTest {
 	@Test
 	public void shouldAddTeamToDatabase() throws Exception {
 		TeamDto teamDto = prepareTeamDto();
-		doNothing().when(teamService).createTeam(teamDto);
+		
+		doReturn(new ModelMapper().map(teamDto, Team.class))
+				.when(teamService)
+				.createTeam(teamDto);
 		
 		mockMvc.perform(
 				post("/teams")
