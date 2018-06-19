@@ -1,7 +1,10 @@
 package com.softwaremind.crew.people.controller;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
+import com.softwaremind.crew.teams.model.TeamDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -102,5 +105,10 @@ public class PersonRestController {
 		} catch (Exception e) {
 			throw new NoEntityFoundException(e);
 		}
+	}
+	
+	@GetMapping("/peopelWithTeams")
+	public Map<PersonDto, Set<TeamDto>> getPeopleAssignedToTeam2() {
+		return personService.peopelWithTeamsAssigned();
 	}
 }

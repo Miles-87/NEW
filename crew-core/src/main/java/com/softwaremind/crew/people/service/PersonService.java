@@ -1,10 +1,10 @@
 package com.softwaremind.crew.people.service;
 
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import com.softwaremind.crew.common.CreateEntityException;
+import com.softwaremind.crew.teams.model.TeamDto;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,6 +111,17 @@ public class PersonService {
 					personEntity.setStatus(personDto.getStatus());
 					return personRepository.save(personEntity);
 				}).orElseThrow(NoSuchElementException::new);
+	}
+	
+	public Map<PersonDto, Set<TeamDto>> peopelWithTeamsAssigned() {
+		List<Person> people = personRepository.findAll().stream()
+				.filter(p -> p.getTeams() != null && !p.getTeams().isEmpty()).collect(Collectors.toList());
+		Map<PersonDto, Set<TeamDto>> m = new HashMap<>();
+		people.forEach(p -> {
+			m.put(modelMapper.map(p, PersonDto.class),
+					p.getTeams().stream().map(t -> modelMapper.map(t, TeamDto.class)).collect(Collectors.toSet()));
+		});
+		return m;
 	}
 	
 }
