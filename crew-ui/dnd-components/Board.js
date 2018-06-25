@@ -10,7 +10,23 @@ import HTML5Backend from 'react-dnd-html5-backend';
 
 class Board extends Component {
 
+    constructor() {
+        super()
+        this.state = {
+            dataStore: [],
+            teamStore: [],
+        }
+    }
+
+
+
+
+
+
+    
     render() {
+
+
         const style = {
             board: {
                 display: "flex",

@@ -66,7 +66,7 @@ public class PersonServiceIntegrationTest {
 		teamService.addPersonsToTeams(team.getId(), personList.get(1).getId());
 		// extract the people resource
 		List<Person> notAssignedPeople = new ModelMapper()
-				.map(personService.findNotAssignedPeople(), new TypeToken<List<PersonDto>>() {
+				.map(personService.findNotAssignedPeople(), new TypeToken<List<Person>>() {
 				}.getType());
 		
 		entityManager.flush();

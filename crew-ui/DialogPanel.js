@@ -60,7 +60,6 @@ class DialogPanel extends React.Component {
     }
 
     publish() {
-        console.log("Data:" + this.state.name, this.state.lastname, this.state.location, this.state.email, this.state.status, this.state.role);
         this.addPersonToDatabase(this.dataTable2(this.state.name, this.state.lastname, this.state.location, this.state.email, this.state.status, this.state.role));
     }
 
@@ -86,7 +85,7 @@ class DialogPanel extends React.Component {
 
     render() {
         return (
-            <div style={{marginTop: '15px'}}>
+            <div style={{marginTop: '15px', float: 'left'}}>
                 <Button variant="raised" color="primary" aria-label="add"
                         onClick={this.handleClickOpen}><AddIcon/></Button>
                 <Dialog

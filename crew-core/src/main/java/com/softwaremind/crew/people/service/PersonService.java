@@ -119,7 +119,7 @@ public class PersonService {
 	 * @return not Assigned Person's entities
 	 */
 	public List<PersonDto> findNotAssignedPeople() {
-		return modelMapper.map(personRepository.findAllNotAssignedPeople(), new TypeToken<List<PersonDto>>() {
+		return modelMapper.map(personRepository.findAllNotAssignedPeople(), new TypeToken<List<Person>>() {
 		}.getType());
 	}
 }
