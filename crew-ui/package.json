@@ -6,11 +6,10 @@
   "scripts": {
     "start": "webpack-dev-server --hot"
   },
-  "author": "Mateusz Michoński & Wiktor Religo",
+  "author": "Mateusz Michoński",
   "license": "ISC",
   "devDependencies": {
     "css-loader": "^0.28.11",
-    "url-loader": "^1.0.1",
     "webpack": "^4.8.3",
     "webpack-cli": "^2.1.3",
     "webpack-dev-server": "^3.1.4"
@@ -26,18 +25,20 @@
     "classnames": "latest",
     "html-webpack-plugin": "^3.2.0",
     "immutability-helper": "^2.7.0",
+    "jquery": "^3.3.1",
     "lodash": "latest",
     "material-ui": "^0.20.1",
     "prop-types": "latest",
-    "react": "^16.4.0",
-    "react-addons-update": "^15.6.2",
-    "react-dnd": "^4.0.2",
+    "react": "^16.3.2",
+    "react-dnd": "^4.0.4",
     "react-dnd-html5-backend": "^4.0.4",
     "react-dom": "^16.3.2",
-    "react-redux": "^5.0.7",
+    "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
+    "reactjs-popup": "^1.1.1",
     "redux": "latest",
     "underscore": "latest",
     "dnd-core": "latest"
+
   }
 }

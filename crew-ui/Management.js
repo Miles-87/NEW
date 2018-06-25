@@ -1,5 +1,6 @@
 import React from 'react';
 import {NavigationMenu} from "./TeamPage";
+import Board from "./dnd-components/Board.js";
 
 {/*
    @author Wiktor Religo
@@ -15,6 +16,7 @@ class Management extends React.Component {
         return (
             <div>
                 <NavigationMenu/>
+                <Board/>
             </div>
         );
     }

@@ -36,7 +36,6 @@ var config = {
                 loader: 'url-loader',
             },
             {
-
                 test: /\.css$/,
                 loader: "style-loader!css-loader"
             },
