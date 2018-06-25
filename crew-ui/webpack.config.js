@@ -8,7 +8,7 @@ var config = {
     },
     devServer: {
         inline: true,
-        port: 8080,
+        port: 8080,                                         
     },
     plugins: [
         new webpack.DefinePlugin({
@@ -36,7 +36,6 @@ var config = {
                 loader: 'url-loader',
             },
             {
-
                 test: /\.css$/,
                 loader: "style-loader!css-loader"
             },

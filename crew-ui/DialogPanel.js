@@ -11,6 +11,13 @@ import Save from "@material-ui/icons/es/Save";
 import Delete from "@material-ui/icons/es/Delete";
 import {dataTable2, globalFetchData} from "./NextPersonTable";
 
+
+{/*
+   @author Wiktor Religo
+ * @since 01.06.2018*/
+}
+
+
 class DialogPanel extends React.Component {
     constructor() {
         super();
