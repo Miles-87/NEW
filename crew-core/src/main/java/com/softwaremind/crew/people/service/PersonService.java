@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import com.softwaremind.crew.common.CreateEntityException;
+import com.softwaremind.crew.people.model.dto.PersonWithTeamsDto;
 import com.softwaremind.crew.teams.model.TeamDto;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -113,15 +114,19 @@ public class PersonService {
 				}).orElseThrow(NoSuchElementException::new);
 	}
 	
-	public Map<PersonDto, Set<TeamDto>> peopelWithTeamsAssigned() {
-		List<Person> people = personRepository.findAll().stream()
-				.filter(p -> p.getTeams() != null && !p.getTeams().isEmpty()).collect(Collectors.toList());
-		Map<PersonDto, Set<TeamDto>> m = new HashMap<>();
-		people.forEach(p -> {
-			m.put(modelMapper.map(p, PersonDto.class),
-					p.getTeams().stream().map(t -> modelMapper.map(t, TeamDto.class)).collect(Collectors.toSet()));
-		});
-		return m;
+	public List<PersonWithTeamsDto> peopelWithTeamsAssigned() {
+		List<Person> people = personRepository.findByTeamsNotEmpty();
+		
+		return people.stream()
+				.map(person -> {
+					PersonWithTeamsDto dto = modelMapper.map(person, PersonWithTeamsDto.class);
+					dto.setTeams(mapTeams(person));
+					return dto;
+				}).collect(Collectors.toList());
+	}
+	
+	private Set<TeamDto> mapTeams(Person person) {
+		return person.getTeams().stream().map(t -> modelMapper.map(t, TeamDto.class)).collect(Collectors.toSet());
 	}
 	
 }

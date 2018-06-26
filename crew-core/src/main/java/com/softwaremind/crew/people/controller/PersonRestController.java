@@ -1,10 +1,7 @@
 package com.softwaremind.crew.people.controller;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
-import com.softwaremind.crew.teams.model.TeamDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.softwaremind.crew.common.NoEntityFoundException;
 import com.softwaremind.crew.people.model.dto.PersonDto;
+import com.softwaremind.crew.people.model.dto.PersonWithTeamsDto;
 import com.softwaremind.crew.people.service.PersonService;
 
 /**
@@ -108,7 +106,7 @@ public class PersonRestController {
 	}
 	
 	@GetMapping("/peopelWithTeams")
-	public Map<PersonDto, Set<TeamDto>> getPeopleAssignedToTeam2() {
+	public List<PersonWithTeamsDto> getPeopleAssignedToTeam2() {
 		return personService.peopelWithTeamsAssigned();
 	}
 }

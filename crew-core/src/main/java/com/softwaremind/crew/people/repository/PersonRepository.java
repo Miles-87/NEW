@@ -5,6 +5,8 @@ import org.springframework.stereotype.Repository;
 
 import com.softwaremind.crew.people.model.Person;
 
+import java.util.List;
+
 /**
  * PersonRepository class as data storage layer
  *
@@ -14,5 +16,6 @@ import com.softwaremind.crew.people.model.Person;
  */
 @Repository
 public interface PersonRepository extends JpaRepository<Person, Long> {
-	
+
+    List<Person> findByTeamsNotEmpty();
 }
