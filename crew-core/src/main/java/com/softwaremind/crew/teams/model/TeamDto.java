@@ -3,8 +3,6 @@ package com.softwaremind.crew.teams.model;
 import java.io.Serializable;
 import java.util.Objects;
 
-import javax.validation.constraints.NotNull;
-
 /**
  * This class define team object
  *
