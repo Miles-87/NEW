@@ -79,11 +79,12 @@ public class PersonService {
 	 * @param personDto
 	 * @return
 	 */
-	public Person addPerson(PersonDto personDto) {
+	public PersonDto addPerson(PersonDto personDto) {
 		Assert.notNull(personDto, "Object can't be null!");
 		try {
 			Assert.notNull(personDto.getFirstName());
-			return personRepository.save(modelMapper.map(personDto, Person.class));
+			Person save = personRepository.save(modelMapper.map(personDto, Person.class));
+			return modelMapper.map(save, PersonDto.class);
 		} catch (Exception e) {
 			throw new CreateEntityException(e);
 		}
@@ -119,7 +120,7 @@ public class PersonService {
 	 * @return not Assigned Person's entities
 	 */
 	public List<PersonDto> findNotAssignedPeople() {
-		return modelMapper.map(personRepository.findAllNotAssignedPeople(), new TypeToken<List<Person>>() {
+		return modelMapper.map(personRepository.findAllNotAssignedPeople(), new TypeToken<List<PersonDto>>() {
 		}.getType());
 	}
 }

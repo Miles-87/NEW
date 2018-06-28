@@ -13,20 +13,45 @@ class Board extends Component {
     constructor() {
         super()
         this.state = {
-            dataStore: [],
             teamStore: [],
+            unassignedPersons: [],
+            assignedPersons: [],
         }
     }
 
+    componentDidMount() {
+        this.fetchTeamsFromBase();
+        this.fetchPersonWithTeam();
+        this.fetchPersonWithoutTeam();
 
 
+    }
 
+    fetchTeamsFromBase() {
+        fetch('http://localhost:9090/teams')
+            .then(response => response.json())
+            .then(data => {
+                this.setState({teamStore: data});
+            });
+    }
 
+    fetchPersonWithTeam() {
+        fetch('http://localhost:9090/peopel')
+            .then(response => response.json())
+            .then(data => {
+                this.setState({assignedPersons: data});
+            });
+    }
 
-    
+    fetchPersonWithoutTeam() {
+        fetch('http://localhost:9090/people/unassigned')
+            .then(response => response.json())
+            .then(data => {
+                this.setState({unassignedPersons: data});
+            });
+    }
+
     render() {
-
-
         const style = {
             board: {
                 display: "flex",
@@ -34,6 +59,7 @@ class Board extends Component {
                 paddingTop: "20px"
             }
         };
+
 
         const listOne = [
             {id: 1, teamPosition: "Developer", personName: "Krystian Wolski"},
@@ -57,9 +83,13 @@ class Board extends Component {
 
         return (
             <div style={style.board}>
-                <TeamAsList teamName={"Ninjas"} id={1} list={listOne}/>
-                <TeamAsList teamName={"Grube Baby"} id={2} list={listTwo}/>
-                <TeamAsList teamName={"Mistrzowie Jedi"} id={3} list={listThree}/>
+                {this.state.teamStore.map(n => {
+                    return (
+                        <TeamAsList teamName={"Ninjas"} id={n.id} list={listOne}/>
+                    )
+                })
+                }
+                <TeamAsList teamName={"No Membered "} id={(this.state.teamStore.length + 1)} list={listOne}/>
             </div>
         );
     }

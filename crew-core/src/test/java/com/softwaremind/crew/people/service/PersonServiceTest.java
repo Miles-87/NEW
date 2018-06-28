@@ -81,6 +81,8 @@ public class PersonServiceTest {
 	@Test
 	public void shouldAddPersonToDatabase() {
 		Person person1 = new Person(1L, "jan", "mucha", "krakow", "email1@onet.com", "Programing", "Developer");
+		Mockito.when(personRepository.save(person1)).thenReturn(person1);
+		
 		personService.addPerson(mapper.map(person1, PersonDto.class));
 		Mockito.verify(personRepository, times(1)).save(person1);
 	}

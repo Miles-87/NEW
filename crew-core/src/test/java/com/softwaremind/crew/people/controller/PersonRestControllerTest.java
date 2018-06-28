@@ -23,7 +23,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.softwaremind.crew.common.NoEntityFoundException;
-import com.softwaremind.crew.people.model.Person;
 import com.softwaremind.crew.people.model.dto.PersonDto;
 import com.softwaremind.crew.people.service.PersonService;
 
@@ -120,7 +119,7 @@ public class PersonRestControllerTest {
 	@Test
 	public void shouldSavePersonInDatabase() throws Exception {
 		PersonDto personDto = new PersonDto(1L, "Bob", "Noob", "mail@first.pl", "Warszawa", "APPS", "Developer");
-		doReturn(new ModelMapper().map(personDto, Person.class)).when(personService).addPerson(personDto);
+		doReturn(new ModelMapper().map(personDto, PersonDto.class)).when(personService).addPerson(personDto);
 		
 		mockMvc.perform(
 				post("/people")

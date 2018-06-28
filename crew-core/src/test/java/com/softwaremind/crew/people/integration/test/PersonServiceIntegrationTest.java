@@ -10,17 +10,13 @@ import javax.persistence.EntityManager;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.softwaremind.crew.people.model.Person;
 import com.softwaremind.crew.people.model.dto.PersonDto;
 import com.softwaremind.crew.people.service.PersonService;
-import com.softwaremind.crew.teams.model.Team;
 import com.softwaremind.crew.teams.model.TeamDto;
 import com.softwaremind.crew.teams.service.TeamService;
 
@@ -51,46 +47,37 @@ public class PersonServiceIntegrationTest {
 	@Transactional
 	public void shouldReturnNoAssignedPeople() {
 		// given
-		TeamDto teamDto = new TeamDto(null, "Byczki z Osiedla ", "local", "wawa", 6);
-		Team team = teamService.createTeam(teamDto);
-		List<PersonDto> personDtoList = returnPersonTestResource();
-		List<Person> personList = new ArrayList<>();
+		TeamDto teamDto = new TeamDto(1l, "Byczki z Osiedla ", "local", "wawa", 6);
+		TeamDto team = teamService.createTeam(teamDto);
 		
-		personDtoList.forEach(p -> {
-			Person person = personService.addPerson(p);
-			personList.add(person);
-		});
+		List<PersonDto> personDtoList = new ArrayList<>();
+		returnPersonTestResource().forEach(p -> personDtoList.add(personService.addPerson(p)));
+		
+
 		
 		// when
-		teamService.addPersonsToTeams(team.getId(), personList.get(0).getId());
-		teamService.addPersonsToTeams(team.getId(), personList.get(1).getId());
+		
+		boolean resultOfAddingP1 = teamService.addPersonsToTeams(team.getId(), personDtoList.get(0).getId());
+		boolean resultOfAddingP2 = teamService.addPersonsToTeams(team.getId(), personDtoList.get(1).getId());
+		
 		// extract the people resource
-		List<Person> notAssignedPeople = new ModelMapper()
-				.map(personService.findNotAssignedPeople(), new TypeToken<List<Person>>() {
-				}.getType());
+		List<PersonDto> notAssignedPeople = personService.findNotAssignedPeople();
 		
 		entityManager.flush();
 		entityManager.clear();
 		
 		// then
-		assertThat(team.getPersons()).hasSize(2);
-		assertThat(personList.get(2).getTeams()).isEmpty();
-		assertThat(personList).hasSize(3);
+		assertThat((resultOfAddingP1 && resultOfAddingP2)).isTrue();
+		assertThat(personDtoList).hasSize(3);
 		
-		// grab id of unassigned Person
-		long personID = personList.get(2).getId();
+		// grab unassigned Person
+		PersonDto p1 = personDtoList.get(2);
 		
-		// id of unassigned Person does not exist in Team's set collection
-		assertThat(team.getPersons()
-				.stream()
-				.filter(t -> t.getId() == personID)
-				.count()).isEqualTo(0);
-		
-		// check exists of Person as notAssigned
-		assertThat(notAssignedPeople).contains(personList.get(2));
+		// check that unassigned Person exist in notAssigned Lists
+		assertThat(notAssignedPeople).contains(p1);
 		
 		// check Person with assigned Team, does not on the unassigned list
-		assertThat(notAssignedPeople).doesNotContain(personList.get(0));
+		assertThat(notAssignedPeople).doesNotContain(personDtoList.get(0));
 	}
 	
 	/**

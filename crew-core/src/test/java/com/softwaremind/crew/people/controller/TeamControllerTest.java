@@ -24,11 +24,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.softwaremind.crew.common.NoEntityFoundException;
 import com.softwaremind.crew.handlers.GlobalExceptionHandler;
-import com.softwaremind.crew.people.model.Person;
 import com.softwaremind.crew.people.model.dto.PersonDto;
 import com.softwaremind.crew.people.service.PersonService;
 import com.softwaremind.crew.teams.controller.TeamController;
-import com.softwaremind.crew.teams.model.Team;
 import com.softwaremind.crew.teams.model.TeamDto;
 import com.softwaremind.crew.teams.service.TeamService;
 
@@ -135,7 +133,7 @@ public class TeamControllerTest {
 	public void shouldAddTeamToDatabase() throws Exception {
 		TeamDto teamDto = prepareTeamDto();
 		
-		doReturn(new ModelMapper().map(teamDto, Team.class))
+		doReturn(new ModelMapper().map(teamDto, TeamDto.class))
 				.when(teamService)
 				.createTeam(teamDto);
 		
@@ -166,8 +164,8 @@ public class TeamControllerTest {
 		TeamDto teamDto = prepareTeamDto();
 		PersonDto personDto = preparePersonDto();
 		// When
-		when(teamService.createTeam(teamDto)).thenReturn(new Team());
-		when(personService.addPerson(personDto)).thenReturn(new Person());
+		when(teamService.createTeam(teamDto)).thenReturn(new TeamDto());
+		when(personService.addPerson(personDto)).thenReturn(new PersonDto());
 		// Then
 		mockMvc.perform(post("/addPeopleToTeams/{teamId}/{personId}", 1, 1))
 				.andExpect(status().isOk());
