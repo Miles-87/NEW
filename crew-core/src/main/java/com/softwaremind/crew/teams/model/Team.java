@@ -8,6 +8,11 @@ import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import com.softwaremind.crew.people.model.Person;
 
 /**
  * Team represents entity in the database
@@ -25,17 +30,32 @@ public class Team {
 	@Version
 	private Long version;
 	
+	@NotNull
+	@Size(min = 4, max = 35, message = "Name should be between 4-35 characters.")
 	private String name;
+	@NotNull
+	@Size(max = 100, message = "Description should be less then 100 characters")
 	private String description;
+	@NotNull
+	@Size(min = 3, max = 20)
 	private String city;
+	@Min(value = 0)
 	private Integer headcount;
+	@Column(name = "Creation_time")
 	private LocalDateTime createdOn;
+	@Column(name = "Modification_time")
 	private LocalDateTime modifiedOn;
 	@ManyToMany(cascade = CascadeType.MERGE)
 	@JoinTable(name = "persons_teams",
 			joinColumns = @JoinColumn(name = "teamId"),
 			inverseJoinColumns = @JoinColumn(name = "personId"))
 	private Set<Person> people = new HashSet<>();
+	
+	@ManyToMany
+	@JoinTable(name = "PERSONS_TEAMS",
+			joinColumns = { @JoinColumn(name = "team_id", referencedColumnName = "id") },
+			inverseJoinColumns = { @JoinColumn(name = "person_id", referencedColumnName = "id") })
+	private Set<Person> persons = new HashSet<>();
 	
 	/**
 	 * Default constructor using for ModelMapper
@@ -121,6 +141,14 @@ public class Team {
 	
 	public void setModifiedOn(LocalDateTime modifiedOn) {
 		this.modifiedOn = modifiedOn;
+	}
+	
+	public Set<Person> getPersons() {
+		return persons;
+	}
+	
+	public void setPersons(Set<Person> persons) {
+		this.persons = persons;
 	}
 	
 	@Override

@@ -10,6 +10,10 @@ import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+
+import com.softwaremind.crew.teams.model.Team;
 
 /**
  * Person class represents the Person entity
@@ -25,19 +29,39 @@ public class Person implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	
 	@Version
 	private Long version;
 	
+	@NotNull
+	@Column(name = "First_Name")
 	private String firstName;
+	
+	@NotNull
+	@Column(name = "Last_Name")
 	private String lastName;
+	
+	@Column(name = "Location")
 	private String location;
+	
+	@NotNull
+	@Email
+	@Column(name = "Email")
 	private String email;
+	
+	@Column(name = "Status")
 	private String status;
+	
+	@Column(name = "Role")
 	private String role;
+	
 	private LocalDateTime createdOn;
 	private LocalDateTime modifiedOn;
 	@ManyToMany(mappedBy = "people")
 	private Set<Team> teams = new HashSet<Team>();
+	
+	@ManyToMany(cascade = CascadeType.ALL, mappedBy = "persons")
+	private Set<Team> teams = new HashSet<>();
 	
 	/**
 	 * Creating for Testing using Jackson, which requires a default constructor
@@ -135,6 +159,14 @@ public class Person implements Serializable {
 	
 	public void setModifiedOn(LocalDateTime modifiedOn) {
 		this.modifiedOn = modifiedOn;
+	}
+	
+	public Set<Team> getTeams() {
+		return teams;
+	}
+	
+	public void setTeams(Set<Team> teams) {
+		this.teams = teams;
 	}
 	
 	@Override

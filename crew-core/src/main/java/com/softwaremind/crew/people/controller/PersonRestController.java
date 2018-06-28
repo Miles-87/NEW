@@ -7,7 +7,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.softwaremind.crew.common.NoEntityFoundException;
 import com.softwaremind.crew.people.model.dto.PersonDto;
+import com.softwaremind.crew.people.model.dto.PersonWithTeamsDto;
 import com.softwaremind.crew.people.service.PersonService;
 
 /**
@@ -33,6 +35,7 @@ public class PersonRestController {
 	 * @return
 	 */
 	@GetMapping("/people")
+	@CrossOrigin
 	public List<PersonDto> findAll() {
 		return personService.findAll();
 	}
@@ -75,7 +78,9 @@ public class PersonRestController {
 	 * @param id
 	 * @return
 	 */
+	
 	@DeleteMapping("/people/{id}")
+	@CrossOrigin
 	public ResponseEntity<PersonDto> deletePerson(@PathVariable Long id) {
 		return personService
 				.deletePerson(id)
@@ -89,12 +94,19 @@ public class PersonRestController {
 	 * @param personDto
 	 * @return
 	 */
-	@PostMapping("/people/add")
-	public ResponseEntity<PersonDto> createPerson(@RequestBody PersonDto personDto) {
-		return personService
-				.addPerson(personDto)
-				.map(ResponseEntity::ok)
-				.orElse(ResponseEntity.notFound().build());
+	@PostMapping("/people")
+	@CrossOrigin
+	public ResponseEntity<?> createPerson(@RequestBody PersonDto personDto) {
+		try {
+			personService.addPerson(personDto);
+			return ResponseEntity.ok(personDto);
+		} catch (Exception e) {
+			throw new NoEntityFoundException(e);
+		}
 	}
 	
+	@GetMapping("/peopelWithTeams")
+	public List<PersonWithTeamsDto> getPeopleAssignedToTeam2() {
+		return personService.peopelWithTeamsAssigned();
+	}
 }

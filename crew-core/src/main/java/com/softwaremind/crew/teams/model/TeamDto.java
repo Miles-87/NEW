@@ -11,14 +11,14 @@ import java.util.Objects;
  * @since 09.04.2018
  */
 public class TeamDto implements Serializable {
-	
 	private Long id;
+	
 	private String name;
 	private String description;
 	private String city;
 	private Integer headcount;
 	
-	public TeamDto(long id, String name, String description, String city, Integer headcount) {
+	public TeamDto(Long id, String name, String description, String city, Integer headcount) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
