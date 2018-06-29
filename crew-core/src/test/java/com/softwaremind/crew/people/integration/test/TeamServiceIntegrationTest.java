@@ -43,10 +43,10 @@ public class TeamServiceIntegrationTest {
 	public void shouldAddPersonToTeam() {
 		
 		// Given
-		TeamDto teamDto = new TeamDto(null, "Janek", "local", "wawa", 6);
-		PersonDto personDto = new PersonDto(null, "janek", "mucha", "email1@onet.com", "krakow", "Programing", "Developer");
-		Team team = teamService.createTeam(teamDto);
-		Person person = personService.addPerson(personDto);
+		TeamDto teamDto = new TeamDto(11l, "Janek", "local", "wawa", 6);
+		PersonDto personDto = new PersonDto(12l, "janek", "mucha", "email1@onet.com", "krakow", "Programing", "Developer");
+		TeamDto team = teamService.createTeam(teamDto);
+		PersonDto person = personService.addPerson(personDto);
 		
 		// When
 		final long personId = person.getId();

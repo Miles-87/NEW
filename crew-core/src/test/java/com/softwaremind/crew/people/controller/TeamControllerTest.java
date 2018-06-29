@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -23,11 +24,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.softwaremind.crew.common.NoEntityFoundException;
 import com.softwaremind.crew.handlers.GlobalExceptionHandler;
-import com.softwaremind.crew.people.model.Person;
 import com.softwaremind.crew.people.model.dto.PersonDto;
 import com.softwaremind.crew.people.service.PersonService;
 import com.softwaremind.crew.teams.controller.TeamController;
-import com.softwaremind.crew.teams.model.Team;
 import com.softwaremind.crew.teams.model.TeamDto;
 import com.softwaremind.crew.teams.service.TeamService;
 
@@ -133,7 +132,10 @@ public class TeamControllerTest {
 	@Test
 	public void shouldAddTeamToDatabase() throws Exception {
 		TeamDto teamDto = prepareTeamDto();
-		doNothing().when(teamService).createTeam(teamDto);
+		
+		doReturn(new ModelMapper().map(teamDto, TeamDto.class))
+				.when(teamService)
+				.createTeam(teamDto);
 		
 		mockMvc.perform(
 				post("/teams")
@@ -162,8 +164,8 @@ public class TeamControllerTest {
 		TeamDto teamDto = prepareTeamDto();
 		PersonDto personDto = preparePersonDto();
 		// When
-		when(teamService.createTeam(teamDto)).thenReturn(new Team());
-		when(personService.addPerson(personDto)).thenReturn(new Person());
+		when(teamService.createTeam(teamDto)).thenReturn(new TeamDto());
+		when(personService.addPerson(personDto)).thenReturn(new PersonDto());
 		// Then
 		mockMvc.perform(post("/addPeopleToTeams/{teamId}/{personId}", 1, 1))
 				.andExpect(status().isOk());

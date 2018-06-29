@@ -10,6 +10,7 @@ import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 
@@ -90,6 +91,7 @@ public class TeamServiceTest {
 	public void shouldAddTeamToDatabase() {
 		Team team1 = new Team(1l, "Name1", "description1", "city1", 2);
 		
+		Mockito.when(teamRepository.save(team1)).thenReturn(team1);
 		teamService.createTeam(mapper.map(team1, TeamDto.class));
 		
 		verify(teamRepository, times(1)).save(team1);
