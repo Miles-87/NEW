@@ -12,6 +12,8 @@ import org.springframework.util.Assert;
 
 import com.softwaremind.crew.common.CreateEntityException;
 import com.softwaremind.crew.common.NoEntityFoundException;
+import com.softwaremind.crew.people.model.Person;
+import com.softwaremind.crew.people.repository.PersonRepository;
 import com.softwaremind.crew.teams.model.Team;
 import com.softwaremind.crew.teams.model.TeamDto;
 import com.softwaremind.crew.teams.repository.TeamRepository;
@@ -28,11 +30,13 @@ public class TeamService {
 	
 	private final TeamRepository teamRepository;
 	private final ModelMapper modelMapper;
+	PersonRepository personRepository;
 	
 	@Autowired
-	public TeamService(TeamRepository teamRepository, ModelMapper modelMapper) {
+	public TeamService(TeamRepository teamRepository, PersonRepository personRepository, ModelMapper modelMapper) {
 		this.teamRepository = teamRepository;
 		this.modelMapper = modelMapper;
+		this.personRepository = personRepository;
 	}
 	
 	/**
@@ -107,13 +111,33 @@ public class TeamService {
 	 *            represent Team object
 	 */
 	@Transactional
-	public void createTeam(TeamDto teamDto) {
+	public Team createTeam(TeamDto teamDto) {
 		Assert.notNull(teamDto, "Object can't be null!");
 		try {
 			Assert.notNull(teamDto.getName());
-			teamRepository.save(modelMapper.map(teamDto, Team.class));
+			return teamRepository.save(modelMapper.map(teamDto, Team.class));
 		} catch (Exception e) {
-			throw new CreateEntityException();
+			throw new CreateEntityException(e);
 		}
 	}
+	
+	@Transactional
+	public Optional<Team> findTeamEntityById(Long id) {
+		return teamRepository.findById(id);
+	}
+	
+	@Transactional
+	public boolean addPersonsToTeams(Long teamId, Long personId) {
+		Assert.notNull(personId, "Object can't be null!");
+		Assert.notNull(teamId, "Object can't be null!");
+		try {
+			Person person = personRepository.getOne(personId);
+			Team team = teamRepository.getOne(teamId);
+			team.getPersons().add(person);
+		} catch (Exception e) {
+			throw new CreateEntityException(e);
+		}
+		return true;
+	}
+	
 }
