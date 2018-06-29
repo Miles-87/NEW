@@ -3,6 +3,8 @@ package com.softwaremind.crew.people.service;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -14,7 +16,9 @@ import org.springframework.util.Assert;
 import com.softwaremind.crew.common.CreateEntityException;
 import com.softwaremind.crew.people.model.Person;
 import com.softwaremind.crew.people.model.dto.PersonDto;
+import com.softwaremind.crew.people.model.dto.PersonWithTeamsDto;
 import com.softwaremind.crew.people.repository.PersonRepository;
+import com.softwaremind.crew.teams.model.TeamDto;
 
 /**
  * PersonService class for managing {@link PersonRepository}
@@ -122,5 +126,25 @@ public class PersonService {
 	public List<PersonDto> findNotAssignedPeople() {
 		return modelMapper.map(personRepository.findAllNotAssignedPeople(), new TypeToken<List<PersonDto>>() {
 		}.getType());
+	}
+	
+	/**
+	 * Return all Assigned People
+	 *
+	 * @return Assigned Person's entities
+	 */
+	public List<PersonWithTeamsDto> peopleWithTeamsAssigned() {
+		List<Person> people = personRepository.findByTeamsNotEmpty();
+		
+		return people.stream()
+				.map(person -> {
+					PersonWithTeamsDto dto = modelMapper.map(person, PersonWithTeamsDto.class);
+					dto.setTeams(mapTeams(person));
+					return dto;
+				}).collect(Collectors.toList());
+	}
+	
+	private Set<TeamDto> mapTeams(Person person) {
+		return person.getTeams().stream().map(t -> modelMapper.map(t, TeamDto.class)).collect(Collectors.toSet());
 	}
 }

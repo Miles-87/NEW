@@ -26,6 +26,7 @@ import com.softwaremind.crew.teams.service.TeamService;
  * @author Wiktor Religo
  * @since 18.06.2018
  */
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class PersonServiceIntegrationTest {
@@ -52,8 +53,6 @@ public class PersonServiceIntegrationTest {
 		
 		List<PersonDto> personDtoList = new ArrayList<>();
 		returnPersonTestResource().forEach(p -> personDtoList.add(personService.addPerson(p)));
-		
-
 		
 		// when
 		
@@ -82,7 +81,7 @@ public class PersonServiceIntegrationTest {
 	
 	/**
 	 * Method prepares the resource for test
-	 * 
+	 *
 	 * @return list of PersonDto
 	 */
 	private List<PersonDto> returnPersonTestResource() {

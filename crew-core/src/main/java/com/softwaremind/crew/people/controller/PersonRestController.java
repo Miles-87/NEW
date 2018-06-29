@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.softwaremind.crew.common.NoEntityFoundException;
 import com.softwaremind.crew.people.model.dto.PersonDto;
+import com.softwaremind.crew.people.model.dto.PersonWithTeamsDto;
 import com.softwaremind.crew.people.service.PersonService;
 
 /**
@@ -113,6 +114,15 @@ public class PersonRestController {
 	@CrossOrigin
 	public List<PersonDto> findNotAssignedPeople() {
 		return personService.findNotAssignedPeople();
+	}
+    /**
+     * Return all Assigned People
+     *
+     * @return Assigned Person's entities
+     */
+	@GetMapping("/peopleWithTeams")
+	public List<PersonWithTeamsDto> getPeopleAssignedToTeam() {
+		return personService.peopleWithTeamsAssigned();
 	}
 	
 }
