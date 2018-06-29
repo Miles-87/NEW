@@ -14,7 +14,7 @@ export class TeamAsList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            cards: props.list,
+            cards: props.list,                                              
         };
     }
 
@@ -56,8 +56,9 @@ export class TeamAsList extends Component {
         const isActive = canDrop && isOver;
         const style = {
             list: {
+                margin: '15px',
                 width: '390px',
-                height: '900px',
+                minHeight: '900px',
                 backgroundColor: isActive ? 'lightgreen' : '#fafafa',
                 overflowY: 'auto',
                 boxShadow: '0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)',

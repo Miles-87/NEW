@@ -21,22 +21,21 @@ const styles = theme => ({
     },
     innerRow: {
         fontSize: '15',
-        color: 'red',
-        textAlign: 'left',
-    },
-    head: {
-        fontSize: '15',
         color: 'black',
         textAlign: 'left',
+
     },
-    deleted: {
+    head: {
+        fontSize: '20px',
+    },
+    deletedStyle: {
         textAlign: 'center',
         fontSize: '20px',
     },
     innerLastRow: {
         textAlign: 'center',
     },
-    deleteIcon: {
+    deletedIcon: {
         backgroundColor: '#1e90ff',
         border: 'none',
         color: '#f8f8ff',
@@ -44,11 +43,6 @@ const styles = theme => ({
         fontSize: '15px',
         cursor: 'pointer',
     },
-    anIcon: {
-        marginLeft: '10px',
-    }
-
-
 });
 
 let id = 0;
@@ -85,7 +79,6 @@ class NextPersonTable extends React.Component {
     }
 
     deletePersonFromBase(personId) {
-        console.log("by id: " + personId);
         fetch('http://localhost:9090/people/' + personId,
             {method: 'DELETE',})
             .then(
@@ -117,13 +110,15 @@ class NextPersonTable extends React.Component {
                                        scope="row">Status:</TableCell>
                             <TableCell className={this.props.classes.head} component="th"
                                        scope="row">Role:</TableCell>
+                            <TableCell className={this.props.classes.deletedStyle} component="th"
+                                       scope="row">Delete:</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {this.state.personData.map(n => {
                             return (
                                 <TableRow key={n.id}>
-                                    <TableCell component="th" scope="row">
+                                    <TableCell className={this.props.classes.innerRow} component="th" scope="row">
                                         {n.id}
                                     </TableCell>
                                     <TableCell className={this.props.classes.innerRow} component="th"
@@ -138,11 +133,11 @@ class NextPersonTable extends React.Component {
                                                scope="row">{n.status}</TableCell>
                                     <TableCell className={this.props.classes.innerRow} component="th"
                                                scope="row">{n.role}</TableCell>
-                                    <TableCell numeric style={styles.innerLastRow}>
+                                    <TableCell numeric className={this.props.classes.innerLastRow}>
                                         <button onClick={e => {
                                             this.deletePersonFromBase(n.id);
-                                        }} style={styles.deleteIcon}>Delete <i className="fa fa-trash"
-                                                                               style={styles.anIcon}
+                                        }} className={this.props.classes.deletedIcon}> Delete <i className="fa fa-trash"
+                                                                                                 style={{marginLeft: '10px'}}
                                         ></i>
                                         </button>
                                     </TableCell>

@@ -105,8 +105,24 @@ public class PersonRestController {
 		}
 	}
 	
-	@GetMapping("/peopelWithTeams")
-	public List<PersonWithTeamsDto> getPeopleAssignedToTeam2() {
-		return personService.peopelWithTeamsAssigned();
+	/**
+	 * Return all not Assigned People
+	 *
+	 * @return not Assigned Person's entities
+	 */
+	@GetMapping("/people/unassigned")
+	@CrossOrigin
+	public List<PersonDto> findNotAssignedPeople() {
+		return personService.findNotAssignedPeople();
 	}
+    /**
+     * Return all Assigned People
+     *
+     * @return Assigned Person's entities
+     */
+	@GetMapping("/peopleWithTeams")
+	public List<PersonWithTeamsDto> getPeopleAssignedToTeam() {
+		return personService.peopleWithTeamsAssigned();
+	}
+	
 }

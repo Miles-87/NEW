@@ -111,11 +111,12 @@ public class TeamService {
 	 *            represent Team object
 	 */
 	@Transactional
-	public Team createTeam(TeamDto teamDto) {
+	public TeamDto createTeam(TeamDto teamDto) {
 		Assert.notNull(teamDto, "Object can't be null!");
 		try {
 			Assert.notNull(teamDto.getName());
-			return teamRepository.save(modelMapper.map(teamDto, Team.class));
+			Team save = teamRepository.save(modelMapper.map(teamDto, Team.class));
+			return modelMapper.map(save, TeamDto.class);
 		} catch (Exception e) {
 			throw new CreateEntityException(e);
 		}

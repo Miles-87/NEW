@@ -57,6 +57,15 @@ public class PersonServiceTest {
 	}
 	
 	@Test
+	public void shouldReturnNoAssignedPeople() {
+		Person person1 = new Person(1L, "jan", "mucha", "warszawa", "email1@onet.com", "Programing", "Developer");
+		Mockito.when(personService.findNotAssignedPeople()).thenReturn(Arrays.asList(mapper.map(person1, PersonDto.class)));
+		
+		List<PersonDto> noAssignedPeople = personService.findNotAssignedPeople();
+		assertThat(noAssignedPeople).hasSize(1);
+	}
+	
+	@Test
 	public void shouldReturnPersonById() {
 		
 		Optional<PersonDto> result = personService.findById(3L);
@@ -72,6 +81,8 @@ public class PersonServiceTest {
 	@Test
 	public void shouldAddPersonToDatabase() {
 		Person person1 = new Person(1L, "jan", "mucha", "krakow", "email1@onet.com", "Programing", "Developer");
+		Mockito.when(personRepository.save(person1)).thenReturn(person1);
+		
 		personService.addPerson(mapper.map(person1, PersonDto.class));
 		Mockito.verify(personRepository, times(1)).save(person1);
 	}

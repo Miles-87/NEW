@@ -1,11 +1,11 @@
 package com.softwaremind.crew.people.service;
 
-import java.util.*;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.softwaremind.crew.common.CreateEntityException;
-import com.softwaremind.crew.people.model.dto.PersonWithTeamsDto;
-import com.softwaremind.crew.teams.model.TeamDto;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +13,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import com.softwaremind.crew.common.CreateEntityException;
 import com.softwaremind.crew.people.model.Person;
 import com.softwaremind.crew.people.model.dto.PersonDto;
+import com.softwaremind.crew.people.model.dto.PersonWithTeamsDto;
 import com.softwaremind.crew.people.repository.PersonRepository;
+import com.softwaremind.crew.teams.model.TeamDto;
 
 /**
  * PersonService class for managing {@link PersonRepository}
@@ -80,11 +83,12 @@ public class PersonService {
 	 * @param personDto
 	 * @return
 	 */
-	public Person addPerson(PersonDto personDto) {
+	public PersonDto addPerson(PersonDto personDto) {
 		Assert.notNull(personDto, "Object can't be null!");
 		try {
 			Assert.notNull(personDto.getFirstName());
-			return personRepository.save(modelMapper.map(personDto, Person.class));
+			Person save = personRepository.save(modelMapper.map(personDto, Person.class));
+			return modelMapper.map(save, PersonDto.class);
 		} catch (Exception e) {
 			throw new CreateEntityException(e);
 		}
@@ -114,7 +118,22 @@ public class PersonService {
 				}).orElseThrow(NoSuchElementException::new);
 	}
 	
-	public List<PersonWithTeamsDto> peopelWithTeamsAssigned() {
+	/**
+	 * Return all not Assigned People
+	 *
+	 * @return not Assigned Person's entities
+	 */
+	public List<PersonDto> findNotAssignedPeople() {
+		return modelMapper.map(personRepository.findAllNotAssignedPeople(), new TypeToken<List<PersonDto>>() {
+		}.getType());
+	}
+	
+	/**
+	 * Return all Assigned People
+	 *
+	 * @return Assigned Person's entities
+	 */
+	public List<PersonWithTeamsDto> peopleWithTeamsAssigned() {
 		List<Person> people = personRepository.findByTeamsNotEmpty();
 		
 		return people.stream()
@@ -128,5 +147,4 @@ public class PersonService {
 	private Set<TeamDto> mapTeams(Person person) {
 		return person.getTeams().stream().map(t -> modelMapper.map(t, TeamDto.class)).collect(Collectors.toSet());
 	}
-	
 }
