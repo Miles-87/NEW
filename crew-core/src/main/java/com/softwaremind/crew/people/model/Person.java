@@ -57,9 +57,6 @@ public class Person implements Serializable {
 	
 	private LocalDateTime createdOn;
 	private LocalDateTime modifiedOn;
-	@ManyToMany(mappedBy = "people")
-	private Set<Team> teams = new HashSet<Team>();
-	
 	@ManyToMany(cascade = CascadeType.ALL, mappedBy = "persons")
 	private Set<Team> teams = new HashSet<>();
 	

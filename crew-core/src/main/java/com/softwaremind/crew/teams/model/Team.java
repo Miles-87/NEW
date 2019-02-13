@@ -45,12 +45,6 @@ public class Team {
 	private LocalDateTime createdOn;
 	@Column(name = "Modification_time")
 	private LocalDateTime modifiedOn;
-	@ManyToMany(cascade = CascadeType.MERGE)
-	@JoinTable(name = "persons_teams",
-			joinColumns = @JoinColumn(name = "teamId"),
-			inverseJoinColumns = @JoinColumn(name = "personId"))
-	private Set<Person> people = new HashSet<>();
-	
 	@ManyToMany
 	@JoinTable(name = "PERSONS_TEAMS",
 			joinColumns = { @JoinColumn(name = "team_id", referencedColumnName = "id") },
